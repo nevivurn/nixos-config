@@ -2,14 +2,13 @@
 
 {
   home.stateVersion = "22.11";
-  home.username = "nevivurn";
-  home.homeDirectory = "/home/nevivurn";
 
   home.packages = with pkgs; [
     file
     pv
     tree
     zbar
+    killall
 
     unixtools.xxd
 
@@ -21,6 +20,9 @@
 
     ldns
     mtr
+
+    python3
+    go
   ];
 
   home.sessionVariables = {
@@ -45,6 +47,10 @@
         end_of_line = "lf";
         trim_trailing_whitespace = "true";
         insert_final_newline = "true";
+      };
+      "*.nix" = {
+        indent_style = "space";
+        indent_size = 2;
       };
       "*.md" = {
         max_line_length = 80;
@@ -86,6 +92,7 @@
   };
 
   programs.bash.enable = true;
+  programs.bash.enableVteIntegration = true;
   programs.tmux.enable = true;
 
   programs.dircolors.enable = true;
@@ -103,6 +110,7 @@
     };
     extraConfig = {
       init.defaultBranch = "master";
+      core.pager = "less -+X";
     };
     userName = "Yongun Seong";
     userEmail = "nevivurn@nevi.dev";
