@@ -10,7 +10,7 @@
     pv
     tree
     zbar
-    killall
+    psmisc
 
     unixtools.xxd
 
