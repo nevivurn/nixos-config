@@ -145,6 +145,7 @@
     "/persist/cache" = {
       directories = [
         "/var/lib/systemd/timers"
+        "/var/lib/bluetooth"
         "/root/.cache"
         "/home/nevivurn/.local/share/containers" # cannot be fuse
       ];
@@ -157,6 +158,18 @@
   hardware.opengl.enable = true;
   programs.dconf.enable = true;
   services.dbus.packages = [ pkgs.gcr ];
+
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    pulse.enable = true;
+  };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  };
+  hardware.bluetooth.enable = true;
 
   virtualisation.podman.enable = true;
 }
