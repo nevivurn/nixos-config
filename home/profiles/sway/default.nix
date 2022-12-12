@@ -53,6 +53,51 @@ in
     size = 24;
   };
 
+  programs.wofi = {
+    enable = true;
+    config = {
+      insensitive = true;
+      lines = 5;
+      width = "20%";
+    };
+    # from https://github.com/dracula/wofi/blob/master/style.css
+    style = ''
+      window {
+        margin: 0px;
+        border: 1px solid #bd93f9;
+        background-color: #282a36;
+      }
+      #input {
+        margin: 5px;
+        border: none;
+        color: #f8f8f2;
+        background-color: #44475a;
+      }
+      #inner-box {
+        margin: 5px;
+        border: none;
+        background-color: #282a36;
+      }
+      #outer-box {
+        margin: 5px;
+        border: none;
+        background-color: #282a36;
+      }
+      #scroll {
+        margin: 0px;
+        border: none;
+      }
+      #text {
+        margin: 5px;
+        border: none;
+        color: #f8f8f2;
+      }
+      #entry:selected {
+        background-color: #44475a;
+      }
+    '';
+  };
+
   programs.bash.profileExtra = ''
     if [[ "$(tty)" == /dev/tty1 ]]; then
       trap -- 'systemctl --user stop graphical-session.target' EXIT
@@ -111,9 +156,10 @@ in
 
           term = "kitty";
 
-          menu = "${pkgs.dmenu-wayland}/bin/dmenu-wl_run";
-          passMenu = "PASSMENU_DMENU='${pkgs.dmenu-wayland}/bin/dmenu-wl' PASSMENU_XDOTOOL='${pkgs.wtype}/bin/wtype -s 100 -d 20 -' passmenu";
-          menuArgs = with draculaColors; "-fn 'FiraCode Nerd Font' -nb '${bg}' -nf '${fg}' -sb '${bg}' -sf '${purple}'";
+          menu = "wofi --show run";
+          passMenu = "PASSMENU_DMENU='wofi --show dmenu' PASSMENU_XDOTOOL='${pkgs.wtype}/bin/wtype -s 100 -d 20 -' passmenu";
+          #menuArgs = with draculaColors; "-fn 'FiraCode Nerd Font' -nb '${bg}' -nf '${fg}' -sb '${bg}' -sf '${purple}'";
+          menuArgs = "";
         in
         {
           "${mod}+Return" = "exec ${term}";
