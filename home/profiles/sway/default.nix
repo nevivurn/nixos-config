@@ -318,6 +318,7 @@ in
   home.persistence."/persist/home/nevivurn" = {
     directories = [
       ".mozilla"
+      ".config/fcitx5"
     ];
   };
   home.persistence."/persist/cache/home/nevivurn" = {
