@@ -15,7 +15,7 @@ if [[ $1 == "--otp" ]]; then
 	shift
 fi
 
-password=$(printf '%s\n' "${password_files[@]}" | $dmenu "$@")
+password=$(printf '%s\n' "${password_files[@]}" | $dmenu)
 [[ -n $password ]] || exit
 
 if [[ $otp -eq 0 ]]; then

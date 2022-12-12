@@ -158,8 +158,6 @@ in
 
           menu = "wofi --show run";
           passMenu = "PASSMENU_DMENU='wofi --show dmenu' PASSMENU_XDOTOOL='${pkgs.wtype}/bin/wtype -s 100 -d 20 -' passmenu";
-          #menuArgs = with draculaColors; "-fn 'FiraCode Nerd Font' -nb '${bg}' -nf '${fg}' -sb '${bg}' -sf '${purple}'";
-          menuArgs = "";
         in
         {
           "${mod}+Return" = "exec ${term}";
@@ -181,10 +179,10 @@ in
           "${mod}+r" = "mode resize";
           "${mod}+Shift+e" = "mode exit";
 
-          "${mod}+d" = "exec ${menu} ${menuArgs}";
+          "${mod}+d" = "exec ${menu}";
 
-          "${mod}+p" = "exec ${passMenu} ${menuArgs}";
-          "${mod}+Shift+p" = "exec ${passMenu} --otp ${menuArgs}";
+          "${mod}+p" = "exec ${passMenu}";
+          "${mod}+Shift+p" = "exec ${passMenu} --otp";
         } //
         (
           lib.foldl' (a: b: a // b) { }
