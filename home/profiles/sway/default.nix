@@ -21,16 +21,20 @@ in
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
 
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-
-    xdg-utils
 
     (pkgs.callPackage ./passmenu { pass = config.programs.password-store.package; })
+    xdg-utils
     wl-clipboard
+
+    ffmpeg
+    imv
+    mediainfo
+    yt-dlp
   ];
 
   gtk.enable = true;
@@ -53,50 +57,9 @@ in
     size = 24;
   };
 
-  programs.wofi = {
-    enable = true;
-    config = {
-      insensitive = true;
-      lines = 5;
-      width = "20%";
-    };
-    # from https://github.com/dracula/wofi/blob/master/style.css
-    style = ''
-      window {
-        margin: 0px;
-        border: 1px solid #bd93f9;
-        background-color: #282a36;
-      }
-      #input {
-        margin: 5px;
-        border: none;
-        color: #f8f8f2;
-        background-color: #44475a;
-      }
-      #inner-box {
-        margin: 5px;
-        border: none;
-        background-color: #282a36;
-      }
-      #outer-box {
-        margin: 5px;
-        border: none;
-        background-color: #282a36;
-      }
-      #scroll {
-        margin: 0px;
-        border: none;
-      }
-      #text {
-        margin: 5px;
-        border: none;
-        color: #f8f8f2;
-      }
-      #entry:selected {
-        background-color: #44475a;
-      }
-    '';
-  };
+  xdg.userDirs.enable = true;
+  xdg.userDirs.download = "${config.home.homeDirectory}/dl";
+  xdg.userDirs.pictures = "${config.home.homeDirectory}/pics";
 
   programs.bash.profileExtra = ''
     if [[ "$(tty)" == /dev/tty1 ]]; then
@@ -115,6 +78,7 @@ in
     theme = "Dracula";
     settings = {
       shell_integration = "enabled";
+      enable_audio_bell = false;
     };
   };
   home.shellAliases = {
@@ -140,12 +104,15 @@ in
         "type:keyboard" = { xkb_options = "korean:ralt_hangul"; };
       };
       output = {
+        "*" = { bg = "~/pics/bg fill"; };
         HDMI-A-1 = { pos = "0 0"; };
         DP-3 = { pos = "1920 0"; };
       };
 
       focus.followMouse = false;
       workspaceAutoBackAndForth = true;
+      floating.modifier = "Mod4";
+
       keybindings =
         let
           mod = "Mod4";
@@ -270,6 +237,10 @@ in
       window.border = 3;
       gaps.inner = 10;
     };
+
+    extraConfig = ''
+      tiling_drag disable
+    '';
   };
 
   programs.i3status = {
@@ -315,16 +286,93 @@ in
     };
   };
 
+  programs.wofi = {
+    enable = true;
+    config = {
+      insensitive = true;
+      lines = 5;
+      width = "15%";
+    };
+    # from https://github.com/dracula/wofi/blob/master/style.css
+    style = ''
+      window {
+        margin: 0px;
+        border: 1px solid #bd93f9;
+        background-color: #282a36;
+        font-family: 'FiraCode Nerd Font';
+      }
+      #input {
+        margin: 5px;
+        border: none;
+        color: #f8f8f2;
+        background-color: #44475a;
+      }
+      #inner-box {
+        margin: 5px;
+        border: none;
+        background-color: #282a36;
+      }
+      #outer-box {
+        margin: 5px;
+        border: none;
+        background-color: #282a36;
+      }
+      #scroll {
+        margin: 0px;
+        border: none;
+      }
+      #text {
+        margin: 5px;
+        border: none;
+        color: #f8f8f2;
+      }
+      #entry:selected {
+        background-color: #44475a;
+      }
+    '';
+  };
+
+  programs.mpv = {
+    enable = true;
+    config = {
+      hwdec = "auto";
+      profile = "gpu-hq";
+      scale = "ewa_lanczossharp";
+      cscale = "ewa_lanczossharp";
+      video-sync = "display-resample";
+      interpolation = true;
+      tscale = "oversample";
+
+      pause = true;
+      osc = false;
+      audio-display = false;
+
+      osd-font = "Noto Sans";
+      osd-font-size = 20;
+      osd-border-size = 1;
+
+      alang = [ "ja" "jpn" ];
+      slang = [ "enm" "eng" "en" ];
+    };
+    bindings = {
+      WHEEL_UP = "ignore";
+      WHEEL_DOWN = "ignore";
+      WHEEL_LEFT = "ignore";
+      WHEEL_RIGHT = "ignore";
+    };
+  };
+
   home.persistence."/persist/home/nevivurn" = {
     directories = [
       ".mozilla"
       ".config/fcitx5"
+      "dl"
+      "pics"
     ];
   };
   home.persistence."/persist/cache/home/nevivurn" = {
     directories = [
       ".cache"
-      #".local/share/containers"
     ];
   };
 }

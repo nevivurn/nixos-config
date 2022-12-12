@@ -158,6 +158,7 @@
   hardware.opengl.enable = true;
   programs.dconf.enable = true;
   services.dbus.packages = [ pkgs.gcr ];
+  fonts.enableDefaultFonts = true;
 
   services.pipewire = {
     enable = true;
