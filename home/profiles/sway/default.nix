@@ -35,6 +35,10 @@ in
     imv
     mediainfo
     yt-dlp
+
+    gnucash
+    pavucontrol
+    liquidctl
   ];
 
   gtk.enable = true;
@@ -364,8 +368,10 @@ in
 
   home.persistence."/persist/home/nevivurn" = {
     directories = [
-      ".mozilla"
+      ".config/dconf"
       ".config/fcitx5"
+      ".local/share/gnucash"
+      ".mozilla"
       "dl"
       "pics"
     ];
