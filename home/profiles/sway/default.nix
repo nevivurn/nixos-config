@@ -37,8 +37,10 @@ in
     yt-dlp
 
     gnucash
-    pavucontrol
     liquidctl
+    moonlight-qt
+    pavucontrol
+    virt-manager
   ];
 
   gtk.enable = true;
