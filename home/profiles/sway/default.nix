@@ -372,6 +372,7 @@ in
     directories = [
       ".config/dconf"
       ".config/fcitx5"
+      ".config/Moonlight Game Streaming Project"
       ".local/share/gnucash"
       ".mozilla"
       "dl"
