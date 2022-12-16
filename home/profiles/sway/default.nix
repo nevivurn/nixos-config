@@ -156,6 +156,9 @@ in
 
           "${mod}+p" = "exec ${passMenu}";
           "${mod}+Shift+p" = "exec ${passMenu} --otp";
+
+          "Control+Space" = "exec makoctl dismiss";
+          "Control+Escape" = "exec makoctl restore";
         } //
         (
           lib.foldl' (a: b: a // b) { }
@@ -337,6 +340,17 @@ in
       }
     '';
   };
+
+  programs.mako = {
+    enable = true;
+    layer = "overlay";
+    font = "Noto Sans";
+  } //
+  (with draculaColors; {
+    backgroundColor = bg;
+    borderColor = purple;
+    textColor = fg;
+  });
 
   programs.mpv = {
     enable = true;
