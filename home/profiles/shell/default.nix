@@ -14,17 +14,19 @@
 
     unixtools.xxd
 
-    wget
     curl
+    wget
 
     p7zip
     unzip
 
     ldns
     mtr
+    openssl
 
     python3
     go
+    openjdk17
 
     binutils
     gcc
@@ -120,6 +122,10 @@
       init.defaultBranch = "master";
       core.pager = "less -+X";
     };
+    ignores = [
+      ".direnv"
+      ".envrc"
+    ];
     userName = "Yongun Seong";
     userEmail = "nevivurn@nevi.dev";
   };
