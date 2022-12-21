@@ -86,12 +86,38 @@
           indent = { enable = true },
         }
       EOF
+
+      " quickfix shortcuts
+      nnoremap <leader>o :copen<CR>
+      nnoremap <leader>q :cclose<CR>
+      map <C-n> :cnext<CR>
+      map <C-p> :cprev<CR>
+
+      " unmap K
+      map <S-k> <Nop>
+
+      " go settings
+      function! s:build_go_files()
+        let l:file = expand('%')
+        if l:file =~# '^\f\+_test\.go$'
+          call go#test#Test(0, 1)
+        elseif l:file =~# '^\f\+\.go$'
+          call go#cmd#Build(0)
+        endif
+      endfunction
+
+      autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+      autocmd FileType go nmap <leader>t <Plug>(go-test)
+      autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
+      autocmd FileType go nmap <leader>a <Plug>(go-alternate-edit)
+      let g:go_list_type = "quickfix"
     '';
     extraPackages = with pkgs; [ ];
     plugins = with pkgs.vimPlugins; [
       dracula-vim
       editorconfig-nvim
       nvim-treesitter.withAllGrammars
+      vim-go
     ];
 
     viAlias = true;
