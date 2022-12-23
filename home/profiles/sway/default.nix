@@ -26,7 +26,6 @@ in
     noto-fonts-cjk-sans
     noto-fonts-emoji
 
-
     (pkgs.callPackage ./passmenu { pass = config.programs.password-store.package; })
     xdg-utils
     wl-clipboard
@@ -38,6 +37,7 @@ in
 
     gnucash
     liquidctl
+    lm_sensors
     moonlight-qt
     pavucontrol
     thunderbird
@@ -383,11 +383,24 @@ in
     };
   };
 
+  systemd.user.services."protonmail-bridge" = {
+    Unit.Description = "protonmail bridge client";
+    Service = {
+      ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --no-window --noninteractive";
+      Environment =
+        let passCfg = config.programs.password-store;
+        in lib.mapAttrsToList (k: v: "${k}=${v}") passCfg.settings ++
+          [ "PATH=${lib.makeBinPath [ passCfg.package ]}" ];
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
   home.persistence."/persist/home/nevivurn" = {
     directories = [
       ".config/Moonlight Game Streaming Project"
       ".config/dconf"
       ".config/fcitx5"
+      ".config/protonmail/bridge"
       ".local/share/gnucash"
       ".mozilla"
       ".thunderbird"
@@ -398,6 +411,7 @@ in
   home.persistence."/persist/cache/home/nevivurn" = {
     directories = [
       ".cache"
+      ".config/protonmail/bridge/cache"
     ];
   };
 }
