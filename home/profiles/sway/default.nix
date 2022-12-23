@@ -40,6 +40,7 @@ in
     liquidctl
     moonlight-qt
     pavucontrol
+    thunderbird
     virt-manager
   ];
 
@@ -384,11 +385,12 @@ in
 
   home.persistence."/persist/home/nevivurn" = {
     directories = [
+      ".config/Moonlight Game Streaming Project"
       ".config/dconf"
       ".config/fcitx5"
-      ".config/Moonlight Game Streaming Project"
       ".local/share/gnucash"
       ".mozilla"
+      ".thunderbird"
       "dl"
       "pics"
     ];
