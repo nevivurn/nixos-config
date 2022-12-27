@@ -155,8 +155,10 @@ in
 
           "${mod}+d" = "exec ${menu}";
 
-          "${mod}+p" = "exec ${passMenu}";
-          "${mod}+Shift+p" = "exec ${passMenu} --otp";
+          "${mod}+p" = "exec ${passMenu} -t";
+          "${mod}+Mod1+p" = "exec ${passMenu} -c";
+          "${mod}+Shift+p" = "exec ${passMenu} -o -t";
+          "${mod}+Mod1+Shift+p" = "exec ${passMenu} -o -c";
 
           "Control+Space" = "exec makoctl dismiss";
           "Control+Escape" = "exec makoctl restore";

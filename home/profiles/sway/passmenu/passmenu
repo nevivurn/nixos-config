@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 shopt -s nullglob globstar
 
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
@@ -15,11 +16,32 @@ if [[ $1 == "--otp" ]]; then
 	shift
 fi
 
+cmd="show"
+mode="copy"
+while getopts oct arg; do
+	case "$arg" in
+		o)
+			cmd="otp code"
+			;;
+		c)
+			mode="copy"
+			;;
+		t)
+			mode="type"
+			;;
+		*)
+			exit 1
+	esac
+done
+
 password=$(printf '%s\n' "${password_files[@]}" | $dmenu)
 [[ -n $password ]] || exit
 
-if [[ $otp -eq 0 ]]; then
-	pass show "$password" | head -n1 | tr -d '\n' | $xdotool
-else
-	pass otp code "$password" | head -n1 | tr -d '\n' | $xdotool
-fi
+case "$mode" in
+	copy)
+		pass $cmd --clip "$password"
+		;;
+	type)
+		pass $cmd "$password" | head -n1 | tr -d '\n' | $xdotool
+		;;
+esac
