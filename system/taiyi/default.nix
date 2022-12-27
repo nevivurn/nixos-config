@@ -173,4 +173,5 @@
   hardware.bluetooth.enable = true;
 
   virtualisation.podman.enable = true;
+  virtualisation.podman.dockerSocket.enable = true;
 }

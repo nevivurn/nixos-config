@@ -3,12 +3,19 @@
 {
   imports = [ ../shell ];
 
+  home.packages = with pkgs; [
+    docker-compose
+    google-cloud-sdk
+    terraform
+  ];
+  home.sessionVariables = {
+    DOCKER_HOST = "\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
+  };
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    config.whitelist.prefix = [
-      "${config.home.homeDirectory}/code/nevi"
-    ];
+    config.whitelist.prefix = [ "${config.home.homeDirectory}/code/nevi" ];
   };
 
   programs.password-store = {
@@ -36,6 +43,7 @@
     enable = true;
     matchBlocks = {
       "*.snucse.org" = { user = "bacchus"; };
+      "cse.snu.ac.kr" = { user = "bacchus"; };
       "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
         { user = "sherry"; };
       "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
@@ -58,14 +66,23 @@
     mount_program = "${pkgs.fuse-overlayfs}/bin/fuse-overlayfs"
   '';
 
-  home.persistence."/persist/cache/home/nevivurn".allowOther = true;
+  home.file.".terraformrc".text = ''
+    plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+  '';
+
+  home.persistence."/persist/cache/home/nevivurn" = {
+    allowOther = true;
+    directories = [
+      ".terraform.d"
+    ];
+  };
   home.persistence."/persist/home/nevivurn" = {
     allowOther = true;
     directories = [
-      "code"
-      ".ssh"
       ".gnupg"
       ".local/share/password-store"
+      ".ssh"
+      "code"
     ];
   };
 }
