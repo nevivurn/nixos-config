@@ -131,6 +131,10 @@
 
   programs.dircolors.enable = true;
   programs.starship.enable = true;
+  programs.starship.settings = {
+    docker_context.disabled = true;
+    gcloud.disabled = true;
+  };
 
   programs.jq.enable = true;
   programs.less.enable = true;
