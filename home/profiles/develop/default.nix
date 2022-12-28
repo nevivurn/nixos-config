@@ -4,9 +4,13 @@
   imports = [ ../shell ];
 
   home.packages = with pkgs; [
+    awscli2
     docker-compose
     google-cloud-sdk
+    kubectl
     terraform
+
+    restic
   ];
   home.sessionVariables = {
     DOCKER_HOST = "\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
@@ -79,6 +83,7 @@
   home.persistence."/persist/home/nevivurn" = {
     allowOther = true;
     directories = [
+      ".aws"
       ".gnupg"
       ".local/share/password-store"
       ".ssh"

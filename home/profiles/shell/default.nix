@@ -132,6 +132,7 @@
   programs.dircolors.enable = true;
   programs.starship.enable = true;
   programs.starship.settings = {
+    aws.disabled = true;
     docker_context.disabled = true;
     gcloud.disabled = true;
   };

@@ -172,6 +172,9 @@
   };
   hardware.bluetooth.enable = true;
 
-  virtualisation.podman.enable = true;
-  virtualisation.podman.dockerSocket.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerSocket.enable = true;
+    defaultNetwork.dnsname.enable = true;
+  };
 }
