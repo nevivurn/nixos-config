@@ -416,4 +416,8 @@ in
       ".config/protonmail/bridge/cache"
     ];
   };
+  # Ensure ordering for proton cache
+  systemd.user.services."bindMount--persist-cache-home-nevivurn-config-protonmail-bridge-cache-" = {
+    Unit.After = "bindMount--persist-home-nevivurn-config-protonmail-bridge-.service";
+  };
 }
