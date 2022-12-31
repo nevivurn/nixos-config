@@ -13,7 +13,7 @@
     restic
   ];
   home.sessionVariables = {
-    DOCKER_HOST = "\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
+    DOCKER_HOST = "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
   };
 
   programs.direnv = {
