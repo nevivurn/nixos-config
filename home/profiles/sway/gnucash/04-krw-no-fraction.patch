@@ -1,0 +1,13 @@
+diff --git a/libgnucash/engine/iso-4217-currencies.xml b/libgnucash/engine/iso-4217-currencies.xml
+index 93c2231..9be0527 100644
+--- a/libgnucash/engine/iso-4217-currencies.xml
++++ b/libgnucash/engine/iso-4217-currencies.xml
+@@ -1453,7 +1453,7 @@
+   namespace="ISO4217"
+   exchange-code="410"
+   parts-per-unit="1"
+-  smallest-fraction="100"
++  smallest-fraction="1"
+   local-symbol="₩"
+ />
+ <!-- "KWD" - "Kuwaiti Dinar"
