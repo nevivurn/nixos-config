@@ -90,6 +90,7 @@
       Gateway = "192.168.1.1";
       DNS = [ "192.168.1.1" ];
       NTP = [ "192.168.1.1" ];
+      LinkLocalAddressing = "no";
     };
   };
 
