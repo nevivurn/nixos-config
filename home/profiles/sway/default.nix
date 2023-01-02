@@ -27,8 +27,9 @@ in
     noto-fonts-emoji
 
     (pkgs.callPackage ./passmenu { pass = config.programs.password-store.package; })
-    xdg-utils
+    sway-contrib.grimshot
     wl-clipboard
+    xdg-utils
 
     ffmpeg
     imv
