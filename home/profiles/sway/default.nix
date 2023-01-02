@@ -414,11 +414,16 @@ in
   home.persistence."/persist/cache/home/nevivurn" = {
     directories = [
       ".cache"
-      ".config/protonmail/bridge/cache"
+
+      # BUG: this is currently broken due to /persist/cache/home/nevivurn being
+      # handled before /persist/home/nevivurn (alphabetical).
+      #
+      # For now, put the (~1Gi) protonmail cache in persistent non-cache
+      # storage. Waiting on some sort of ordering fix in impermanence,
+      # something like
+      # https://github.com/nix-community/impermanence/pull/97 or
+      # https://github.com/nix-community/impermanence/pull/109.
+      #".config/protonmail/bridge/cache"
     ];
-  };
-  # Ensure ordering for proton cache
-  systemd.user.services."bindMount--persist-cache-home-nevivurn-config-protonmail-bridge-cache-" = {
-    Unit.After = "bindMount--persist-home-nevivurn-config-protonmail-bridge-.service";
   };
 }
