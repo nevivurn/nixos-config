@@ -36,7 +36,12 @@ in
     mediainfo
     yt-dlp
 
-    (gnucash.overrideAttrs (final: prev: { patches = prev.patches ++ [ ./gnucash/04-krw-no-fraction.patch ]; }))
+    (gnucash.overrideAttrs (prev: {
+      patches = prev.patches ++ [
+        ./gnucash/0004-no-exec-perl.patch
+        ./gnucash/0005-krw-no-fraction.patch
+      ];
+    }))
     liquidctl
     lm_sensors
     moonlight-qt
