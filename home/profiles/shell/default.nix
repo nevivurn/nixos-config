@@ -84,6 +84,7 @@
             disable = { "bash" },
           },
           indent = { enable = true },
+          incremental_selection = { enable = true },
         }
       EOF
 
@@ -111,12 +112,29 @@
       autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
       autocmd FileType go nmap <leader>a <Plug>(go-alternate-edit)
       let g:go_list_type = "quickfix"
+
+      lua << EOF
+        local on_attach = function(client, bufnr)
+          local bufopts = { noremap=true, silent=true, buffer=bufnr }
+          -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
+          if client.server_capabilities.documentFormattingProvider then
+            vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+              buffer = bufnr,
+              callback = function() vim.lsp.buf.format() end,
+            })
+          end
+        end
+
+        require'lspconfig'.rnix.setup { on_attach = on_attach }
+      EOF
     '';
-    extraPackages = with pkgs; [ ];
+    extraPackages = with pkgs; [ rnix-lsp ];
     plugins = with pkgs.vimPlugins; [
       dracula-vim
       editorconfig-nvim
       nvim-treesitter.withAllGrammars
+      nvim-lspconfig
       vim-go
     ];
 
