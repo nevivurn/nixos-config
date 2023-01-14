@@ -48,6 +48,9 @@ in
     pavucontrol
     thunderbird
     virt-manager
+
+    discord-ptb # stable is broken due to https://github.com/NixOS/nixpkgs/issues/171976
+    slack
   ];
 
   gtk.enable = true;
@@ -397,8 +400,9 @@ in
       ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --no-window --noninteractive";
       Environment =
         let passCfg = config.programs.password-store;
-        in lib.mapAttrsToList (k: v: "${k}=${v}") passCfg.settings ++
-          [ "PATH=${lib.makeBinPath [ passCfg.package ]}" ];
+        in
+        lib.mapAttrsToList (k: v: "${k}=${v}") passCfg.settings ++
+        [ "PATH=${lib.makeBinPath [ passCfg.package ]}" ];
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
@@ -419,6 +423,9 @@ in
   home.persistence."/persist/cache/home/nevivurn" = {
     directories = [
       ".cache"
+
+      ".config/discord"
+      ".config/Slack"
 
       # BUG: this is currently broken due to /persist/cache/home/nevivurn being
       # handled before /persist/home/nevivurn (alphabetical).
