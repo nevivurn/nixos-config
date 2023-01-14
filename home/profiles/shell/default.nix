@@ -127,15 +127,53 @@
         end
 
         require'lspconfig'.rnix.setup { on_attach = on_attach }
+        require'lspconfig'.terraformls.setup { on_attach = on_attach }
+
+      EOF
+
+      lua << EOF
+        local cmp = require'cmp'
+        cmp.setup {
+          snippet = {
+            expand = function(args)
+              vim.fn["vsnip#anonymous"](args.body)
+            end,
+          },
+          mapping = cmp.mapping.preset.insert({
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          }),
+          sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' },
+          }),
+        }
+
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
       EOF
     '';
-    extraPackages = with pkgs; [ rnix-lsp ];
+    extraPackages = with pkgs; [
+      rnix-lsp
+      terraform-ls
+    ];
     plugins = with pkgs.vimPlugins; [
       dracula-vim
-      editorconfig-nvim
+
       nvim-treesitter.withAllGrammars
       nvim-lspconfig
+
+      nvim-cmp
+      cmp-nvim-lsp
+
+      vim-vsnip
+      cmp-vsnip
+
       vim-go
+
+      editorconfig-nvim
     ];
 
     viAlias = true;
