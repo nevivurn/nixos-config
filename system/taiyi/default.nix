@@ -145,10 +145,11 @@
     };
     "/persist/cache" = {
       directories = [
-        "/var/lib/systemd/timers"
-        "/var/lib/bluetooth"
-        "/root/.cache"
         "/home/nevivurn/.local/share/containers" # cannot be fuse
+        "/root/.cache"
+        "/var/lib/bluetooth"
+        "/var/lib/systemd/timers"
+        "/var/log"
       ];
     };
   };
