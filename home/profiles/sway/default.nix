@@ -424,7 +424,7 @@ in
     directories = [
       ".cache"
 
-      ".config/discord"
+      ".config/discordptb"
       ".config/Slack"
 
       # BUG: this is currently broken due to /persist/cache/home/nevivurn being
