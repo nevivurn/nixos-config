@@ -67,7 +67,6 @@
     zfs rollback rpool/local/root@empty
   '';
 
-
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = { enable = true; editor = false; consoleMode = "0"; };
 
