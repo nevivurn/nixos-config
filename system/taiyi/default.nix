@@ -147,6 +147,7 @@
         "/home/nevivurn/.local/share/containers" # cannot be fuse
         "/root/.cache"
         "/var/lib/bluetooth"
+        "/var/lib/nixos"
         "/var/lib/systemd/timers"
         "/var/log"
       ];
