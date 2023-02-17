@@ -115,6 +115,7 @@
     dates = "monthly";
     persistent = true;
     randomizedDelaySec = "12h";
+    options = "--delete-older-than 30d";
   };
 
   ## Users
