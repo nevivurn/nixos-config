@@ -37,10 +37,7 @@ in
     yt-dlp
 
     (gnucash.overrideAttrs (prev: {
-      patches = prev.patches ++ [
-        ./gnucash/0004-no-exec-perl.patch
-        ./gnucash/0005-krw-no-fraction.patch
-      ];
+      patches = prev.patches ++ [ ./gnucash/0005-krw-no-fraction.patch ];
     }))
     liquidctl
     lm_sensors
@@ -112,6 +109,7 @@ in
 
   wayland.windowManager.sway = {
     enable = true;
+    package = with pkgs; sway.override { sway-unwrapped = sway-unwrapped.override { wlroots = enableDebugging wlroots; }; };
     systemdIntegration = true;
     config = {
       fonts = { names = [ "FiraCode Nerd Font" ]; size = 10.0; };
