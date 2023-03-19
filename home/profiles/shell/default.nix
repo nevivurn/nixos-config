@@ -208,6 +208,7 @@
     extraConfig = {
       init.defaultBranch = "master";
       core.pager = "less -+X";
+      core.quotePath = false;
     };
     ignores = [
       ".direnv"
