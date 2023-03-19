@@ -80,6 +80,18 @@
   networking.useNetworkd = true;
   services.resolved.dnssec = "false";
 
+  networking.wg-quick.interfaces."wg-home" = {
+    address = [ "fd5e:77c8:d76e:1::5/64" ];
+    privateKeyFile = "/persist/secrets/wg-home-priv";
+
+    peers = [{
+      allowedIPs = [ "fd5e:77c8:d76e:1::/64" ];
+      publicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
+      presharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
+      endpoint = "athebyne.lan:6666";
+    }];
+  };
+
   systemd.network.networks."40-home" = {
     matchConfig = {
       Name = "enp42s0";
