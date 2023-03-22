@@ -391,6 +391,17 @@ in
       WHEEL_RIGHT = "ignore";
     };
   };
+  programs.jellyfin-mpv-shim = {
+    enable = true;
+    config = {
+      mpv_ext = true;
+      enable_osc = false;
+      mpv_ext_path = "${config.programs.mpv.package}/bin/mpv";
+      client_uuid = "0566401a-b129-4075-a73b-319d8dfba8e2";
+      player_name = "taiyi";
+    };
+    useMpvConfig = true;
+  };
 
   systemd.user.services."protonmail-bridge" = {
     Unit.Description = "protonmail bridge client";
