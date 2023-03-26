@@ -31,6 +31,8 @@
     binutils
     gcc
     gnumake
+
+    man-pages
   ];
 
   home.sessionVariables = {

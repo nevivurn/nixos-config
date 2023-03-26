@@ -433,8 +433,8 @@ in
     directories = [
       ".cache"
 
-      ".config/discordptb"
       ".config/Slack"
+      ".config/discordptb"
 
       # BUG: this is currently broken due to /persist/cache/home/nevivurn being
       # handled before /persist/home/nevivurn (alphabetical).
