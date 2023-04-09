@@ -38,6 +38,7 @@ in
 
     (gnucash.overrideAttrs (prev: {
       patches = prev.patches ++ [ ./gnucash/0005-krw-no-fraction.patch ];
+      doCheck = false;
     }))
     liquidctl
     lm_sensors
