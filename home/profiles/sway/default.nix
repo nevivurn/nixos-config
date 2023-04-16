@@ -169,6 +169,11 @@ in
           "${mod}+Shift+p" = "exec ${passMenu} -o -t";
           "${mod}+Mod1+Shift+p" = "exec ${passMenu} -o -c";
 
+          "${mod}+Prior" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
+          "${mod}+Next" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
+          "${mod}+Home" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ 1";
+          "${mod}+End" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+
           "Control+Space" = "exec makoctl dismiss";
           "Control+Escape" = "exec makoctl restore";
         } //
