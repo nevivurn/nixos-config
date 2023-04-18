@@ -305,6 +305,12 @@ in
         settings.threshold_type = "percentage_avail";
         settings.low_threshold = 80;
       };
+      "volume pulse" = {
+        position = 4;
+        settings.format = "&#xf028; %volume";
+        settings.format_muted = "&#xf028; (%volume)";
+        settings.device = "pulse";
+      };
       "time" = {
         position = 9;
         settings.format = "%Y-%m-%d (%a) %H:%M:%S";
