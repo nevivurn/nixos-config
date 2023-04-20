@@ -58,6 +58,10 @@
         trim_trailing_whitespace = "true";
         insert_final_newline = "true";
       };
+      "*.tf" = {
+        indent_style = "space";
+        indent_size = 2;
+      };
       "*.nix" = {
         indent_style = "space";
         indent_size = 2;
@@ -95,6 +99,10 @@
       nnoremap <leader>q :cclose<CR>
       map <C-n> :cnext<CR>
       map <C-p> :cprev<CR>
+
+      " make by default
+      nnoremap <leader>b :make<CR>
+      set autowrite
 
       " unmap K
       map <S-k> <Nop>
