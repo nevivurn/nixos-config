@@ -40,6 +40,7 @@ in
       patches = prev.patches ++ [ ./gnucash/0005-krw-no-fraction.patch ];
       doCheck = false;
     }))
+    desmume
     liquidctl
     lm_sensors
     moonlight-qt
@@ -433,6 +434,7 @@ in
     directories = [
       ".config/Moonlight Game Streaming Project"
       ".config/dconf"
+      ".config/desmume"
       ".config/fcitx5"
       ".config/protonmail/bridge"
       ".local/share/gnucash"
