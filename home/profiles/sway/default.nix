@@ -436,7 +436,7 @@ in
       ".config/dconf"
       ".config/desmume"
       ".config/fcitx5"
-      ".config/protonmail/bridge"
+      ".config/protonmail/bridge" # .config/protonmail/bridge/cache -> .cache/protonmail/cache
       ".local/share/gnucash"
       ".mozilla"
       ".thunderbird"
@@ -450,16 +450,6 @@ in
 
       ".config/Slack"
       ".config/discordptb"
-
-      # BUG: this is currently broken due to /persist/cache/home/nevivurn being
-      # handled before /persist/home/nevivurn (alphabetical).
-      #
-      # For now, put the (~1Gi) protonmail cache in persistent non-cache
-      # storage. Waiting on some sort of ordering fix in impermanence,
-      # something like
-      # https://github.com/nix-community/impermanence/pull/97 or
-      # https://github.com/nix-community/impermanence/pull/109.
-      #".config/protonmail/bridge/cache"
     ];
   };
 }
