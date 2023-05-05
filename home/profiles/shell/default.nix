@@ -24,9 +24,9 @@
     mtr
     openssl
 
-    python3
-    go
+    go_1_20
     openjdk17
+    python3
 
     binutils
     gcc
