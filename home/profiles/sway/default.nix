@@ -49,6 +49,7 @@ in
     virt-manager
 
     discord-ptb # stable is broken due to https://github.com/NixOS/nixpkgs/issues/171976
+    protonmail-bridge
     slack
   ];
 
@@ -415,19 +416,6 @@ in
       player_name = "taiyi";
     };
     useMpvConfig = true;
-  };
-
-  systemd.user.services."protonmail-bridge" = {
-    Unit.Description = "protonmail bridge client";
-    Service = {
-      ExecStart = "${pkgs.protonmail-bridge}/bin/protonmail-bridge --no-window --noninteractive";
-      Environment =
-        let passCfg = config.programs.password-store;
-        in
-        lib.mapAttrsToList (k: v: "${k}=${v}") passCfg.settings ++
-        [ "PATH=${lib.makeBinPath [ passCfg.package ]}" ];
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
   };
 
   home.persistence."/persist/home/nevivurn" = {
