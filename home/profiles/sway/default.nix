@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, pkgsUnstable, ... }:
 
 let
   draculaColors = {
@@ -36,9 +36,8 @@ in
     mediainfo
     yt-dlp
 
-    (gnucash.overrideAttrs (prev: {
+    (pkgsUnstable.gnucash.overrideAttrs (prev: {
       patches = prev.patches ++ [ ./gnucash/0005-krw-no-fraction.patch ];
-      doCheck = false;
     }))
     desmume
     liquidctl
