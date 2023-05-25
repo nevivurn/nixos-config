@@ -124,7 +124,7 @@
 
   nix.gc = {
     automatic = true;
-    dates = "monthly";
+    dates = "weekly";
     persistent = true;
     randomizedDelaySec = "12h";
     options = "--delete-older-than 30d";
