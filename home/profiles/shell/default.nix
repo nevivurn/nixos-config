@@ -138,6 +138,7 @@
 
         require'lspconfig'.rnix.setup { on_attach = on_attach }
         require'lspconfig'.terraformls.setup { on_attach = on_attach }
+        require'lspconfig'.yamlls.setup { on_attach = on_attach }
 
       EOF
 
@@ -168,6 +169,7 @@
     extraPackages = with pkgs; [
       rnix-lsp
       terraform-ls
+      yaml-language-server
     ];
     plugins = with pkgs.vimPlugins; [
       dracula-vim
