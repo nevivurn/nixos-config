@@ -48,6 +48,7 @@ in
     virt-manager
 
     discord-ptb # stable is broken due to https://github.com/NixOS/nixpkgs/issues/171976
+    element-desktop
     protonmail-bridge
     slack
   ];
@@ -437,6 +438,7 @@ in
 
       ".config/Slack"
       ".config/discordptb"
+      ".config/Element"
     ];
   };
 }
