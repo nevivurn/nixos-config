@@ -136,7 +136,14 @@
           end
         end
 
-        require'lspconfig'.rnix.setup { on_attach = on_attach }
+        require'lspconfig'.nil_ls.setup {
+          on_attach = on_attach,
+          settings = {
+            ['nil'] = {
+              formatting = { command = { 'nixpkgs-fmt' } }
+            },
+          },
+        }
         require'lspconfig'.terraformls.setup { on_attach = on_attach }
         require'lspconfig'.yamlls.setup { on_attach = on_attach }
 
@@ -167,7 +174,8 @@
       EOF
     '';
     extraPackages = with pkgs; [
-      rnix-lsp
+      nil
+      nixpkgs-fmt
       terraform-ls
       yaml-language-server
     ];
