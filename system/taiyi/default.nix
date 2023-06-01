@@ -188,6 +188,15 @@
   };
   hardware.bluetooth.enable = true;
 
+  systemd.services."liquidctl" = {
+    description = "Configure pump speed curve";
+    script = ''
+      ${pkgs.liquidctl}/bin/liquidctl set pump speed 25 25 35 100
+    '';
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "multi-user.target" ];
+  };
+
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
