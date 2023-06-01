@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgsUnstable, ... }:
+{ lib, config, pkgs, ... }:
 
 let
   draculaColors = {
@@ -36,7 +36,7 @@ in
     mediainfo
     yt-dlp
 
-    (pkgsUnstable.gnucash.overrideAttrs (prev: {
+    (gnucash.overrideAttrs (prev: {
       patches = prev.patches ++ [ ./gnucash/0005-krw-no-fraction.patch ];
     }))
     desmume
@@ -113,7 +113,6 @@ in
 
   wayland.windowManager.sway = {
     enable = true;
-    package = with pkgs; sway.override { sway-unwrapped = sway-unwrapped.override { wlroots = enableDebugging wlroots; }; };
     systemdIntegration = true;
     config = {
       fonts = { names = [ "FiraCode Nerd Font" ]; size = 10.0; };
@@ -262,7 +261,9 @@ in
         urgent = { background = red; border = red; childBorder = red; indicator = red; text = fg; };
       };
       floating.border = 3;
+      floating.titlebar = false;
       window.border = 3;
+      window.titlebar = false;
       gaps.inner = 10;
     };
 
@@ -322,7 +323,7 @@ in
 
   programs.wofi = {
     enable = true;
-    config = {
+    settings = {
       insensitive = true;
       lines = 5;
       width = "15%";
@@ -366,7 +367,7 @@ in
     '';
   };
 
-  programs.mako = {
+  services.mako = {
     enable = true;
     layer = "overlay";
     font = "Noto Sans";

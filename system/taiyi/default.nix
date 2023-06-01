@@ -7,7 +7,7 @@
     nixos-hardware.common-gpu-amd
   ];
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.extra-experimental-features = [ "nix-command" "flakes" ];
@@ -78,6 +78,7 @@
 
   networking.useDHCP = false;
   networking.useNetworkd = true;
+  networking.nftables.enable = true;
   services.resolved.dnssec = "false";
 
   networking.wg-quick.interfaces."wg-home" = {
@@ -190,6 +191,5 @@
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
-    defaultNetwork.dnsname.enable = true;
   };
 }
