@@ -78,18 +78,19 @@ in
 
   ## Boot
 
+  # pci passthrough
   boot.kernelParams = [
-    "ip=dhcp" # initrd network (for ZFS unlock)
-
-    # pci passthrough
     "iommu=pt"
     "vfio-pci.ids=10de:2504,10de:228e"
     "video=efifb:off"
   ];
   boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback rpool/local/root@empty
   '';
+
+  boot.initrd.kernelModules = [ "r8169" ]; # needed for initrd network
   boot.initrd.network = {
     enable = true;
     ssh.enable = true;
@@ -158,13 +159,15 @@ in
 
   users.users.nevivurn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "libvirtd" ];
     passwordFile = "/persist/secrets/passwd-nevivurn";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJ1U9//g+W2pRNdBaiADCMhAWlfWt3Ha1zwfR+iwMoZ nevivurn@tianyi"
     ];
   };
+  home-manager.users.nevivurn = self.nixosModules.home-shell;
+
   users.users.media = {
     isSystemUser = true;
     home = "/data/media";

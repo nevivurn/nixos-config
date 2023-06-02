@@ -27,6 +27,7 @@
         graphical = import ./nixos/profiles/graphical;
 
         home-sway = import ./home/profiles/sway;
+        home-shell = import ./home/profiles/shell;
       };
 
       nixosConfigurations = {
