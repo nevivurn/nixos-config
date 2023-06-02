@@ -30,8 +30,6 @@ in
     ./services/wireguard.nix
   ];
 
-  system.stateVersion = "23.05";
-
   ## Filesystems
 
   #   Bay 1    Bay 2

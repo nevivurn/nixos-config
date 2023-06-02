@@ -15,6 +15,8 @@ with inputs;
     impermanence.nixosModules.impermanence
   ];
 
+  system.stateVersion = "23.05";
+
   nixpkgs.overlays = [ self.overlays.default ];
 
   home-manager.sharedModules = [

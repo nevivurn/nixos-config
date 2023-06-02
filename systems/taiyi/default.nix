@@ -18,8 +18,6 @@ in
     nixos-hardware.nixosModules.common-gpu-amd
   ];
 
-  system.stateVersion = "23.05";
-
   ## Filesystems
 
   fileSystems = {
