@@ -13,7 +13,7 @@
     , nixos-hardware
     , home-manager
     , impermanence
-    }:
+    } @ inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -21,38 +21,25 @@
     {
       formatter.${system} = pkgs.nixpkgs-fmt;
 
-      homeConfigurations = {
-        shell = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./home/profiles/shell
-            {
-              home.username = "nevivurn";
-              home.homeDirectory = "/home/nevivurn";
-            }
-          ];
-        };
+      overlays.default = import ./pkgs;
+      nixosModules = {
+        default = import ./nixos/modules;
+        graphical = import ./nixos/profiles/graphical;
+
+        home-sway = import ./home/profiles/sway;
       };
 
       nixosConfigurations = {
         taiyi = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            nixos-hardware = nixos-hardware.nixosModules;
-          };
-          modules = [
-            ./system/taiyi
-            home-manager.nixosModules.home-manager
-            impermanence.nixosModules.impermanence
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.nevivurn.imports = [
-                ./home/profiles/sway
-                impermanence.nixosModules.home-manager.impermanence
-              ];
-            }
-          ];
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/taiyi ];
+        };
+
+        athebyne = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/athebyne ];
         };
       };
     };

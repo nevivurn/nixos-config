@@ -1,0 +1,14 @@
+diff --git a/jellyfin_mpv_shim/conf.py b/jellyfin_mpv_shim/conf.py
+index a4d7d58..941006c 100644
+--- a/jellyfin_mpv_shim/conf.py
++++ b/jellyfin_mpv_shim/conf.py
+@@ -182,9 +182,6 @@ class Settings(SettingsBase):
+                         )
+ 
+                 log.info("Loaded settings from json: %s" % path)
+-                if input_params < len(self.__fields__):
+-                    log.info("Saving back due to schema change.")
+-                    self.save()
+             except Exception as e:
+                 log.error("Error loading settings from json: %s" % e)
+                 fh.close()

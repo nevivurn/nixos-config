@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+shopt -s nullglob globstar
+
+prefix=${PASSWORD_STORE_DIR-~/.password-store}
+password_files=( "$prefix"/**/*.gpg )
+password_files=( "${password_files[@]#"$prefix"/}" )
+password_files=( "${password_files[@]%.gpg}" )
+
+dmenu=${PASSMENU_DMENU:-dmenu}
+xdotool=${PASSMENU_XDOTOOL:-xdotool type --clearmodifiers --file -}
+
+otp=0
+if [[ $1 == "--otp" ]]; then
+	otp=1
+	shift
+fi
+
+cmd="show"
+mode="copy"
+while getopts oct arg; do
+	case "$arg" in
+		o)
+			cmd="otp code"
+			;;
+		c)
+			mode="copy"
+			;;
+		t)
+			mode="type"
+			;;
+		*)
+			exit 1
+	esac
+done
+
+password=$(printf '%s\n' "${password_files[@]}" | $dmenu)
+[[ -n $password ]] || exit
+
+case "$mode" in
+	copy)
+		pass $cmd --clip "$password"
+		;;
+	type)
+		pass $cmd "$password" | head -n1 | tr -d '\n' | $xdotool
+		;;
+esac

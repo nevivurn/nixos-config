@@ -36,9 +36,7 @@ in
     mediainfo
     yt-dlp
 
-    (gnucash.overrideAttrs (prev: {
-      patches = prev.patches ++ [ ./gnucash/0005-krw-no-fraction.patch ];
-    }))
+    gnucash
     desmume
     liquidctl
     lm_sensors
