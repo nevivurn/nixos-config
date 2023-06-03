@@ -20,6 +20,7 @@ with inputs;
   nixpkgs.overlays = [ self.overlays.default ];
 
   home-manager.sharedModules = [
+    self.nixosModules.home-default
     impermanence.nixosModules.home-manager.impermanence
   ];
 

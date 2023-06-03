@@ -26,6 +26,7 @@
         default = import ./nixos/modules;
         graphical = import ./nixos/profiles/graphical;
 
+        home-default = import ./home/modules;
         home-sway = import ./home/profiles/sway;
         home-shell = import ./home/profiles/shell;
       };
