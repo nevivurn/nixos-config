@@ -66,7 +66,7 @@ in
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
-  environment.persistence."/persist" = {
-    directories = [ "/var/lib/caddy" ];
+  environment.persistence = {
+    "/persist".directories = [ "/var/lib/caddy" ];
   };
 }

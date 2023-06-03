@@ -130,21 +130,17 @@ in
   ## Persistence
 
   environment.persistence = {
-    "/persist" = {
-      directories = [
-        "/etc/nixos"
-      ];
-    };
-    "/persist/cache" = {
-      directories = [
-        "/home/nevivurn/.local/share/containers" # cannot be fuse
-        "/root/.cache"
-        "/var/lib/bluetooth"
-        "/var/lib/nixos"
-        "/var/lib/systemd/timers"
-        "/var/log"
-      ];
-    };
+    "/persist".directories = [
+      "/etc/nixos"
+    ];
+    "/persist/cache".directories = [
+      "/home/nevivurn/.local/share/containers" # cannot be fuse
+      "/root/.cache"
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd/timers"
+      "/var/log"
+    ];
   };
 
   ## Other hardware-specific configuration

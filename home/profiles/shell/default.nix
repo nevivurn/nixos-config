@@ -1,10 +1,6 @@
 { lib, config, pkgs, ... }:
 
 {
-  imports = [ ../../modules ];
-
-  home.stateVersion = "23.05";
-
   home.packages = with pkgs; [
     file
     pv
@@ -24,12 +20,9 @@
     mtr
     openssl
 
-    go_1_20
-    openjdk17
     python3
 
     binutils
-    gcc
     gnumake
 
     man-pages
@@ -241,5 +234,18 @@
     ];
     userName = "Yongun Seong";
     userEmail = "nevivurn@nevi.dev";
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "athebyne-boot.lan" = { user = "root"; };
+      "*.snucse.org" = { user = "bacchus"; };
+      "cse.snu.ac.kr" = { user = "bacchus"; };
+      "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
+        { user = "sherry"; };
+      "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
+        { user = "yseong"; };
+    };
   };
 }

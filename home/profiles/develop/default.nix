@@ -43,18 +43,6 @@
     sshKeys = [ "9478FDDFE4E99B8BD79B4A0390432CE2B7E9F0B6" ];
   };
 
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "*.snucse.org" = { user = "bacchus"; };
-      "cse.snu.ac.kr" = { user = "bacchus"; };
-      "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
-        { user = "sherry"; };
-      "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
-        { user = "yseong"; };
-    };
-  };
-
   programs.git.extraConfig = {
     gpg.format = "ssh";
     gpg.ssh.defaultKeyCommand = "ssh-add -L";

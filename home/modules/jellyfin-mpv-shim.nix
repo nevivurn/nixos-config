@@ -11,9 +11,7 @@ in
     enable = mkEnableOption "jellyfin-mpv-shim";
     package = mkOption {
       type = with types; package;
-      default = pkgs.jellyfin-mpv-shim.overrideAttrs (_: {
-        patches = [ ./jellyfin-mpv-shim/0001-no-save-config.patch ];
-      });
+      default = pkgs.jellyfin-mpv-shim;
     };
     config = mkOption {
       type = with types; nullOr jsonFormat.type;
