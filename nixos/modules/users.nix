@@ -1,4 +1,6 @@
 # generic user-related settings
+{ config, ... }:
+
 {
   users.mutableUsers = false;
 
@@ -7,4 +9,6 @@
   security.sudo.wheelNeedsPassword = false;
 
   security.polkit.enable = true;
+
+  environment.sessionVariables.TZ = config.time.timeZone;
 }
