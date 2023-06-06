@@ -412,8 +412,9 @@ in
       ".config/dconf"
       ".config/desmume"
       ".config/fcitx5"
-      ".config/protonmail/bridge" # .config/protonmail/bridge/cache -> .cache/protonmail/cache
+      ".config/protonmail"
       ".local/share/gnucash"
+      ".local/share/protonmail"
       ".mozilla"
       ".thunderbird"
       "dl"
