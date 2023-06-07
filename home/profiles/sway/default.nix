@@ -96,9 +96,6 @@ in
       background_opacity = "0.8";
     };
   };
-  home.shellAliases = {
-    ssh = "kitty +kitten ssh";
-  };
 
   i18n.inputMethod = {
     enabled = "fcitx5";
