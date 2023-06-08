@@ -11,8 +11,13 @@
     scrapeConfigs = [{
       job_name = "node_exporter";
       static_configs = [{
-        targets = let node = config.services.prometheus.exporters.node; in
-          [ "${toString node.listenAddress}:${toString node.port}" ];
+        targets =
+          (
+            let self = config.services.prometheus.exporters.node;
+            in
+            [ "${toString self.listenAddress}:${toString self.port}" ]
+          )
+          ++ [ "192.168.1.2:9100" ];
       }];
     }];
 
@@ -67,4 +72,3 @@
     ];
   };
 }
-
