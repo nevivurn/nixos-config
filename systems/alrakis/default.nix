@@ -89,6 +89,12 @@ in
     };
   };
 
+  services.resolved.dnssec = "false";
+  # services.resolved.fallbackDns does not support empty lists
+  environment.etc."systemd/resolved.conf".text = lib.mkAfter ''
+    FallbackDNS=
+  '';
+
   ## Basic config
 
   time.timeZone = "Asia/Seoul";

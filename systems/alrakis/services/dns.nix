@@ -55,12 +55,6 @@
     };
   };
 
-  services.resolved.dnssec = "false";
-  # services.resolved.fallbackDns does not support empty lists
-  environment.etc."systemd/resolved.conf".text = lib.mkAfter ''
-    FallbackDNS=
-  '';
-
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
