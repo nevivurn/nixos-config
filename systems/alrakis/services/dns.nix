@@ -54,6 +54,10 @@
       bogus-priv = true;
     };
   };
+  systemd.services.dnsmasq = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+  };
 
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
