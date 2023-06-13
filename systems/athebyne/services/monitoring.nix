@@ -8,20 +8,31 @@
     listenAddress = "localhost";
     retentionTime = "30d";
 
-    scrapeConfigs = [{
-      job_name = "node_exporter";
-      static_configs = [{
-        targets =
-          (
-            let self = config.services.prometheus.exporters.node;
-            in
-            [ "${toString self.listenAddress}:${toString self.port}" ]
-          )
-          ++ [ "192.168.1.2:9100" ];
-      }];
-    }];
+    scrapeConfigs =
+      let exporters = config.services.prometheus.exporters;
+      in [
+        {
+          job_name = "node_exporter";
+          static_configs = [{
+            targets = [
+              "${toString exporters.node.listenAddress}:${toString exporters.node.port}"
+              "192.168.1.2:9100"
+            ];
+          }];
+        }
+        {
+          job_name = "smartctl";
+          static_configs = [{
+            targets = [ "${toString exporters.smartctl.listenAddress}:${toString exporters.smartctl.port}" ];
+          }];
+        }
+      ];
 
     exporters.node = {
+      enable = true;
+      listenAddress = "localhost";
+    };
+    exporters.smartctl = {
       enable = true;
       listenAddress = "localhost";
     };
