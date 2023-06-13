@@ -49,6 +49,8 @@ in
     element-desktop
     protonmail-bridge
     slack
+
+    (mcomix.override { unrarSupport = true; })
   ];
 
   gtk.enable = true;
