@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # unbound as a simple, validating, recursive DNS server
@@ -42,7 +42,7 @@
             owner = "StevenBlack";
             repo = "hosts";
             rev = "3.13.3";
-            hash = "sha256-DKj2lxgdfkrWR/hNuP4kzqdcSEsqOKP9Mo7hEBxHp/o=";
+            hash = "sha256-gr/ga/c1O5888cFzHQvK1Emd7zeh0LuW+eGaZnycV6U=";
           };
         in
         [ "${hosts}/hosts" ];
