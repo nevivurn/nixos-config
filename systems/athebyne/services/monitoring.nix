@@ -35,6 +35,16 @@
     exporters.smartctl = {
       enable = true;
       listenAddress = "localhost";
+      devices = [
+        "/dev/sda"
+        "/dev/sdb"
+        "/dev/sdc"
+        "/dev/sdd"
+        "/dev/sde"
+        "/dev/sdf"
+        "/dev/sdg"
+        "/dev/sdh"
+      ];
     };
   };
 
