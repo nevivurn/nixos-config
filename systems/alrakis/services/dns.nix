@@ -32,7 +32,6 @@
       # public names are cached in unbound and client-side
       cache-size = 0;
 
-      #no-hosts = true;
       no-resolv = true;
       expand-hosts = true;
       localise-queries = true;
@@ -42,7 +41,7 @@
           hosts = pkgs.fetchFromGitHub {
             owner = "StevenBlack";
             repo = "hosts";
-            rev = "3.12.38";
+            rev = "3.13.3";
             hash = "sha256-DKj2lxgdfkrWR/hNuP4kzqdcSEsqOKP9Mo7hEBxHp/o=";
           };
         in
