@@ -138,6 +138,7 @@
           },
         }
         require'lspconfig'.terraformls.setup { on_attach = on_attach }
+        require'lspconfig'.tsserver.setup { on_attach = on_attach }
         require'lspconfig'.yamlls.setup {
           on_attach = on_attach,
           settings = {
@@ -174,6 +175,7 @@
     extraPackages = with pkgs; [
       nil
       nixpkgs-fmt
+      nodePackages.typescript-language-server
       terraform-ls
       yaml-language-server
     ];
