@@ -1,11 +1,10 @@
-{ lib, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
     file
     pv
     tree
-    zbar
     psmisc
 
     unixtools.xxd
@@ -24,13 +23,7 @@
 
     binutils
     gnumake
-
-    man-pages
   ];
-
-  home.sessionVariables = {
-    EDITOR = "vim";
-  };
 
   home.shellAliases = {
     ls = "ls --color=tty";
@@ -51,16 +44,9 @@
         trim_trailing_whitespace = "true";
         insert_final_newline = "true";
       };
-      "*.tf" = {
-        indent_style = "space";
-        indent_size = 2;
-      };
       "*.nix" = {
         indent_style = "space";
         indent_size = 2;
-      };
-      "*.md" = {
-        max_line_length = 80;
       };
     };
   };
@@ -100,26 +86,9 @@
       " unmap K
       map <S-k> <Nop>
 
-      " go settings
-      function! s:build_go_files()
-        let l:file = expand('%')
-        if l:file =~# '^\f\+_test\.go$'
-          call go#test#Test(0, 1)
-        elseif l:file =~# '^\f\+\.go$'
-          call go#cmd#Build(0)
-        endif
-      endfunction
-
-      autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-      autocmd FileType go nmap <leader>t <Plug>(go-test)
-      autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
-      autocmd FileType go nmap <leader>a <Plug>(go-alternate-edit)
-      let g:go_list_type = "quickfix"
-
       lua << EOF
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
-          -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
           if client.server_capabilities.documentFormattingProvider then
             vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -137,15 +106,6 @@
             },
           },
         }
-        require'lspconfig'.terraformls.setup { on_attach = on_attach }
-        require'lspconfig'.tsserver.setup { on_attach = on_attach }
-        require'lspconfig'.yamlls.setup {
-          on_attach = on_attach,
-          settings = {
-            yaml = { keyOrdering = false }
-          },
-        }
-
       EOF
 
       lua << EOF
@@ -175,14 +135,11 @@
     extraPackages = with pkgs; [
       nil
       nixpkgs-fmt
-      nodePackages.typescript-language-server
-      terraform-ls
-      yaml-language-server
     ];
     plugins = with pkgs.vimPlugins; [
       dracula-vim
 
-      nvim-treesitter.withAllGrammars
+      (nvim-treesitter.withPlugins (p: with p; [ nix ]))
       nvim-lspconfig
 
       nvim-cmp
@@ -191,14 +148,13 @@
       vim-vsnip
       cmp-vsnip
 
-      vim-go
-
       editorconfig-nvim
     ];
 
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    defaultEditor = true;
   };
 
   programs.bash.enable = true;
