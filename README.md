@@ -21,5 +21,7 @@ Personal Nix(OS) configuration.
     └── <host>
         ├── default.nix # root config
         ├── services    # per-service config
-        └── hardware-configuration.nix # generated with nixos-generate-config --no-filesystems --show-hardware-config  2>/dev/null
+        ├── hardware-configuration.nix # generated with nixos-generate-config --no-filesystems --show-hardware-config  2>/dev/null
+        └── home        # per-system home config
+            └── default.nix # root config
 ```

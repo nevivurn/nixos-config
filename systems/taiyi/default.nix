@@ -131,7 +131,7 @@ in
     extraGroups = [ "wheel" "video" ];
     passwordFile = "/persist/secrets/passwd-nevivurn";
   };
-  home-manager.users.nevivurn = self.nixosModules.home-sway;
+  home-manager.users.nevivurn = import ./home;
 
   ## Persistence
 
