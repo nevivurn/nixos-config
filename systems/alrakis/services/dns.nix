@@ -41,8 +41,8 @@
           hosts = pkgs.fetchFromGitHub {
             owner = "StevenBlack";
             repo = "hosts";
-            rev = "3.13.3";
-            hash = "sha256-gr/ga/c1O5888cFzHQvK1Emd7zeh0LuW+eGaZnycV6U=";
+            rev = "3.13.6";
+            hash = "sha256-Bug1uzluz3H5fZdJVbjAE95+O3kE4KR49kwplug/Ls0=";
           };
         in
         [ "${hosts}/hosts" ];
