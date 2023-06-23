@@ -16,6 +16,8 @@ in
 
     nixos-hardware.nixosModules.common-cpu-amd-pstate
     nixos-hardware.nixosModules.common-gpu-amd
+
+    ./services/backups.nix
   ];
 
   ## Filesystems
