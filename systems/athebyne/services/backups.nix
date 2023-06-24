@@ -42,10 +42,10 @@
 
     checkOpts = [ "--with-cache" ];
     pruneOpts = [
-      "--keep-daily 7"
-      "--keep-weekly 4"
-      "--keep-monthly 12"
-      "--keep-yearly 5"
+      "--keep-daily 30"
+      "--keep-weekly 52"
+      "--keep-monthly 48"
+      "--keep-yearly 10"
     ];
 
     timerConfig = {
