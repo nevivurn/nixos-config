@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 
 with inputs;
 
@@ -17,7 +17,15 @@ with inputs;
 
   system.stateVersion = "23.05";
 
-  nixpkgs.overlays = [ self.overlays.default ];
+  nixpkgs.overlays = [
+    self.overlays.default
+    (final: prev: {
+      pkgsUnstable = import inputs.nixpkgs-unstable {
+        inherit (pkgs) system config;
+        overlays = [ self.overlays.default ];
+      };
+    })
+  ];
 
   home-manager.sharedModules = [
     self.nixosModules.home-default
