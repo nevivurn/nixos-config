@@ -30,6 +30,16 @@
         home-shell = import ./home/profiles/shell;
       };
 
+      apps.${system} = {
+        nvd-diff = {
+          type = "app";
+          program = builtins.toString (pkgs.writeScript "" ''
+            nixos-rebuild build
+            ${pkgs.nvd}/bin/nvd diff /run/current-system ./result
+          '');
+        };
+      };
+
       nixosConfigurations = {
         alrakis = nixpkgs.lib.nixosSystem {
           inherit system;
