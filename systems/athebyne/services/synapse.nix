@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+
 {
   services.matrix-synapse = {
     enable = true;
@@ -57,6 +58,18 @@
       reverse_proxy /_synapse/client/* localhost:8008
     '';
   };
+
+  services.prometheus.scrapeConfigs = [{
+    job_name = "matrix-synapse";
+    static_configs =
+      let
+        cfg = config.services.matrix-synapse;
+        port = (builtins.elemAt (builtins.filter (l: l.type == "metrics") cfg.settings.listeners) 0).port;
+      in
+      [{
+        targets = [ "localhost:${builtins.toString port}" ];
+      }];
+  }];
 
   environment.persistence = {
     "/persist".directories = [ "/var/lib/matrix-synapse" ];
