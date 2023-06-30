@@ -38,7 +38,7 @@ in
     mediainfo
     yt-dlp
 
-    pkgsUnstable.gnucash
+    gnucash
     desmume
     liquidctl
     lm_sensors
