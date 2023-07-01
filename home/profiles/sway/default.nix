@@ -47,7 +47,7 @@ in
     thunderbird
     virt-manager
 
-    discord-ptb # stable is broken due to https://github.com/NixOS/nixpkgs/issues/171976
+    discord
     element-desktop
     protonmail-bridge
     slack
