@@ -40,6 +40,9 @@
         };
       };
 
+      checks.${system} =
+        builtins.mapAttrs (k: v: v.config.system.build.toplevel) self.nixosConfigurations;
+
       nixosConfigurations = {
         alrakis = nixpkgs.lib.nixosSystem {
           inherit system;
