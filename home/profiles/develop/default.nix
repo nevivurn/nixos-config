@@ -55,6 +55,7 @@
         end
 
         require'lspconfig'.terraformls.setup { on_attach = on_attach }
+        require'lspconfig'.texlab.setup { on_attach = on_attach }
         require'lspconfig'.tsserver.setup { on_attach = on_attach }
         require'lspconfig'.yamlls.setup {
           on_attach = on_attach,
@@ -67,6 +68,7 @@
     extraPackages = with pkgs; [
       nodePackages.typescript-language-server
       terraform-ls
+      texlab
       yaml-language-server
     ];
     plugins = with pkgs.vimPlugins ;[
