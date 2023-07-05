@@ -19,8 +19,6 @@ in
 {
   imports = [ ../develop ];
 
-  home.sessionVariables.NIXOS_OZONE_WL = 1;
-
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -431,8 +429,10 @@ in
       ".cache"
 
       ".config/Slack"
-      ".config/discordptb"
+      ".config/discord"
       ".config/Element"
+
+      ".local/state/wireplumber"
     ];
   };
 }
