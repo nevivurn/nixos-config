@@ -45,6 +45,8 @@ in
     thunderbird
     virt-manager
 
+    tor-browser-bundle-bin
+
     discord
     # element breaks raendomly with latest electron
     # https://github.com/flathub/im.riot.Riot/issues/376
