@@ -44,6 +44,7 @@
         "/dev/sdf"
         "/dev/sdg"
         "/dev/sdh"
+        "/dev/sdi"
       ];
     };
   };
