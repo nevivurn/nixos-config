@@ -18,8 +18,7 @@ let
   ];
   dlen = builtins.length disks;
 
-  mod = a: n: if a >= n then mod (a - n) n else a;
-  modHr = a: mod a 24;
+  modHr = a: lib.mod a 24;
 
   padz = n: s: if (builtins.stringLength s) >= n then s else padz n ("0" + s);
   pad2n = n: padz 2 (builtins.toString n);
