@@ -52,7 +52,7 @@ in
     # https://github.com/flathub/im.riot.Riot/issues/376
     # https://github.com/NixOS/nixpkgs/issues/238416
     # https://github.com/vector-im/element-desktop/issues/1026
-    element-desktop
+    (element-desktop.override { electron = pkgs.electron_24; })
     protonmail-bridge
     slack
 
