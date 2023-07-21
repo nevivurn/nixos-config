@@ -10,7 +10,7 @@ final: prev: {
   hosts = final.fetchFromGitHub {
     owner = "StevenBlack";
     repo = "hosts";
-    rev = "3.13.9";
-    hash = "sha256-4CXI2vu/zBQeSzLKelaey/5WEjfroRs7LP9BvZ4CsTQ=";
+    rev = "3.13.13";
+    hash = "sha256-wKVdNG3Uj1CdP35GDmRi7mIAGRJCWDzgwxC5Vd77XrA=";
   };
 }
