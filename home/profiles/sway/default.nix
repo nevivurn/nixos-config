@@ -55,6 +55,7 @@ in
     (element-desktop.override { electron = pkgs.electron_24; })
     protonmail-bridge
     slack
+    weechat
 
     (mcomix.override { unrarSupport = true; })
   ];
@@ -418,8 +419,10 @@ in
       ".config/desmume"
       ".config/fcitx5"
       ".config/protonmail"
+      ".config/weechat"
       ".local/share/gnucash"
       ".local/share/protonmail"
+      ".local/share/weechat"
       ".mozilla"
       ".thunderbird"
       "dl"
