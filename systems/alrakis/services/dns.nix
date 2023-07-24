@@ -21,6 +21,7 @@
       server = [
         "127.0.0.1#5353"
         "/lan/"
+        "/athebyne.nevi.network/"
       ];
       listen-address = [
         "127.0.0.1"
