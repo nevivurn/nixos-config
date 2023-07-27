@@ -1,7 +1,10 @@
 final: prev: {
   # Remove fractional units for KRW
   gnucash = prev.gnucash.overrideAttrs (prev: {
-    patches = prev.patches ++ [ ./gnucash/krw-no-fraction.patch ];
+    patches = prev.patches ++ [
+      ./gnucash/krw-no-fraction.patch
+      ./gnucash/extra-quote-sources.patch
+    ];
   });
 
   # custom passmenu allowing generic tools for dmenu / xdotool alternatives
