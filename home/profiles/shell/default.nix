@@ -241,6 +241,7 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      "alruba.lan" = { user = "root"; };
       "athebyne-boot.lan" = { user = "root"; };
       "*.snucse.org" = { user = "bacchus"; };
       "cse.snu.ac.kr" = { user = "bacchus"; };
