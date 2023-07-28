@@ -26,7 +26,7 @@ in
     noto-fonts-cjk-sans
     noto-fonts-emoji
 
-    (pkgs.callPackage ./passmenu { pass = config.programs.password-store.package; })
+    (passmenu.override { pass = config.programs.password-store.package; })
     sway-contrib.grimshot
     wl-clipboard
     xdg-utils
@@ -48,7 +48,7 @@ in
     tor-browser-bundle-bin
 
     discord
-    # element breaks raendomly with latest electron
+    # element breaks randomly with latest electron
     # https://github.com/flathub/im.riot.Riot/issues/376
     # https://github.com/NixOS/nixpkgs/issues/238416
     # https://github.com/vector-im/element-desktop/issues/1026
@@ -209,7 +209,6 @@ in
 
       modes =
         let
-          mod = "Mod4";
           left = "h";
           right = "l";
           up = "k";
