@@ -117,18 +117,16 @@
     plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
   '';
 
-  home.persistence."/persist/cache/home/nevivurn" = {
+  home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
       ".terraform.d"
     ];
   };
-  home.persistence."/persist/home/nevivurn" = {
+  home.persistence."/persist${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
       ".aws"
-      ".gnupg"
-      ".local/share/password-store"
       ".ssh"
       "code"
     ];

@@ -293,26 +293,20 @@ in
         settings.max_threshold = 101;
         settings.separator = false;
       };
-      "cpu_temperature cpu" = {
-        position = 1;
-        settings.format = "%degrees&#x2103;";
-        settings.max_threshold = 85;
-        settings.path = "/sys/class/hwmon/hwmon2/temp1_input";
-      };
       "memory" = {
-        position = 2;
+        position = 1;
         settings.format = "&#xf2db; %percentage_used";
         settings.threshold_degraded = "20%";
         settings.threshold_critical = "10%";
       };
       "disk /" = {
-        position = 3;
+        position = 2;
         settings.format = "&#xf1c0; %percentage_used";
         settings.threshold_type = "percentage_avail";
         settings.low_threshold = 80;
       };
       "volume pulse" = {
-        position = 4;
+        position = 3;
         settings.format = "&#xf028; %volume";
         settings.format_muted = "&#xf028; (%volume)";
         settings.device = "pulse";
@@ -411,7 +405,7 @@ in
     };
   };
 
-  home.persistence."/persist/home/nevivurn" = {
+  home.persistence."/persist${config.home.homeDirectory}" = {
     directories = [
       ".config/Moonlight Game Streaming Project"
       ".config/dconf"
@@ -419,7 +413,9 @@ in
       ".config/fcitx5"
       ".config/protonmail"
       ".config/weechat"
+      ".gnupg"
       ".local/share/gnucash"
+      ".local/share/password-store"
       ".local/share/protonmail"
       ".local/share/weechat"
       ".mozilla"
@@ -428,10 +424,8 @@ in
       "pics"
     ];
   };
-  home.persistence."/persist/cache/home/nevivurn" = {
+  home.persistence."/persist/cache${config.home.homeDirectory}" = {
     directories = [
-      ".cache"
-
       ".config/Slack"
       ".config/discord"
       ".config/Element"

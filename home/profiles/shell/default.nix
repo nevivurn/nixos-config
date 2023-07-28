@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -197,14 +197,21 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
-      "alruba.lan" = { user = "root"; };
-      "athebyne-boot.lan" = { user = "root"; };
-      "*.snucse.org" = { user = "bacchus"; };
-      "cse.snu.ac.kr" = { user = "bacchus"; };
+      "alruba.lan".user = "root";
+      "athebyne-boot.lan".user = "root";
+
+      "cse.snu.ac.kr".user = "bacchus";
+      "*.snucse.org".user = "bacchus";
       "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
         { user = "sherry"; };
       "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
         { user = "yseong"; };
     };
+  };
+
+  home.persistence."/persist/cache${config.home.homeDirectory}" = {
+    directories = [
+      ".cache"
+    ];
   };
 }
