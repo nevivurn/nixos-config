@@ -8,7 +8,7 @@ lib.mkMerge [
       dates = "weekly";
       persistent = true;
       randomizedDelaySec = "12h";
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 7d";
     };
 
     nix.optimise = {
