@@ -209,7 +209,11 @@
     };
   };
 
+  home.persistence."/persist${config.home.homeDirectory}" = {
+    allowOther = true;
+  };
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
+    allowOther = true;
     directories = [
       ".cache"
     ];
