@@ -24,15 +24,11 @@
       nixosModules = {
         default = import ./nixos/modules;
         graphical = import ./nixos/profiles/graphical;
-
-        # TODO: remove
-        home-default = import ./home/modules;
-        home-sway = import ./home/profiles/sway;
-        home-shell = import ./home/profiles/shell;
       };
       homeConfigurations = {
         default = import ./home/modules;
         sway = import ./home/profiles/sway;
+        develop = import ./home/profiles/develop;
         shell = import ./home/profiles/shell;
       };
 

@@ -4,7 +4,7 @@ with inputs;
 
 {
   imports = [
-    self.nixosModules.home-develop
+    self.homeConfigurations.develop
   ];
 }
 
