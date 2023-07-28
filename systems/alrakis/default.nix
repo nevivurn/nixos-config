@@ -110,7 +110,7 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJ1U9//g+W2pRNdBaiADCMhAWlfWt3Ha1zwfR+iwMoZ nevivurn@tianyi"
     ];
   };
-  home-manager.users.nevivurn = self.nixosModules.home-shell;
+  home-manager.users.nevivurn = import ./home;
 
   ## Persistence
 
