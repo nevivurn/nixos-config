@@ -6,11 +6,15 @@
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
+
+    nix-update.url = "github:Mic92/nix-update/0.19.0";
+    nix-update.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
     { self
     , nixpkgs
+    , nix-update
     , ...
     } @ inputs:
     let
@@ -37,10 +41,24 @@
       apps.${system} = {
         nvd-diff = {
           type = "app";
-          program = builtins.toString (pkgs.writeScript "" ''
+          program = builtins.toString (pkgs.writeScript "nvd-diff" ''
             nixos-rebuild build
             ${pkgs.nvd}/bin/nvd diff /run/current-system ./result
           '');
+        };
+
+        nix-update = {
+          type = "app";
+          program =
+            let
+              updater = nix-update.packages.${system}.nix-update;
+              upPkgs = builtins.attrNames (pkgs.lib.filterAttrs (_: p: p?version) self.packages.${system});
+            in
+            builtins.toString (pkgs.writeScript "nix-update" ''
+              for pkg in ${builtins.concatStringsSep " " upPkgs}; do
+                ${updater}/bin/nix-update -F --commit ''${pkg}
+              done
+            '');
         };
       };
 
