@@ -58,6 +58,8 @@ in
     weechat
 
     (mcomix.override { unrarSupport = true; })
+
+    steam-run
   ];
 
   gtk.enable = true;
