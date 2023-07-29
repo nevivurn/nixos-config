@@ -394,8 +394,8 @@ in
       osd-font-size = 20;
       osd-border-size = 1;
 
-      alang = [ "ja" "jpn" ];
-      slang = [ "enm" "eng" "en" ];
+      alang = "ja,jpn";
+      slang = "enm,eng,en";
     };
     bindings = {
       WHEEL_UP = "ignore";
