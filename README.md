@@ -15,7 +15,8 @@ Personal Nix(OS) configuration.
 │       ├── develop
 │       └── graphical
 ├── pkgs                # custom packages
-│   ├── default.nix     # root overlay
+│   ├── default.nix     # custom packages
+│   ├── overlay.nix     # overlay including custom packages and overridden packages
 │   └── <package>
 └── systems             # per-system config
     └── <host>

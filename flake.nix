@@ -20,7 +20,9 @@
     {
       formatter.${system} = pkgs.nixpkgs-fmt;
 
-      overlays.default = import ./pkgs;
+      packages.${system} = import ./pkgs { inherit pkgs; };
+      overlays.default = import ./pkgs/overlay.nix;
+
       nixosModules = {
         default = import ./nixos/modules;
         graphical = import ./nixos/profiles/graphical;
