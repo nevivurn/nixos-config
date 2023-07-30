@@ -118,11 +118,14 @@
   '';
 
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
+    allowOther = true;
     directories = [
+      ".cache"
       ".terraform.d"
     ];
   };
   home.persistence."/persist${config.home.homeDirectory}" = {
+    allowOther = true;
     directories = [
       ".aws"
       ".ssh"

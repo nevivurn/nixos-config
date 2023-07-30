@@ -12,11 +12,7 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , nix-update
-    , ...
-    } @ inputs:
+    { self, nixpkgs, home-manager, nix-update, ... } @ inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -82,6 +78,24 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ ./systems/athebyne ];
+        };
+
+        iso = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ({ modulesPath, ... }: {
+              imports = [
+                (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+                home-manager.nixosModules.home-manager
+              ];
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                sharedModules = [ self.homeConfigurations.default ];
+                users.nixos = self.homeConfigurations.shell;
+              };
+            })
+          ];
         };
       };
     };
