@@ -52,7 +52,7 @@
           program =
             let
               updater = nix-update.packages.${system}.nix-update;
-              upPkgs = builtins.attrNames (pkgs.lib.filterAttrs (_: p: p?version) self.packages.${system});
+              upPkgs = builtins.attrNames (nixpkgs.lib.filterAttrs (_: p: p?version) self.packages.${system});
             in
             builtins.toString (pkgs.writeScript "nix-update" ''
               for pkg in ${builtins.concatStringsSep " " upPkgs}; do
