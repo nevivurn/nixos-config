@@ -80,6 +80,14 @@
           modules = [ ./systems/athebyne ];
         };
 
+        funi = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs.inputs = {
+            inherit (inputs) self nixpkgs nixos-hardware home-manager;
+          };
+          modules = [ ./systems/funi ];
+        };
+
         iso = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
