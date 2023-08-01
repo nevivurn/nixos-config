@@ -39,7 +39,6 @@ in
     pkgsUnstable.gnucash
     desmume
     liquidctl
-    lm_sensors
     moonlight-qt
     pavucontrol
     thunderbird
@@ -105,6 +104,7 @@ in
       shell_integration = "enabled";
       enable_audio_bell = false;
       background_opacity = "0.8";
+      dynamic_background_opacity = true;
     };
   };
 

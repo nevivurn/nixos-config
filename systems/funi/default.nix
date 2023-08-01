@@ -76,7 +76,10 @@ in
 
   ## Other hardware-specific configuration
 
+  hardware.enableRedistributableFirmware = true;
+  networking.wireless.athUserRegulatoryDomain = true;
+
+  # Remove references to unnecessary dependencies
   environment.defaultPackages = [ ];
   programs.nano.syntaxHighlight = false;
-  hardware.enableRedistributableFirmware = true;
 }

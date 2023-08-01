@@ -18,8 +18,6 @@
     mtr
     openssl
     tcpdump
-
-    lm_sensors
   ];
 
   home.shellAliases = {
@@ -49,7 +47,6 @@
   };
 
   programs.bash.enable = true;
-  #programs.bash.enableVteIntegration = true;
   programs.tmux.enable = true;
 
   programs.dircolors.enable = true;

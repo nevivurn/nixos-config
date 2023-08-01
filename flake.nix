@@ -91,11 +91,13 @@
         iso = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
-            ({ modulesPath, ... }: {
+            ({ config, pkgs, modulesPath, ... }: {
               imports = [
                 (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
                 home-manager.nixosModules.home-manager
               ];
+              # rebuilds kernel, FML
+              networking.wireless.athUserRegulatoryDomain = true;
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
