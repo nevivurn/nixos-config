@@ -18,6 +18,8 @@
     mtr
     openssl
     tcpdump
+
+    lm_sensors
   ];
 
   home.shellAliases = {
@@ -46,6 +48,111 @@
     };
   };
 
+  programs.neovim = {
+    enable = true;
+    extraConfig = ''
+      set mouse=
+      set relativenumber
+
+      packadd! dracula-vim
+      set termguicolors
+      colorscheme dracula
+      hi Normal guibg=NONE ctermbg=NONE
+
+      lua << EOF
+        require'nvim-treesitter.configs'.setup {
+          highlight = {
+            enable = true,
+            disable = { "bash" },
+          },
+          indent = { enable = true },
+          incremental_selection = { enable = true },
+        }
+      EOF
+
+      " quickfix shortcuts
+      nnoremap <leader>o :copen<CR>
+      nnoremap <leader>q :cclose<CR>
+      map <C-n> :cnext<CR>
+      map <C-p> :cprev<CR>
+
+      " make by default
+      nnoremap <leader>b :make<CR>
+      set autowrite
+
+      " unmap K
+      map <S-k> <Nop>
+
+      lua << EOF
+        local on_attach = function(client, bufnr)
+          local bufopts = { noremap=true, silent=true, buffer=bufnr }
+
+          if client.server_capabilities.documentFormattingProvider then
+            vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+              buffer = bufnr,
+              callback = function() vim.lsp.buf.format() end,
+            })
+          end
+        end
+
+        require'lspconfig'.nil_ls.setup {
+          on_attach = on_attach,
+          settings = {
+            ['nil'] = {
+              formatting = { command = { 'nixpkgs-fmt' } }
+            },
+          },
+        }
+      EOF
+
+      lua << EOF
+        local cmp = require'cmp'
+        cmp.setup {
+          snippet = {
+            expand = function(args)
+              vim.fn["vsnip#anonymous"](args.body)
+            end,
+          },
+          mapping = cmp.mapping.preset.insert({
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          }),
+          sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' },
+          }),
+        }
+
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      EOF
+    '';
+    extraPackages = with pkgs; [
+      nil
+      nixpkgs-fmt
+    ];
+    plugins = with pkgs.vimPlugins; [
+      dracula-vim
+
+      (nvim-treesitter.withPlugins (p: with p; [ nix ]))
+      nvim-lspconfig
+
+      nvim-cmp
+      cmp-nvim-lsp
+
+      vim-vsnip
+      cmp-vsnip
+
+      editorconfig-nvim
+    ];
+
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    defaultEditor = true;
+  };
   programs.bash.enable = true;
   programs.tmux.enable = true;
 
