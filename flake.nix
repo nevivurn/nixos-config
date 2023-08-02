@@ -74,6 +74,12 @@
           modules = [ ./systems/taiyi ];
         };
 
+        tianyi = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/tianyi ];
+        };
+
         athebyne = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
