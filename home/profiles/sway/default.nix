@@ -318,8 +318,8 @@ in
       };
       "wireless wlan0" = {
         position = 4;
-        format_up = "&#xf1eb; %essid";
-        format_down = "&#xf1eb";
+        settings.format_up = "&#xf1eb; %essid";
+        settings.format_down = "&#xf1eb";
       };
       "battery 0" = {
         position = 5;
