@@ -129,8 +129,21 @@ in
       };
     };
   };
-  # TODO figure out rpfilter
-  networking.firewall.checkReversePath = false;
+
+  # rp mangling, copied from wg-quick
+  boot.kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
+  networking.nftables.ruleset = lib.mkAfter ''
+    table inet wg-rpmangle {
+      chain premangle {
+        type filter hook prerouting priority mangle;
+        meta l4proto udp meta mark set ct mark
+      }
+      chain postmangle {
+        type filter hook postrouting priority mangle;
+        meta l4proto udp mark 51820 ct mark set mark
+      }
+    }
+  '';
 
   networking.wireless.iwd.enable = true;
   networking.wireless.interfaces = [ "wlan0" ];
