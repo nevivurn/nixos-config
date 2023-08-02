@@ -63,6 +63,7 @@
   # will require rework then.
   services.hostapd = {
     enable = true;
+    interface = "";
     extraConfig = ''
       interface=wlp4s0
       bridge=br-lan
