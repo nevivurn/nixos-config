@@ -59,7 +59,9 @@
       };
 
       checks.${system} =
-        builtins.mapAttrs (k: v: v.config.system.build.toplevel) self.nixosConfigurations;
+        builtins.mapAttrs (_: v: v.config.system.build.toplevel)
+          # do not build funi in CI, building the kernel takes too many resources
+          (nixpkgs.lib.filterAttrs (k: _: k != "funi") self.nixosConfigurations);
 
       nixosConfigurations = {
         alrakis = nixpkgs.lib.nixosSystem {
@@ -92,26 +94,6 @@
             inherit (inputs) self nixpkgs nixos-hardware home-manager;
           };
           modules = [ ./systems/funi ];
-        };
-
-        iso = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            ({ config, pkgs, modulesPath, ... }: {
-              imports = [
-                (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
-                home-manager.nixosModules.home-manager
-              ];
-              # rebuilds kernel, FML
-              networking.wireless.athUserRegulatoryDomain = true;
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                sharedModules = [ self.homeConfigurations.default ];
-                users.nixos = self.homeConfigurations.shell;
-              };
-            })
-          ];
         };
       };
     };
