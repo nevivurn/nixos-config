@@ -76,25 +76,27 @@ in
   networking.hostName = hostname;
 
   systemd.network = {
-    #netdevs = {
-    #  "30-wg-home" = {
-    #    netdevConfig = {
-    #      Name = "wg-home";
-    #      Kind = "wireguard";
-    #    };
-    #    wireguardConfig = {
-    #      PrivateKeyFile = "/persist/secrets/wg-home-priv";
-    #    };
-    #    wireguardPeers = [{
-    #      wireguardPeerConfig = {
-    #        Endpoint = "athebyne.lan:6666";
-    #        PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-    #        PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
-    #        AllowedIPs = [ "fd5e:77c8:d76e:1::/64" ];
-    #      };
-    #    }];
-    #  };
-    #};
+    netdevs = {
+      "30-wg-home" = {
+        netdevConfig = {
+          Name = "wg-home";
+          Kind = "wireguard";
+        };
+        wireguardConfig = {
+          PrivateKeyFile = "/persist/secrets/wg-home-priv";
+          FirewallMark = 51820;
+          RouteTable = 51820;
+        };
+        wireguardPeers = [{
+          wireguardPeerConfig = {
+            Endpoint = "alruba.nevi.network:6666";
+            PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
+            PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
+            AllowedIPs = [ "0.0.0.0/0" "::/0" ];
+          };
+        }];
+      };
+    };
 
     networks = {
       "20-wifi" = {
@@ -102,16 +104,33 @@ in
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
+          Domains = [ "~alruba.nevi.network" ];
         };
       };
 
-      #"30-wg-home" = {
-      #  matchConfig.Name = "wg-home";
-      #  linkConfig.RequiredForOnline = false;
-      #  networkConfig.Address = "fd5e:77c8:d76e:1::5/64";
-      #};
+      "30-wg-home" = {
+        matchConfig.Name = "wg-home";
+        linkConfig.RequiredForOnline = false;
+        networkConfig = {
+          Address = [
+            "10.42.42.2/24"
+            "fd5e:77c8:d76e:1::2/64"
+          ];
+          DNS = "192.168.1.1";
+          Domains = [ "~." "~lan" ];
+        };
+        routingPolicyRules = [{
+          routingPolicyRuleConfig = {
+            FirewallMark = 51820;
+            InvertRule = true;
+            Table = 51820;
+          };
+        }];
+      };
     };
   };
+  # TODO figure out rpfilter
+  networking.firewall.checkReversePath = false;
 
   networking.wireless.iwd.enable = true;
   networking.wireless.interfaces = [ "wlan0" ];
