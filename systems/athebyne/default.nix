@@ -199,6 +199,12 @@ in
 
   ## Other hardware-specific configuration
 
+  # I have no idea what I'm doing, but this improves throughput significantly
+  boot.kernel.sysctl = {
+    "net.core.default_qdisc" = "fq";
+    "net.ipv4.tcp_congestion_control" = "bbr";
+  };
+
   # for hw accel
   hardware.opengl.enable = true;
   # but we don't need the everything else
