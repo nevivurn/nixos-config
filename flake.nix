@@ -27,7 +27,7 @@
         default = import ./nixos/modules;
         graphical = import ./nixos/profiles/graphical;
       };
-      homeConfigurations = {
+      homeModules = {
         default = import ./home/modules;
         sway = import ./home/profiles/sway;
         develop = import ./home/profiles/develop;

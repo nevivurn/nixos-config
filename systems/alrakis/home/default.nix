@@ -4,7 +4,7 @@ with inputs;
 
 {
   imports = [
-    self.homeConfigurations.shell
+    self.homeModules.shell
   ];
 }
 

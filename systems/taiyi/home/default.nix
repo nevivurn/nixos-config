@@ -4,6 +4,6 @@ with inputs;
 
 {
   imports = [
-    self.homeConfigurations.sway
+    self.homeModules.sway
   ];
 }
