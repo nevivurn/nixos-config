@@ -7,7 +7,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-update.url = "github:Mic92/nix-update/0.19.0";
+    nix-update.url = "github:Mic92/nix-update/0.19.2";
     nix-update.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -27,7 +27,7 @@
         default = import ./nixos/modules;
         graphical = import ./nixos/profiles/graphical;
       };
-      homeConfigurations = {
+      homeModules = {
         default = import ./home/modules;
         sway = import ./home/profiles/sway;
         develop = import ./home/profiles/develop;

@@ -28,7 +28,7 @@ with inputs;
   ];
 
   home-manager.sharedModules = [
-    self.homeConfigurations.default
+    self.homeModules.default
     impermanence.nixosModules.home-manager.impermanence
   ];
 
