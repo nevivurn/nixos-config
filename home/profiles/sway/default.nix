@@ -319,7 +319,7 @@ in
       "wireless wlan0" = {
         position = 4;
         settings.format_up = "&#xf1eb; %essid";
-        settings.format_down = "&#xf1eb";
+        settings.format_down = "&#xf1eb;";
       };
       "battery 0" = {
         position = 5;
