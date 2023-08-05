@@ -21,16 +21,12 @@ with inputs;
 
     settings = {
       server = [ "127.0.0.1#5353" "/lan/" ];
-      address = [ "/funi.lan/192.168.2.1" ];
+      address = [
+        "/funi.lan/192.168.2.1"
+        "/funi.lan/fd07:f9bb:f9ba:1::1"
+      ];
       interface = "br-lan";
       bind-interfaces = true;
-
-      proxy-dnssec = true;
-
-      dhcp-range = [ "192.168.2.100,192.168.2.254" ];
-
-      domain = "lan";
-      dhcp-fqdn = true;
 
       # public names are cached in unbound and client-side
       cache-size = 0;
@@ -38,13 +34,29 @@ with inputs;
       no-resolv = true;
       expand-hosts = true;
       localise-queries = true;
+      proxy-dnssec = true;
 
-      addn-hosts = [ "${self.packages.${pkgs.system}.hosts}/hosts" ];
+      addn-hosts =
+        let hosts = self.packages.${pkgs.system}.hosts; in
+        [
+          "${hosts}/hosts"
+          "${hosts}/hosts-ipv6"
+        ];
       no-hosts = true;
 
       stop-dns-rebind = true;
       domain-needed = true;
       bogus-priv = true;
+
+      dhcp-range = [
+        "192.168.2.100,192.168.2.254"
+        "fd07:f9bb:f9ba:1::1:1,fd07:f9bb:f9ba:1::1:ffff"
+        "2001:470:24:5b::,2001:470:24:5b:ffff:ffff:ffff:ffff"
+      ];
+      enable-ra = true;
+
+      domain = "lan";
+      dhcp-fqdn = true;
     };
   };
   systemd.services.dnsmasq = {
@@ -54,6 +66,6 @@ with inputs;
 
   networking.firewall.interfaces."br-lan" = {
     allowedTCPPorts = [ 53 ];
-    allowedUDPPorts = [ 53 67 ];
+    allowedUDPPorts = [ 53 67 547 ];
   };
 }

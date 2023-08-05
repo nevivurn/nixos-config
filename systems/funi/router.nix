@@ -9,6 +9,17 @@
           Kind = "bridge";
         };
       };
+      he-ipv6 = {
+        netdevConfig = {
+          Name = "he-ipv6";
+          Kind = "sit";
+        };
+        tunnelConfig = {
+          Local = "dhcpv4";
+          Remote = "74.82.46.6";
+          TTL = 255;
+        };
+      };
     };
     networks = {
       # WAN
@@ -17,29 +28,43 @@
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
+          Tunnel = "he-ipv6";
         };
         dhcpV4Config = {
           UseDNS = false;
           UseNTP = false;
           UseHostname = false;
         };
-        #dhcpv6Config = {
+        #dhcpV6Config = {
         #  UseDNS = false;
         #  UseNTP = false;
         #  UseHostname = false;
         #};
-        #ipv6AcceptRAConfig = {
-        #  UseDNS = false;
-        #};
+        ipv6AcceptRAConfig = {
+          UseDNS = false;
+        };
+      };
+      "15-he-ipv6" = {
+        matchConfig.Name = "he-ipv6";
+        networkConfig = {
+          Address = "2001:470:23:5b::2/64";
+          Gateway = "::";
+        };
       };
       "20-lan-bridge" = {
         matchConfig.Type = "ether";
         networkConfig.Bridge = "br-lan";
+        linkConfig.RequiredForOnline = false;
       };
       "30-bridge" = {
         matchConfig.Type = "bridge";
         networkConfig = {
-          Address = [ "192.168.2.1/24" ];
+          IPForward = "yes";
+          Address = [
+            "192.168.2.1/24"
+            "fd07:f9bb:f9ba:1::1/64"
+            "2001:470:24:5b::1/64"
+          ];
           DNS = [ "127.0.0.1" "::1" ];
           DHCP = "no";
           IPv6AcceptRA = false;
