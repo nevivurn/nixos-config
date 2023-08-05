@@ -19,6 +19,7 @@ in
 
     ./router.nix
 
+    ./services/dns.nix
     ./services/openssh.nix
   ];
 

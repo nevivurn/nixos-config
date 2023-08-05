@@ -3,25 +3,11 @@
   systemd.network = {
     enable = true;
     netdevs = {
-      br0 = {
-        netdevConfig = {
-          Name = "br0";
-          Kind = "bridge";
-        };
-      };
       br-lan = {
         netdevConfig = {
           Name = "br-lan";
-          Kind = "vlan";
+          Kind = "bridge";
         };
-        vlanConfig.Id = 101;
-      };
-      br-guest = {
-        netdevConfig = {
-          Name = "br-guest";
-          Kind = "vlan";
-        };
-        vlanConfig.Id = 102;
       };
     };
     networks = {
@@ -48,47 +34,12 @@
       };
       "20-lan-bridge" = {
         matchConfig.Type = "ether";
-        networkConfig.Bridge = "br0";
-        bridgeVLANs = [{
-          bridgeVLANConfig = {
-            VLAN = "101-102";
-            PVID = 101;
-            EgressUntagged = 101;
-          };
-        }];
+        networkConfig.Bridge = "br-lan";
       };
       "30-bridge" = {
         matchConfig.Type = "bridge";
         networkConfig = {
-          VLAN = [ "br-lan" "br-guest" ];
-        };
-        bridgeVLANs = [{
-          bridgeVLANConfig = {
-            VLAN = "101-102";
-            PVID = 101;
-            EgressUntagged = 101;
-          };
-        }];
-      };
-      "40-bridge-lan" = {
-        matchConfig = {
-          Name = "br-lan";
-          Type = "vlan";
-        };
-        networkConfig = {
-          Address = [ "192.168.1.1/24" ];
-          DNS = [ "127.0.0.1" "::1" ];
-          DHCP = "no";
-          IPv6AcceptRA = false;
-        };
-      };
-      "40-bridge-guest" = {
-        matchConfig = {
-          Name = "br-guest";
-          Type = "vlan";
-        };
-        networkConfig = {
-          Address = [ "192.168.10.1/24" ];
+          Address = [ "192.168.2.1/24" ];
           DNS = [ "127.0.0.1" "::1" ];
           DHCP = "no";
           IPv6AcceptRA = false;
@@ -111,7 +62,7 @@
     interface = "wlp4s0";
     extraConfig = ''
       interface=wlp4s0
-      bridge=br0
+      bridge=br-lan
 
       ssid=alruba2
       utf8_ssid=1
