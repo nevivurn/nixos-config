@@ -1,4 +1,4 @@
-{ lib, modulesPath, inputs, ... }:
+{ lib, inputs, ... }:
 
 with inputs;
 
@@ -14,7 +14,6 @@ in
     (self + "/nixos/modules/nix.nix")
     (self + "/nixos/modules/users.nix")
 
-    (modulesPath + "/profiles/minimal.nix")
     home-manager.nixosModules.home-manager
     nixos-hardware.nixosModules.pcengines-apu
 
