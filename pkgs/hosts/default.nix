@@ -13,11 +13,15 @@ stdenvNoCC.mkDerivation rec {
 
   patches = [ ./remove-invalid.patch ];
 
-  dontBuild = true;
+  buildPhase = ''
+    runHook preBuild
+    sed -E 's/^0.0.0.0(\s)/::\1/' hosts > hosts-ipv6
+    runHook postBuild
+  '';
 
   installPhase = ''
     runHook preInstall
-    install -Dm644 hosts $out/hosts
+    install -Dm644 -t $out hosts hosts-ipv6
     runHook postInstall
   '';
 }
