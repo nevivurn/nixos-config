@@ -160,6 +160,8 @@ in
     dockerSocket.enable = true;
   };
 
+  powerManagement.cpuFreqGovernor = "schedutil";
+
   # cooler pump
   services.udev.packages = with pkgs; [ liquidctl ];
   systemd.services."liquidctl" = {
