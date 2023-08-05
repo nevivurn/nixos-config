@@ -125,7 +125,11 @@ in
 
       input = {
         "type:keyboard" = { xkb_options = "ctrl:swapcaps,korean:ralt_hangul"; };
-        "type:touchpad" = { tap = "enabled"; };
+        "type:touch" = { events = "disabled"; };
+        "type:touchpad" = {
+          tap = "enabled";
+          dwt = "enabled";
+        };
       };
       output = {
         "*" = { bg = "~/pics/bg fill"; };
