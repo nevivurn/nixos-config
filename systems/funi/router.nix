@@ -82,6 +82,16 @@
 
   # NOTE: seems to have been overhauled on nixpkgs-unstable (after 23.05)
   # will require rework then.
+  nixpkgs.overlays = [
+    # enable OCV. Enabled after 23.05, can be removed next release
+    (final: prev: {
+      hostapd = prev.hostapd.overrideAttrs (prev: {
+        extraConfig = prev.extraConfig + ''
+          CONFIG_OCV=y
+        '';
+      });
+    })
+  ];
   services.hostapd = {
     enable = true;
     interface = "wlp4s0";
@@ -123,7 +133,7 @@
 
       ieee80211w=1
       beacon_prot=1
-      #ocv=1
+      ocv=1
       wpa_disable_eapol_key_retries=1
       wpa_deny_ptk0_rekey=1
     '';
