@@ -217,6 +217,8 @@ in
     dockerSocket.enable = true;
   };
 
+  powerManagement.cpuFreqGovernor = "schedutil";
+
   # VMs
   virtualisation.libvirtd = {
     enable = true;
