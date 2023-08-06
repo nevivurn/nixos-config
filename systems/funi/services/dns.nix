@@ -23,7 +23,7 @@ with inputs;
       server = [ "127.0.0.1#5353" "/lan/" ];
       address = [
         "/funi.lan/192.168.2.1"
-        "/funi.lan/fd07:f9bb:f9ba:1::1"
+        "/funi.lan/2001:470:24:5b::1"
       ];
       interface = "br-lan";
       bind-interfaces = true;
@@ -50,7 +50,6 @@ with inputs;
 
       dhcp-range = [
         "192.168.2.100,192.168.2.254"
-        "fd07:f9bb:f9ba:1::1:1,fd07:f9bb:f9ba:1::1:ffff"
         "2001:470:24:5b::,2001:470:24:5b:ffff:ffff:ffff:ffff"
       ];
       enable-ra = true;

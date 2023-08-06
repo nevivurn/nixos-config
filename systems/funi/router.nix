@@ -62,7 +62,6 @@
           IPForward = "yes";
           Address = [
             "192.168.2.1/24"
-            "fd07:f9bb:f9ba:1::1/64"
             "2001:470:24:5b::1/64"
           ];
           DNS = [ "127.0.0.1" "::1" ];
@@ -108,7 +107,7 @@
       local_pwr_constraint=3
 
       hw_mode=a
-      channel=100
+      channel=116
 
       preamble=1
 
@@ -119,21 +118,27 @@
       ieee80211ac=1
       vht_capab=[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][MAX-A-MPDU-LEN-EXP3][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN]
       vht_oper_chwidth=1
-      vht_oper_centr_freq_seg0_idx=106
+      vht_oper_centr_freq_seg0_idx=122
 
-      auth_algs=2
+      disassoc_low_ack=1
+      uapsd_advertisement_enabled=1
+
+      auth_algs=1
       wpa=2
       wpa_key_mgmt=WPA-PSK WPA-PSK-SHA256 SAE
       wpa_pairwise=CCMP
       rsn_pairwise=CCMP
       wpa_passphrase=temporary password testing
       rsn_preauth=1
+      sae_require_mfp=1
+      sae_pwe=2
 
       ap_isolate=1
 
-      ieee80211w=1
+      ieee80211w=2
       beacon_prot=1
       ocv=1
+      okc=1
       wpa_disable_eapol_key_retries=1
       wpa_deny_ptk0_rekey=1
     '';
