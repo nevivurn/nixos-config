@@ -1,4 +1,4 @@
-{ lib, inputs, ... }:
+{ lib, pkgs, inputs, ... }:
 
 with inputs;
 
@@ -97,6 +97,8 @@ in
       ATH10K_DFS_CERTIFIED = yes;
     };
   }];
+
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
 
   # Remove references to unnecessary dependencies
   environment.defaultPackages = [ ];
