@@ -48,12 +48,6 @@ in
       options = [ "zfsutil" ];
       neededForBoot = true;
     };
-
-    "/mnt/athebyne" = {
-      device = "athebyne.lan:/data";
-      fsType = "nfs";
-      options = [ "soft" ];
-    };
   };
   swapDevices = [{
     device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part2";
@@ -61,6 +55,25 @@ in
       enable = true;
       allowDiscards = true;
     };
+  }];
+
+  boot.supportedFilesystems = [ "nfs" ];
+  systemd.automounts = [{
+    where = "/mnt/athebyne";
+    automountConfig.TimeoutIdleSec = "5min";
+
+    unitConfig.DefaultDependencies = false;
+    before = [ "unmount.target" "remote-fs.target" ];
+    after = [ "remote-fs-pre.target" "systemd-network-wait-online@wg\\x2dhome.service" ];
+    requires = [ "systemd-network-wait-online@wg\\x2dhome.service" ];
+    wantedBy = [ "multi-user.target" ];
+    conflicts = [ "unmount.target" ];
+  }];
+  systemd.mounts = [{
+    type = "nfs";
+    what = "athebyne.lan:/data";
+    where = "/mnt/athebyne";
+    options = "soft";
   }];
 
   ## Boot
