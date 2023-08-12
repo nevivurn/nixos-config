@@ -76,8 +76,12 @@ in
     };
   };
 
-  home-manager.extraSpecialArgs = { inherit inputs; };
-  home-manager.users.nevivurn = import ./home;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    users.nevivurn = import ./home;
+  };
 
   ## Other hardware-specific configuration
 
