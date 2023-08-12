@@ -4,6 +4,7 @@
 {
   home.packages = with pkgs; [
     file
+    pv
     tree
     psmisc
 
@@ -12,12 +13,17 @@
     curl
     wget
 
+    (p7zip.override { enableUnfree = true; })
+    unzip
+
     ethtool
     iw
     ldns
     mtr
     openssl
     tcpdump
+
+    python3
 
     lm_sensors
   ];
@@ -163,4 +169,24 @@
   programs.less.enable = true;
   programs.lesspipe.enable = true;
   programs.man.enable = true;
+
+  programs.git = {
+    enable = true;
+    aliases = {
+      graph = "log --graph --all --oneline";
+    };
+    extraConfig = {
+      init.defaultBranch = "master";
+      core.pager = "less -+X";
+      core.quotePath = false;
+    };
+    ignores = [
+      ".direnv"
+      ".envrc"
+    ];
+    userName = "Yongun Seong";
+    userEmail = "nevivurn@nevi.dev";
+  };
+
+  programs.ssh.enable = true;
 }
