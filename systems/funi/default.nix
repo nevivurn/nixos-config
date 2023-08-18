@@ -102,6 +102,11 @@ in
     };
   }];
 
+  specialisation.xanmod.configuration = {
+    system.nixos.tags = [ "xanmod" ];
+    boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
+  };
+
   # Remove references to unnecessary dependencies
   environment.defaultPackages = [ ];
   programs.nano.syntaxHighlight = false;
