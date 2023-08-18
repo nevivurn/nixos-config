@@ -401,9 +401,6 @@ in
     enable = true;
     config = {
       hwdec = "auto";
-      profile = "gpu-hq";
-      scale = "ewa_lanczossharp";
-      cscale = "ewa_lanczossharp";
       video-sync = "display-resample";
       interpolation = true;
       tscale = "oversample";
