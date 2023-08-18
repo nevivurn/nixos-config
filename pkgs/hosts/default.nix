@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "hosts";
-  version = "3.13.21";
+  version = "3.13.22";
 
   src = fetchFromGitHub {
     owner = "StevenBlack";
     repo = "hosts";
     rev = version;
-    hash = "sha256-0GgQndhR4wMrvbNWrlDFTpbsKQSj/4U9xsodxFgcS4g=";
+    hash = "sha256-AV1MZIlfgSStmsHL7vJ8f7pBeKs5YfSzSZiWt0uDy84=";
   };
 
   patches = [ ./remove-invalid.patch ];
