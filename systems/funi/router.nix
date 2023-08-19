@@ -83,6 +83,12 @@
           hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0 };
         }
 
+        chain rpfilter {
+          type filter hook prerouting priority filter; policy accept;
+          meta nfproto ipv4 udp sport . udp dport { 68 . 67, 67 . 68 } accept
+          fib saddr . iif oif missing drop
+        }
+
         chain forward {
           type filter hook forward priority filter; policy drop;
 
