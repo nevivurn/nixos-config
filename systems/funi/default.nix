@@ -22,6 +22,7 @@ in
     ./services/dns.nix
     ./services/hostapd.nix
     ./services/openssh.nix
+    ./services/monitoring.nix
   ];
 
   system.stateVersion = "23.05";
