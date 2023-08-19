@@ -11,7 +11,7 @@ in
 
     virtualHosts."athebyne.nevi.network" = {
       extraConfig = ''
-        @private remote_ip 10.42.42.0/24 192.168.2.0/24 fd5e:77c8:d76e:1::/64
+        @private remote_ip 10.42.42.0/24 192.168.2.0/24 fd5e:77c8:d76e:1::/64 fdbc:ba6a:38de::/64
         encode zstd gzip
 
         handle @private {
