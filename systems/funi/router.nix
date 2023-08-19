@@ -72,11 +72,68 @@
     };
   };
 
-  networking.nftables.enable = true;
-  networking.nat = {
+  networking.firewall.enable = false;
+  networking.nftables = {
     enable = true;
-    externalInterface = "enp1s0";
-    internalInterfaces = [ "br-lan" ];
+    checkRuleset = false;
+    ruleset = ''
+      flush ruleset
+
+      table ip nat {
+        chain prerouting {
+          type nat hook prerouting priority dstnat; policy accept;
+        }
+        chain postrouting {
+          type nat hook postrouting priority srcnat; policy accept;
+          iifname "br-lan" oifname "enp1s0" masquerade
+        }
+      }
+
+      table inet filter {
+        flowtable f {
+          hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0 };
+        }
+
+        chain forward {
+          type filter hook forward priority filter; policy drop;
+
+          meta l4proto { tcp, udp } flow offload @f
+          ct state vmap { established : accept, related : accept, invalid : drop }
+
+          icmpv6 type { router-renumbering, 139, 140 } drop
+          icmpv6 type != { router-renumbering, 139, 140 } accept
+
+          iifname "br-lan" oifname { "enp1s0", "he-ipv6" } accept
+        }
+
+        chain input {
+          type filter hook input priority filter; policy drop;
+
+          ct state vmap { established : accept, related : accept, invalid : drop }
+          iifname vmap { lo : accept, br-lan : jump input_lan, enp1s0 : jump input_wan }
+        }
+
+        chain input_lan {
+          icmp type { echo-request } accept
+          icmpv6 type != { nd-redirect, 139, 140 } accept
+
+          meta l4proto . th dport vmap {
+            tcp . 22 : accept,
+            tcp . 53 : accept, udp . 53 : accept,
+            udp . 67 : accept, udp . 547 : accept
+          }
+        }
+
+        chain input_wan {
+          icmp type { echo-request } accept
+          icmpv6 type != { nd-redirect, 139, 140 } accept
+
+          meta l4proto . th dport vmap {
+            tcp . 22 : accept
+          }
+        }
+      }
+    '';
   };
 
   # NOTE: seems to have been overhauled on nixpkgs-unstable (after 23.05)
@@ -107,7 +164,7 @@
       local_pwr_constraint=3
 
       hw_mode=a
-      channel=acs_survey
+      channel=100
 
       preamble=1
 
@@ -118,6 +175,7 @@
       ieee80211ac=1
       vht_capab=[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][MAX-A-MPDU-LEN-EXP3][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN]
       vht_oper_chwidth=1
+      vht_oper_centr_freq_seg0_idx=106
 
       disassoc_low_ack=1
       uapsd_advertisement_enabled=1
