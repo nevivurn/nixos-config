@@ -20,6 +20,7 @@ in
     ./router.nix
 
     ./services/dns.nix
+    ./services/hostapd.nix
     ./services/openssh.nix
   ];
 
@@ -44,7 +45,7 @@ in
   environment.etc."machine-id".text = "${machineId}\n";
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
-  networking.domain = "lan";
+  networking.domain = "nevi.network";
 
   services.resolved.dnssec = "false";
   # services.resolved.fallbackDns does not support empty lists

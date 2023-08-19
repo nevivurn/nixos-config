@@ -20,10 +20,10 @@ with inputs;
     resolveLocalQueries = false;
 
     settings = {
-      server = [ "127.0.0.1#5353" "/lan/" ];
+      server = [ "127.0.0.1#5353" "/nevi.network/" ];
       address = [
-        "/funi.lan/192.168.2.1"
-        "/funi.lan/2001:470:24:5b::1"
+        "/funi.nevi.network/192.168.2.1"
+        "/funi.nevi.network/fdbc:ba6a:38de::1"
       ];
       interface = "br-lan";
       bind-interfaces = true;
@@ -50,11 +50,15 @@ with inputs;
 
       dhcp-range = [
         "192.168.2.100,192.168.2.254"
-        "2001:470:24:5b::,2001:470:24:5b:ffff:ffff:ffff:ffff"
+        "fdbc:ba6a:38de:0:1::,fdbc:ba6a:38de::ffff:ffff:ffff:ffff"
+      ];
+      dhcp-host = [
+        "92:ef:6d:2b:7b:cf,192.168.2.10,athebyne.nevi.network"
+        "id:00:02:00:00:ab:11:df:85:50:1e:9b:2a:af:84,[fdbc:ba6a:38de::a],athebyne.nevi.network"
       ];
       enable-ra = true;
 
-      domain = "lan";
+      domain = "nevi.network";
       dhcp-fqdn = true;
     };
   };
