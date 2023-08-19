@@ -25,6 +25,9 @@ with inputs;
         "/funi.nevi.network/192.168.2.1"
         "/funi.nevi.network/fdbc:ba6a:38de::1"
       ];
+      cname = [
+        "matrix.nevi.network,athebyne.nevi.network"
+      ];
       interface = "br-lan";
       bind-interfaces = true;
 
