@@ -110,7 +110,7 @@
 
         chain forward_wan {
           ct status dnat accept
-          ip6 daddr fdbc:ba6a:38de::a meta l4proto . th dport vmap {
+          ip6 daddr fdbc:ba6a:38de::10 meta l4proto . th dport vmap {
             tcp . 80 : accept,
             tcp . 443 : accept,
             udp . 443 : accept,
