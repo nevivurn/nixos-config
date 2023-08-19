@@ -28,13 +28,9 @@
         }
       ];
 
-    exporters.node = {
-      enable = true;
-      listenAddress = "localhost";
-    };
+    exporters.node.enable = true;
     exporters.smartctl = {
       enable = true;
-      listenAddress = "localhost";
       devices = [
         "/dev/sda"
         "/dev/sdb"
