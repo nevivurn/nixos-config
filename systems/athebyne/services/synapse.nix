@@ -67,7 +67,7 @@
         port = (builtins.elemAt (builtins.filter (l: l.type == "metrics") cfg.settings.listeners) 0).port;
       in
       [{
-        targets = [ "localhost:${builtins.toString port}" ];
+        targets = [ "athebyne.nevi.network:${builtins.toString port}" ];
       }];
   }];
 
