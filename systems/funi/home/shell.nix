@@ -26,6 +26,8 @@
     python3
 
     lm_sensors
+
+    xterm # for "resize"
   ];
 
   home.shellAliases = {
