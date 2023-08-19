@@ -21,8 +21,9 @@ in
 
     ./services/dns.nix
     ./services/hostapd.nix
-    ./services/openssh.nix
+    ./services/inadyn.nix
     ./services/monitoring.nix
+    ./services/openssh.nix
   ];
 
   system.stateVersion = "23.05";
