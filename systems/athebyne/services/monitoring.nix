@@ -14,10 +14,7 @@
         {
           job_name = "node_exporter";
           static_configs = [{
-            targets = [
-              "${toString exporters.node.listenAddress}:${toString exporters.node.port}"
-              "192.168.1.2:9100"
-            ];
+            targets = [ "${toString exporters.node.listenAddress}:${toString exporters.node.port}" ];
           }];
         }
         {

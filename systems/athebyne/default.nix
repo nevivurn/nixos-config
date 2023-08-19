@@ -117,6 +117,7 @@ in
   environment.etc."machine-id".text = "${machineId}\n";
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
+  networking.domain = "nevi.network";
 
   # spare open port
   networking.firewall.allowedTCPPorts = [ 7777 ];
