@@ -201,8 +201,7 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
-      "alruba.lan".user = "root";
-      "athebyne-boot.lan".user = "root";
+      "athebyne-boot.nevi.network".user = "root";
 
       "cse.snu.ac.kr".user = "bacchus";
       "*.snucse.org".user = "bacchus";

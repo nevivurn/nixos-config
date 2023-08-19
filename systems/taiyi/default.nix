@@ -53,7 +53,7 @@ in
     };
 
     "/mnt/athebyne" = {
-      device = "athebyne.lan:/data";
+      device = "athebyne.nevi.network:/data";
       fsType = "nfs";
       options = [ "soft" ];
     };
@@ -77,28 +77,9 @@ in
   environment.etc."machine-id".text = "${machineId}\n";
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
+  networking.domain = "nevi.network";
 
   systemd.network = {
-    netdevs = {
-      "30-wg-home" = {
-        netdevConfig = {
-          Name = "wg-home";
-          Kind = "wireguard";
-        };
-        wireguardConfig = {
-          PrivateKeyFile = "/persist/secrets/wg-home-priv";
-        };
-        wireguardPeers = [{
-          wireguardPeerConfig = {
-            Endpoint = "athebyne.lan:6666";
-            PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-            PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
-            AllowedIPs = [ "fd5e:77c8:d76e:1::/64" ];
-          };
-        }];
-      };
-    };
-
     networks = {
       "20-lan" = {
         matchConfig.Type = "ether";
@@ -106,12 +87,6 @@ in
           DHCP = "ipv4";
           IPv6AcceptRA = true;
         };
-      };
-
-      "30-wg-home" = {
-        matchConfig.Name = "wg-home";
-        linkConfig.RequiredForOnline = false;
-        networkConfig.Address = "fd5e:77c8:d76e:1::5/64";
       };
     };
   };
