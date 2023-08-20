@@ -136,6 +136,7 @@
             tcp . 22 : accept,
             tcp . 53 : accept, udp . 53 : accept,
             udp . 67 : accept, udp . 547 : accept,
+            udp . 123 : accept,
             tcp . 9100 : accept
           }
         }

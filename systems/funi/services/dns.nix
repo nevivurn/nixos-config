@@ -61,6 +61,11 @@ with inputs;
       ];
       enable-ra = true;
 
+      dhcp-option = [
+        "option:ntp-server,0.0.0.0"
+        "option6:ntp-server,[fd00::]"
+      ];
+
       domain = "nevi.network";
       dhcp-fqdn = true;
     };

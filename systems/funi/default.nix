@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, ... }:
+{ lib, inputs, ... }:
 
 with inputs;
 
@@ -19,6 +19,7 @@ in
 
     ./router.nix
 
+    ./services/chrony.nix
     ./services/dns.nix
     ./services/hostapd.nix
     ./services/inadyn.nix
