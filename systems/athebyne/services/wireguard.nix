@@ -26,12 +26,6 @@
             PresharedKeyFile = "/persist/secrets/wg-home-fafnir-psk";
           }
           {
-            # taiyi
-            AllowedIPs = [ "fd5e:77c8:d76e:1::5/128" ];
-            PublicKey = "1svQFqULf3fkfllK2yh4cXBChbug8Qg22bMI94OGqVs=";
-            PresharedKeyFile = "/persist/secrets/wg-home-taiyi-psk";
-          }
-          {
             # altais
             AllowedIPs = [ "10.42.42.6/32" "fd5e:77c8:d76e:1::6/128" ];
             PublicKey = "F+Gz+s93TCYuFMYawdLF56gsjL6JNqOR7PglXbTZJgs=";
