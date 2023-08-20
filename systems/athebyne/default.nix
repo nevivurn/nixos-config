@@ -201,10 +201,13 @@ in
 
   ## Other hardware-specific configuration
 
-  # I have no idea what I'm doing, but this improves throughput significantly
   boot.kernel.sysctl = {
+    # I have no idea what I'm doing, but this improves throughput significantly
     "net.core.default_qdisc" = "fq";
     "net.ipv4.tcp_congestion_control" = "bbr";
+    # For caddy (quic-go)
+    "net.core.rmem_max" = 2500000;
+    "net.core.wmem_max" = 2500000;
   };
 
   # for hw accel
