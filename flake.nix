@@ -64,12 +64,6 @@
           (nixpkgs.lib.filterAttrs (k: _: k != "funi") self.nixosConfigurations);
 
       nixosConfigurations = {
-        alrakis = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [ ./systems/alrakis ];
-        };
-
         taiyi = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
