@@ -118,6 +118,7 @@ in
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
+  networking.timeServers = [ ];
 
   # spare open port
   networking.firewall.allowedTCPPorts = [ 7777 ];

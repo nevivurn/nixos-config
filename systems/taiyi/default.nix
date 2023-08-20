@@ -78,6 +78,7 @@ in
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
+  networking.timeServers = [ ];
 
   systemd.network = {
     networks = {
