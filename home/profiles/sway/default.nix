@@ -37,14 +37,11 @@ in
     yt-dlp
 
     pkgsUnstable.gnucash
-    desmume
     liquidctl
     moonlight-qt
     pavucontrol
     thunderbird
     virt-manager
-
-    tor-browser-bundle-bin
 
     discord
     # element breaks randomly with latest electron
@@ -55,10 +52,6 @@ in
     protonmail-bridge
     slack
     weechat
-
-    (mcomix.override { unrarSupport = true; })
-
-    steam-run
   ];
 
   gtk.enable = true;
