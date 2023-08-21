@@ -71,7 +71,7 @@ in
   }];
   systemd.mounts = [{
     type = "nfs";
-    what = "athebyne.lan:/data";
+    what = "athebyne.nevi.network:/data";
     where = "/mnt/athebyne";
     options = "soft";
   }];
@@ -102,7 +102,7 @@ in
         };
         wireguardPeers = [{
           wireguardPeerConfig = {
-            Endpoint = "alruba.nevi.network:6666";
+            Endpoint = "athebyne.nevi.network:6666";
             PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
             PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
             AllowedIPs = [ "0.0.0.0/0" "::/0" ];
@@ -117,7 +117,7 @@ in
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
-          Domains = [ "~alruba.nevi.network" ];
+          Domains = [ "~athebyne.nevi.network" ];
         };
       };
 
@@ -129,8 +129,8 @@ in
             "10.42.42.2/24"
             "fd5e:77c8:d76e:1::2/64"
           ];
-          DNS = "192.168.1.1";
-          Domains = [ "~." "~lan" ];
+          DNS = "192.168.2.1";
+          Domains = [ "~." ];
         };
         routingPolicyRules = [{
           routingPolicyRuleConfig = {
