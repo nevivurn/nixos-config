@@ -44,11 +44,7 @@ in
     virt-manager
 
     discord
-    # element breaks randomly with latest electron
-    # https://github.com/flathub/im.riot.Riot/issues/376
-    # https://github.com/NixOS/nixpkgs/issues/238416
-    # https://github.com/vector-im/element-desktop/issues/1026
-    (element-desktop.override { electron = pkgs.electron_24; })
+    element-desktop
     protonmail-bridge
     slack
     weechat
