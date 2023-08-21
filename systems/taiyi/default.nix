@@ -136,6 +136,9 @@ in
     dockerSocket.enable = true;
   };
 
+  # Do not install OpenCL stuff, to save space
+  hardware.amdgpu.opencl = false;
+
   powerManagement.cpuFreqGovernor = "schedutil";
 
   # cooler pump
