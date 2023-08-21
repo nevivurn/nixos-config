@@ -1,14 +1,6 @@
-{ lib, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 with inputs;
-
-let
-  hosts =
-    builtins.map (lib.removePrefix "0.0.0.0 ")
-      (builtins.filter (lib.hasPrefix "0.0.0.0 ")
-        (lib.splitString "\n"
-          (builtins.readFile "${self.packages.${pkgs.system}.hosts}/hosts")));
-in
 
 {
   # unbound as a simple, validating, recursive DNS server
@@ -29,11 +21,10 @@ in
 
     settings = {
       server = [ "127.0.0.1#5353" "/nevi.network/" ];
-      local = builtins.map (s: "/${s}/") hosts;
       address = [
         "/funi.nevi.network/192.168.2.1"
         "/funi.nevi.network/fdbc:ba6a:38de::1"
-      ] ++ builtins.map (s: "/${s}/0.0.0.0") hosts;
+      ];
       cname = [
         "matrix.nevi.network,athebyne.nevi.network"
       ];
@@ -71,6 +62,16 @@ in
       domain = "nevi.network";
       dhcp-fqdn = true;
     };
+
+    extraConfig = builtins.readFile (pkgs.runCommand "dnsmasq-hosts" { } ''
+      < ${self.packages.${pkgs.system}.hosts}/hosts \
+          grep ^0.0.0.0 \
+        | awk '{print $2}' \
+        | tail -n+2 \
+      > hosts
+      awk '{print "local=/" $0 "/"}' hosts >> $out
+      awk '{print "address=/" $0 "/0.0.0.0"}' hosts >> $out
+    '');
   };
   systemd.services.dnsmasq = {
     after = [ "network-online.target" ];
