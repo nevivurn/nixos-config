@@ -38,13 +38,6 @@ with inputs;
       expand-hosts = true;
       localise-queries = true;
       proxy-dnssec = true;
-
-      addn-hosts =
-        let hosts = self.packages.${pkgs.system}.hosts; in
-        [
-          "${hosts}/hosts"
-          "${hosts}/hosts-ipv6"
-        ];
       no-hosts = true;
 
       stop-dns-rebind = true;
@@ -69,6 +62,16 @@ with inputs;
       domain = "nevi.network";
       dhcp-fqdn = true;
     };
+
+    extraConfig = builtins.readFile (pkgs.runCommand "dnsmasq-hosts" { } ''
+      < ${self.packages.${pkgs.system}.hosts}/hosts \
+          grep ^0.0.0.0 \
+        | awk '{print $2}' \
+        | tail -n+2 \
+      > hosts
+      awk '{print "local=/" $0 "/"}' hosts >> $out
+      awk '{print "address=/" $0 "/0.0.0.0"}' hosts >> $out
+    '');
   };
   systemd.services.dnsmasq = {
     after = [ "network-online.target" ];
