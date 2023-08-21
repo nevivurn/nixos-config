@@ -144,10 +144,6 @@
         chain input_wan {
           icmp type { echo-request } accept
           icmpv6 type != { nd-redirect, 139, 140 } accept
-
-          meta l4proto . th dport vmap {
-            tcp . 22 : accept
-          }
         }
       }
     '';

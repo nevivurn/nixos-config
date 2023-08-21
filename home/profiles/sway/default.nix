@@ -44,6 +44,7 @@ in
     virt-manager
 
     discord
+    webcord # for screen sharing, for now
     element-desktop
     protonmail-bridge
     slack
@@ -436,6 +437,7 @@ in
     directories = [
       ".config/Slack"
       ".config/discord"
+      ".config/WebCord"
       ".config/Element"
 
       ".local/state/wireplumber"
