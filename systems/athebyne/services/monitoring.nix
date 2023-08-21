@@ -15,26 +15,22 @@
           job_name = "node_exporter";
           static_configs = [{
             targets = [
-              "${toString exporters.node.listenAddress}:${toString exporters.node.port}"
-              "192.168.1.2:9100"
+              "athebyne.nevi.network:${toString exporters.node.port}"
+              "funi.nevi.network:${toString exporters.node.port}"
             ];
           }];
         }
         {
           job_name = "smartctl";
           static_configs = [{
-            targets = [ "${toString exporters.smartctl.listenAddress}:${toString exporters.smartctl.port}" ];
+            targets = [ "athebyne.nevi.network:${toString exporters.smartctl.port}" ];
           }];
         }
       ];
 
-    exporters.node = {
-      enable = true;
-      listenAddress = "localhost";
-    };
+    exporters.node.enable = true;
     exporters.smartctl = {
       enable = true;
-      listenAddress = "localhost";
       devices = [
         "/dev/sda"
         "/dev/sdb"

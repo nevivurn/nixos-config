@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, ... }:
+{ lib, inputs, ... }:
 
 with inputs;
 
@@ -19,7 +19,11 @@ in
 
     ./router.nix
 
+    ./services/chrony.nix
     ./services/dns.nix
+    ./services/hostapd.nix
+    ./services/inadyn.nix
+    ./services/monitoring.nix
     ./services/openssh.nix
   ];
 
@@ -44,7 +48,7 @@ in
   environment.etc."machine-id".text = "${machineId}\n";
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
-  networking.domain = "lan";
+  networking.domain = "nevi.network";
 
   services.resolved.dnssec = "false";
   # services.resolved.fallbackDns does not support empty lists
@@ -101,11 +105,6 @@ in
       ATH10K_DFS_CERTIFIED = yes;
     };
   }];
-
-  specialisation.xanmod.configuration = {
-    system.nixos.tags = [ "xanmod" ];
-    boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
-  };
 
   # Remove references to unnecessary dependencies
   environment.defaultPackages = [ ];

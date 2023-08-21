@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   cfg = config.services.caddy;
@@ -6,12 +6,18 @@ in
 {
   services.caddy = {
     enable = true;
+    package = pkgs.pkgsUnstable.caddyWithCloudflare;
 
     email = "yseong.p@gmail.com";
 
     virtualHosts."athebyne.nevi.network" = {
       extraConfig = ''
-        @private remote_ip 10.42.42.0/24 192.168.1.0/24 fd5e:77c8:d76e:1::/64
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+
+        @private remote_ip 10.42.42.0/24 192.168.2.0/24 fd5e:77c8:d76e:1::/64 fdbc:ba6a:38de::/64
         encode zstd gzip
 
         handle @private {
@@ -36,6 +42,8 @@ in
     };
   };
   systemd.services.caddy.serviceConfig = {
+    EnvironmentFile = "/persist/secrets/cf-api-token";
+
     CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
     LockPersonality = true;
     MemoryDenyWriteExecute = true;

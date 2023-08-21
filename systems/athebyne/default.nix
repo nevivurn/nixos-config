@@ -117,6 +117,8 @@ in
   environment.etc."machine-id".text = "${machineId}\n";
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
+  networking.domain = "nevi.network";
+  networking.timeServers = [ ];
 
   # spare open port
   networking.firewall.allowedTCPPorts = [ 7777 ];
@@ -199,10 +201,13 @@ in
 
   ## Other hardware-specific configuration
 
-  # I have no idea what I'm doing, but this improves throughput significantly
   boot.kernel.sysctl = {
+    # I have no idea what I'm doing, but this improves throughput significantly
     "net.core.default_qdisc" = "fq";
     "net.ipv4.tcp_congestion_control" = "bbr";
+    # For caddy (quic-go)
+    "net.core.rmem_max" = 2500000;
+    "net.core.wmem_max" = 2500000;
   };
 
   # for hw accel
