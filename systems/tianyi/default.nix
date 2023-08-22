@@ -117,7 +117,6 @@ in
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
-          Domains = [ "~athebyne.nevi.network" ];
         };
       };
 
