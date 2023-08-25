@@ -31,6 +31,10 @@ with inputs;
       interface = "br-lan";
       bind-interfaces = true;
 
+      interface-name = [
+        "public.nevi.network,enp1s0/4"
+      ];
+
       # public names are cached in unbound and client-side
       cache-size = 0;
 
