@@ -102,7 +102,7 @@ in
         };
         wireguardPeers = [{
           wireguardPeerConfig = {
-            Endpoint = "athebyne.nevi.network:6666";
+            Endpoint = "public.nevi.network:6666";
             PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
             PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
             AllowedIPs = [ "0.0.0.0/0" "::/0" ];
@@ -117,6 +117,7 @@ in
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
+          Domains = [ "~public.nevi.network" ];
         };
       };
 
@@ -126,7 +127,7 @@ in
         networkConfig = {
           Address = [
             "10.42.42.2/24"
-            "fd5e:77c8:d76e:1::2/64"
+            "fdbc:ba6a:38de:1::2/64"
           ];
           DNS = "192.168.2.1";
           Domains = [ "~." ];
