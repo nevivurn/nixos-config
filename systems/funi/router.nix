@@ -3,11 +3,41 @@
   systemd.network = {
     enable = true;
     netdevs = {
-      br-lan = {
+      "10-br-lan" = {
         netdevConfig = {
           Name = "br-lan";
           Kind = "bridge";
         };
+      };
+      "40-wg-home" = {
+        netdevConfig = {
+          Name = "wg-home";
+          Kind = "wireguard";
+        };
+        wireguardConfig = {
+          PrivateKeyFile = "/secrets/wg-home-priv";
+          ListenPort = 6666;
+        };
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+          {
+            # tianyi
+            AllowedIPs = [ "10.42.42.2/32" "fdbc:ba6a:38de:1::2/128" ];
+            PublicKey = "JR9Zu+6QO8yBBE9WwbwEcdo6JVZ1pHsjb3P+mQIy3mY=";
+            PresharedKeyFile = "/secrets/wg-home-tianyi-psk";
+          }
+          {
+            # fafnir
+            AllowedIPs = [ "10.42.42.3/32" "fdbc:ba6a:38de:1::3/128" ];
+            PublicKey = "W2634QLtmqji5pZzlDh5Z02KegcCf3uleQqbtctOsTk=";
+            PresharedKeyFile = "/secrets/wg-home-fafnir-psk";
+          }
+          {
+            # altais
+            AllowedIPs = [ "10.42.42.6/32" "fdbc:ba6a:38de:1::6/128" ];
+            PublicKey = "F+Gz+s93TCYuFMYawdLF56gsjL6JNqOR7PglXbTZJgs=";
+            PresharedKeyFile = "/secrets/wg-home-altais-psk";
+          }
+        ];
       };
     };
     networks = {
@@ -50,6 +80,10 @@
           IPv6AcceptRA = false;
         };
       };
+      "40-wg-home" = {
+        matchConfig.Name = "wg-home";
+        networkConfig.Address = [ "10.42.42.1/24" "fdbc:ba6a:38de:1::1/64" ];
+      };
     };
   };
 
@@ -68,13 +102,12 @@
             udp . 443 : 192.168.2.10,
             tcp . 5555 : 192.168.2.10,
             udp . 5555 : 192.168.2.10,
-            udp . 6666 : 192.168.2.10,
             tcp . 7777 : 192.168.2.10
           }
         }
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
-          iifname "br-lan" oifname "enp1s0" masquerade
+          iifname { "br-lan", "wg-home" } oifname "enp1s0" masquerade
         }
       }
 
@@ -100,12 +133,13 @@
 
           iifname vmap {
             br-lan : jump forward_lan,
+            wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
           }
         }
 
         chain forward_lan {
-          oifname { "br-lan", "enp1s0" } accept
+          oifname { "br-lan", "wg-home", "enp1s0" } accept
         }
 
         chain forward_wan {
@@ -116,7 +150,6 @@
             udp . 443 : accept,
             tcp . 5555 : accept,
             udp . 5555 : accept,
-            udp . 6666 : accept,
             tcp . 7777 : accept
           }
         }
@@ -125,7 +158,12 @@
           type filter hook input priority filter; policy drop;
 
           ct state vmap { established : accept, related : accept, invalid : drop }
-          iifname vmap { lo : accept, br-lan : jump input_lan, enp1s0 : jump input_wan }
+          iifname vmap {
+            lo : accept,
+            br-lan : jump input_lan,
+            wg-home : jump input_lan,
+            enp1s0 : jump input_wan
+          }
         }
 
         chain input_lan {
@@ -137,6 +175,7 @@
             tcp . 53 : accept, udp . 53 : accept,
             udp . 67 : accept, udp . 547 : accept,
             udp . 123 : accept,
+            udp . 6666 : accept,
             tcp . 9100 : accept
           }
         }
@@ -144,6 +183,9 @@
         chain input_wan {
           icmp type { echo-request } accept
           icmpv6 type != { nd-redirect, 139, 140 } accept
+          meta l4proto . th dport vmap {
+            udp . 6666 : accept
+          }
         }
       }
     '';
