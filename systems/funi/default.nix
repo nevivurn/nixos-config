@@ -1,4 +1,4 @@
-{ lib, inputs, ... }:
+{ inputs, lib, pkgs, ... }:
 
 with inputs;
 
@@ -79,6 +79,14 @@ in
       ];
     };
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit (pkgs) system config;
+      };
+    })
+  ];
 
   home-manager = {
     useGlobalPkgs = true;
