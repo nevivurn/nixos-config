@@ -8,7 +8,7 @@ let
     provider default@cloudflare.com {
       username = nevi.network
       password = @password@
-      hostname = funi.nevi.network
+      hostname = public.nevi.network
     }
   '';
 
