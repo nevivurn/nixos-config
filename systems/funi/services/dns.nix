@@ -56,6 +56,7 @@ with inputs;
       ];
       dhcp-host = [
         "92:ef:6d:2b:7b:cf,192.168.2.10,athebyne.nevi.network"
+        "a8:a1:59:6f:4d:54,192.168.2.11,athebyne-boot.nevi.network"
         "id:00:02:00:00:ab:11:df:85:50:1e:9b:2a:af:84,[fdbc:ba6a:38de::10],athebyne.nevi.network"
       ];
       enable-ra = true;
