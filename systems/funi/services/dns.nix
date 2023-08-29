@@ -35,6 +35,8 @@ with inputs;
         "public.nevi.network,enp1s0/4"
       ];
 
+      addn-hosts = [ "/secrets/dnsmasq-hosts" ];
+
       # public names are cached in unbound and client-side
       cache-size = 0;
 
