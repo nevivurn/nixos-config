@@ -17,6 +17,7 @@
             targets = [
               "athebyne.nevi.network:${toString exporters.node.port}"
               "funi.nevi.network:${toString exporters.node.port}"
+              "tianyi.nevi.network:${toString exporters.node.port}"
             ];
           }];
         }

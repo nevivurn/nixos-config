@@ -18,6 +18,7 @@ in
     nixos-hardware.nixosModules.common-gpu-amd
 
     ./services/backups.nix
+    ./services/monitoring.nix
   ];
 
   ## Filesystems
