@@ -414,6 +414,12 @@ in
     };
   };
 
+  services.gammastep = {
+    enable = true;
+    latitude = 37.56;
+    longitude = 126.99;
+  };
+
   home.persistence."/persist${config.home.homeDirectory}" = {
     directories = [
       ".config/Moonlight Game Streaming Project"
