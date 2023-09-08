@@ -1,4 +1,4 @@
-{ lib, buildGoModule, caddy, plugins ? [ ], vendorHash, ... }:
+{ lib, buildGoModule, caddy, plugins ? [ ], vendorHash ? "sha256-K9HPZnr+hMcK5aEd1H4gEg6PXAaNrNWFvaHYm5m62JY=", ... }:
 
 let
   patchScript = lib.concatMapStrings
