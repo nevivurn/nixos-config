@@ -11,6 +11,7 @@
     terraform
 
     restic
+    (unison.override { enableX11 = false; })
   ];
   home.sessionVariables = {
     DOCKER_HOST = "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
@@ -19,7 +20,7 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    config.whitelist.prefix = [ "${config.home.homeDirectory}/code/nevi" ];
+    config.whitelist.prefix = [ "/persist/home/nevivurn/code/nevi" ];
   };
 
   programs.neovim = {
@@ -132,7 +133,7 @@
     directories = [
       ".aws"
       ".ssh"
-      "code"
+      { directory = "code"; method = "symlink"; }
     ];
   };
 }
