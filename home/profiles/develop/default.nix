@@ -11,6 +11,7 @@
     terraform
 
     restic
+    (unison.override { enableX11 = false; })
   ];
   home.sessionVariables = {
     DOCKER_HOST = "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
@@ -129,7 +130,7 @@
     directories = [
       ".aws"
       ".ssh"
-      "code"
+      { directory = "code"; method = "symlink"; }
     ];
   };
 }
