@@ -176,7 +176,8 @@
             udp . 67 : accept, udp . 547 : accept,
             udp . 123 : accept,
             udp . 6666 : accept,
-            tcp . 9100 : accept
+            tcp . 9100 : accept,
+            tcp . 9586 : accept,
           }
         }
 
