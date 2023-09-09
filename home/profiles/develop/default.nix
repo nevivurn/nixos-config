@@ -123,6 +123,7 @@
     directories = [
       ".cache"
       ".terraform.d"
+      ".unison"
     ];
   };
   home.persistence."/persist${config.home.homeDirectory}" = {
