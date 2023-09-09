@@ -19,7 +19,7 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    config.whitelist.prefix = [ "${config.home.homeDirectory}/code/nevi" ];
+    config.whitelist.prefix = [ "/mnt/athebyne/share/code" ];
   };
 
   programs.neovim = {
@@ -117,6 +117,12 @@
     plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
   '';
 
+  home.persistence."/mnt/athebyne/share" = {
+    directories = [{
+      directory = "code";
+      method = "symlink";
+    }];
+  };
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
@@ -129,7 +135,6 @@
     directories = [
       ".aws"
       ".ssh"
-      "code"
     ];
   };
 }
