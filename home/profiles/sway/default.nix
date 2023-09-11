@@ -158,6 +158,7 @@ in
 
           "${mod}+r" = "mode resize";
           "${mod}+Shift+e" = "mode exit";
+          "${mod}+Shift+o" = "exec loginctl lock-session";
 
           "${mod}+d" = "exec ${menu}";
 
@@ -394,6 +395,22 @@ in
       WHEEL_DOWN = "ignore";
       WHEEL_LEFT = "ignore";
       WHEEL_RIGHT = "ignore";
+    };
+  };
+
+  services.swayidle = {
+    enable = true;
+    events =
+      let swaylock = config.programs.swaylock.package; in
+      [
+        { command = "${swaylock}/bin/swaylock -f"; event = "lock"; }
+        { command = "${swaylock}/bin/swaylock -f"; event = "before-sleep"; }
+      ];
+  };
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      image = "~/pics/bg";
     };
   };
 
