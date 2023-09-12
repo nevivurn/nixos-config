@@ -136,6 +136,9 @@ in
     "net.ipv4.tcp_congestion_control" = "bbr";
   };
 
+  # swaylock locks out otherwise
+  security.pam.services.swaylock = { };
+
   # podman requires system-level config
   virtualisation.podman = {
     enable = true;
