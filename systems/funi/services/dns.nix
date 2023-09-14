@@ -24,6 +24,9 @@ with inputs;
       address = [
         "/funi.nevi.network/192.168.2.1"
         "/funi.nevi.network/fdbc:ba6a:38de::1"
+
+        "/tianyi.home.nevi.network/10.42.42.2"
+        "/tianyi.home.nevi.network/fdbc:ba6a:38de:1::2"
       ];
       cname = [
         "matrix.nevi.network,athebyne.nevi.network"

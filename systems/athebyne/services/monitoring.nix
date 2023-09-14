@@ -18,6 +18,7 @@
               "athebyne.nevi.network:${toString exporters.node.port}"
               "funi.nevi.network:${toString exporters.node.port}"
               "taiyi.nevi.network:${toString exporters.node.port}"
+              "tianyi.home.nevi.network:${toString exporters.node.port}"
             ];
           }];
         }
