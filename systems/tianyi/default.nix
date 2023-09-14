@@ -15,6 +15,8 @@ in
     self.nixosModules.graphical
 
     nixos-hardware.nixosModules.dell-xps-13-9370
+
+    ./services/monitoring.nix
   ];
 
   ## Filesystems
