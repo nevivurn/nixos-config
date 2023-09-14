@@ -89,6 +89,8 @@ in
   environment.etc."machine-id".text = "${machineId}\n";
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
+  networking.domain = "nevi.network";
+  networking.timeServers = [ ];
 
   systemd.network = {
     netdevs = {
@@ -132,6 +134,7 @@ in
             "fdbc:ba6a:38de:1::2/64"
           ];
           DNS = "192.168.2.1";
+          NTP = "funi.nevi.network";
           Domains = [ "~." ];
         };
         routingPolicyRules = [{
