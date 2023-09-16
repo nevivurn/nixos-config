@@ -12,4 +12,8 @@ let extras = import ./default.nix final; in
       ./gnucash/extra-quote-sources.patch
     ];
   });
+
+  element-desktop = prev.element-desktop.override {
+    electron = final.electron_26;
+  };
 }

@@ -45,7 +45,7 @@ in
 
     discord
     webcord # for screen sharing, for now
-    element-desktop
+    element-desktop-wayland
     protonmail-bridge
     slack
     weechat
