@@ -9,4 +9,7 @@
 
   # caddy with extra plugins
   caddyWithPlugins = pkgs.callPackage ./caddy-with-plugins { };
+
+  # kubectl with plugins
+  kubectlWithPlugins = pkgs.callPackage ./kubectl-with-plugins { };
 }

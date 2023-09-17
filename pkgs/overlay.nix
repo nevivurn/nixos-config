@@ -3,7 +3,11 @@ final: prev:
 let extras = import ./default.nix final; in
 
 {
-  inherit (extras) hosts passmenu caddyWithPlugins;
+  inherit (extras)
+    caddyWithPlugins
+    hosts
+    kubectlWithPlugins
+    passmenu;
 
   # Remove fractional units for KRW
   gnucash = prev.gnucash.overrideAttrs (prev: {
