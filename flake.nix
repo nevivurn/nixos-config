@@ -66,10 +66,7 @@
         };
       };
 
-      checks.${system} =
-        builtins.mapAttrs (_: v: v.config.system.build.toplevel)
-          # do not build funi in CI, building the kernel takes too many resources
-          (lib.filterAttrs (k: _: k != "funi") self.nixosConfigurations);
+      checks.${system} = builtins.mapAttrs (_: v: v.config.system.build.toplevel) self.nixosConfigurations;
 
       nixosConfigurations = {
         taiyi = lib.nixosSystem {
