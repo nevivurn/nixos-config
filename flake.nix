@@ -41,10 +41,10 @@
       apps.${system} = {
         nvd-diff = {
           type = "app";
-          program = builtins.toString (pkgs.writeScript "nvd-diff" ''
+          program = (pkgs.writeScript "nvd-diff" ''
             nixos-rebuild build
             ${pkgs.nvd}/bin/nvd diff /run/current-system ./result
-          '');
+          '').outPath;
         };
 
         nix-update = {
@@ -58,11 +58,11 @@
                   lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file)
                 self.packages.${system});
             in
-            builtins.toString (pkgs.writeScript "nix-update" ''
+            (pkgs.writeScript "nix-update" ''
               for pkg in ${builtins.concatStringsSep " " upPkgs}; do
                 ${updater}/bin/nix-update -F --commit ''${pkg}
               done
-            '');
+            '').outPath;
         };
       };
 

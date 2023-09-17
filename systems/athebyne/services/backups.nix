@@ -32,10 +32,9 @@
       "--exclude=/data/vm"
     ];
     passwordFile = "/data/keys/restic-password";
-    environmentFile = builtins.toString
-      (pkgs.writeText "restic-gcp-creds" ''
-        GOOGLE_APPLICATION_CREDENTIALS=/data/keys/restic-unified-gcp
-      '');
+    environmentFile = (pkgs.writeText "restic-gcp-creds" ''
+      GOOGLE_APPLICATION_CREDENTIALS=/data/keys/restic-unified-gcp
+    '').outPath;
 
     repository = "gs:nevi-backups-sp:athebyne";
     extraOptions = [ "gs.connections=10" ];
