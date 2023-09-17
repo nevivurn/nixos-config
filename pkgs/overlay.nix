@@ -1,14 +1,7 @@
 final: prev:
 
-let extras = import ./default.nix final; in
-
+import ./default.nix prev //
 {
-  inherit (extras)
-    caddyWithPlugins
-    hosts
-    kubectlWithPlugins
-    passmenu;
-
   # Remove fractional units for KRW
   gnucash = prev.gnucash.overrideAttrs (prev: {
     patches = prev.patches ++ [
