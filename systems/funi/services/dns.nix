@@ -71,17 +71,17 @@ with inputs;
 
       domain = "nevi.network";
       dhcp-fqdn = true;
-    };
 
-    extraConfig = builtins.readFile (pkgs.runCommand "dnsmasq-hosts" { } ''
-      < ${self.packages.${pkgs.system}.hosts}/hosts \
-          grep ^0.0.0.0 \
-        | awk '{print $2}' \
-        | tail -n+2 \
-      > hosts
-      awk '{print "local=/" $0 "/"}' hosts >> $out
-      awk '{print "address=/" $0 "/0.0.0.0"}' hosts >> $out
-    '');
+      conf-file = (pkgs.runCommand "dnsmasq-hosts" { } ''
+        < ${self.packages.${pkgs.system}.hosts}/hosts \
+            grep ^0.0.0.0 \
+          | awk '{print $2}' \
+          | tail -n+2 \
+        > hosts
+        awk '{print "local=/" $0 "/"}' hosts >> $out
+        awk '{print "address=/" $0 "/0.0.0.0"}' hosts >> $out
+      '').outPath;
+    };
   };
   systemd.services.dnsmasq = {
     after = [ "network-online.target" ];

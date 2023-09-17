@@ -45,7 +45,7 @@ in
 
     discord
     webcord # for screen sharing, for now
-    element-desktop
+    element-desktop-wayland
     protonmail-bridge
     slack
     weechat
@@ -89,13 +89,15 @@ in
     enable = true;
     font.name = "FiraCode Nerd Font";
     font.size = 10;
-    theme = "Dracula";
     settings = {
       shell_integration = "enabled";
       enable_audio_bell = false;
       background_opacity = "0.8";
       dynamic_background_opacity = true;
     };
+    extraConfig = ''
+      include ${pkgs.kitty-themes}/share/kitty-themes/themes/Dracula.conf
+    '';
   };
 
   i18n.inputMethod = {

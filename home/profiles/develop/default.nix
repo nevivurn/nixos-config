@@ -6,8 +6,8 @@
   home.packages = with pkgs; [
     awscli2
     docker-compose
-    google-cloud-sdk
-    kubectl
+    (google-cloud-sdk.withExtraComponents (with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]))
+    (kubectlWithPlugins.override { plugins = [ kubelogin-oidc ]; })
     terraform
 
     restic
