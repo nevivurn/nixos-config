@@ -16,12 +16,16 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      lib = nixpkgs.lib;
     in
     {
       formatter.${system} = pkgs.nixpkgs-fmt;
 
-      packages.${system} = import ./pkgs { inherit pkgs; };
+      # Overlay including custom and overriden packages
       overlays.default = import ./pkgs/overlay.nix;
+      # Only custom packages, included in above overlay.
+      # Mainly for nix-update, so it can automatically update my packages.
+      packages.${system} = import ./pkgs { inherit pkgs; };
 
       nixosModules = {
         default = import ./nixos/modules;
@@ -48,7 +52,11 @@
           program =
             let
               updater = nix-update.packages.${system}.nix-update;
-              upPkgs = builtins.attrNames (nixpkgs.lib.filterAttrs (_: p: p?version) self.packages.${system});
+              upPkgs = builtins.attrNames (lib.filterAttrs
+                (_: p:
+                  p?version &&
+                  lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file)
+                self.packages.${system});
             in
             builtins.toString (pkgs.writeScript "nix-update" ''
               for pkg in ${builtins.concatStringsSep " " upPkgs}; do
@@ -61,22 +69,22 @@
       checks.${system} =
         builtins.mapAttrs (_: v: v.config.system.build.toplevel)
           # do not build funi in CI, building the kernel takes too many resources
-          (nixpkgs.lib.filterAttrs (k: _: k != "funi") self.nixosConfigurations);
+          (lib.filterAttrs (k: _: k != "funi") self.nixosConfigurations);
 
       nixosConfigurations = {
-        taiyi = nixpkgs.lib.nixosSystem {
+        taiyi = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ ./systems/taiyi ];
         };
 
-        athebyne = nixpkgs.lib.nixosSystem {
+        athebyne = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [ ./systems/athebyne ];
         };
 
-        funi = nixpkgs.lib.nixosSystem {
+        funi = lib.nixosSystem {
           inherit system;
           specialArgs.inputs = {
             inherit (inputs) self nixpkgs nixpkgs-unstable nixos-hardware home-manager;
