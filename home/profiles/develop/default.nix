@@ -130,6 +130,8 @@
     allowOther = true;
     directories = [
       ".aws"
+      ".config/gcloud"
+      ".kube"
       ".ssh"
       { directory = "code"; method = "symlink"; }
     ];
