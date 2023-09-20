@@ -53,6 +53,10 @@
         indent_style = "space";
         indent_size = 2;
       };
+      "*.tf" = {
+        indent_style = "space";
+        indent_size = 2;
+      };
     };
   };
 
