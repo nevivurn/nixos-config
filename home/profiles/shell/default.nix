@@ -215,6 +215,13 @@
         identityFile = "/home/nevivurn/code/datium/id_ed25519_datium";
         identitiesOnly = true;
       };
+
+      # for cfds class
+      "cfds.snu.ac.kr" = {
+        hostname = "147.47.200.192";
+        user = "shpc051";
+        proxyJump = "martini.snucse.org";
+      };
     };
   };
 }
