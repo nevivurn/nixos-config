@@ -17,6 +17,7 @@ in
     nixos-hardware.nixosModules.dell-xps-13-9370
 
     ./services/monitoring.nix
+    ./services/openssh.nix
   ];
 
   ## Filesystems
@@ -182,6 +183,10 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "video" ];
     passwordFile = "/persist/secrets/passwd-nevivurn";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJ1U9//g+W2pRNdBaiADCMhAWlfWt3Ha1zwfR+iwMoZ nevivurn@tianyi"
+    ];
   };
   home-manager.users.nevivurn = import ./home;
 
