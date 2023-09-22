@@ -9,8 +9,4 @@ import ./default.nix prev //
       ./gnucash/extra-quote-sources.patch
     ];
   });
-
-  element-desktop = prev.element-desktop.override {
-    electron = final.electron_26;
-  };
 }
