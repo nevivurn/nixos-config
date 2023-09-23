@@ -140,6 +140,7 @@ in
         };
         routingPolicyRules = [{
           routingPolicyRuleConfig = {
+            Family = "both";
             FirewallMark = 51820;
             InvertRule = true;
             Table = 51820;
