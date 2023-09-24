@@ -46,7 +46,7 @@ in
     discord
     webcord # for screen sharing, for now
     element-desktop-wayland
-    protonmail-bridge
+    pkgsUnstable.protonmail-bridge
     (writeScriptBin "slack" ''
       #!/bin/sh
       NIXOS_OZONE_WL=1 exec ${slack}/bin/slack "$@"
