@@ -10,8 +10,9 @@
     impermanence.url = "github:nix-community/impermanence";
 
     nix-darwin.url = "github:LnL7/nix-darwin";
-    home-manager-unstable.url = "github:nix-community/home-manager";
-    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager-darwin.url = "github:nix-community/home-manager";
+    home-manager-darwin.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
   };
 
   outputs =
@@ -95,7 +96,7 @@
           system = "aarch64-darwin";
           specialArgs.inputs = inputs // {
             nixpkgs = inputs.nixpkgs-unstable;
-            home-manager = inputs.home-manager-unstable;
+            home-manager = inputs.home-manager-darwin;
           };
           modules = [ ./systems/dziban ];
         };
