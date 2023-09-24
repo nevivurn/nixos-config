@@ -12,7 +12,4 @@
 
   # kubectl with plugins
   kubectlWithPlugins = pkgs.callPackage ./kubectl-with-plugins { };
-
-  # firefox on darwin
-  firefox-darwin = pkgs.callPackage ./firefox-darwin { };
 }

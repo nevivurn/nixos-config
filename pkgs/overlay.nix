@@ -9,4 +9,6 @@ import ./default.nix prev //
       ./gnucash/extra-quote-sources.patch
     ];
   });
+
+  firefox = if prev.hostPlatform.isDarwin then final.callPackage ./firefox-darwin { } else prev.firefox;
 }
