@@ -4,6 +4,6 @@ with inputs;
 
 {
   imports = [
-    self.homeModules.develop
+    self.homeModules.shell
   ];
 }

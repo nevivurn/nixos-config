@@ -5,7 +5,7 @@
     file
     pv
     tree
-    psmisc
+    #psmisc
 
     unixtools.xxd
 
@@ -15,8 +15,8 @@
     (p7zip.override { enableUnfree = true; })
     unzip
 
-    ethtool
-    iw
+    #ethtool
+    #iw
     ldns
     mtr
     openssl
@@ -27,7 +27,7 @@
     binutils
     gnumake
 
-    lm_sensors
+    #lm_sensors
   ];
 
   home.shellAliases = {
