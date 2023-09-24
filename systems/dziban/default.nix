@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 with inputs;
 
@@ -25,8 +25,20 @@ with inputs;
 
   home-manager.users.nevivurn = import ./home;
 
-  services.nix-daemon.enable = true;
-
-  programs.bash.enable = true;
   programs.zsh.enable = true;
+  programs.bash.enable = true;
+
+  services.nix-daemon.enable = true;
+  users.users.nevivurn.home = "/Users/nevivurn";
+  users.users.nevivurn.shell = pkgs.bashInteractive;
+
+  networking = {
+    hostName = "dziban";
+    computerName = config.networking.hostName;
+  };
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 }
