@@ -1,11 +1,10 @@
-{ lib, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
     file
     pv
     tree
-    psmisc
 
     unixtools.xxd
 
@@ -15,8 +14,6 @@
     (p7zip.override { enableUnfree = true; })
     unzip
 
-    ethtool
-    iw
     ldns
     mtr
     openssl
@@ -27,6 +24,10 @@
     binutils
     gnumake
 
+  ] ++ lib.optionals pkgs.hostPlatform.isLinux [
+    psmisc
+    ethtool
+    iw
     lm_sensors
   ];
 
