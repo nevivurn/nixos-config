@@ -11,8 +11,6 @@ with inputs;
     ./qbittorrent.nix
     ./users.nix
 
-    ./fix-nfs4-kernel.nix
-
     home-manager.nixosModules.home-manager
     impermanence.nixosModules.impermanence
   ];
