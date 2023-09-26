@@ -152,8 +152,6 @@
 
       vim-vsnip
       cmp-vsnip
-
-      editorconfig-nvim
     ];
 
     viAlias = true;
