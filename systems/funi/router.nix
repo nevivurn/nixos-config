@@ -32,6 +32,12 @@
             PresharedKeyFile = "/secrets/wg-home-fafnir-psk";
           }
           {
+            # dziban
+            AllowedIPs = [ "10.42.42.4/32" "fdbc:ba6a:38de:1::4/128" ];
+            PublicKey = "WAIgHHOWecTbkNv7dnwH98FDFjDmKIf1zno/+Lu+3ws=";
+            PresharedKeyFile = "/secrets/wg-home-dziban-psk";
+          }
+          {
             # altais
             AllowedIPs = [ "10.42.42.6/32" "fdbc:ba6a:38de:1::6/128" ];
             PublicKey = "F+Gz+s93TCYuFMYawdLF56gsjL6JNqOR7PglXbTZJgs=";
