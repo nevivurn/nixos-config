@@ -309,6 +309,7 @@ in
         settings.format_muted = "&#xf028; (%volume)";
         settings.device = "pulse";
       };
+      # leave enough space for per-machine modules
       "time" = {
         position = 9;
         settings.format = "%Y-%m-%d (%a) %H:%M:%S";
@@ -377,9 +378,6 @@ in
     enable = true;
     config = {
       hwdec = "auto";
-      profile = "gpu-hq";
-      scale = "ewa_lanczossharp";
-      cscale = "ewa_lanczossharp";
       video-sync = "display-resample";
       interpolation = true;
       tscale = "oversample";

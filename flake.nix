@@ -79,6 +79,12 @@
           modules = [ ./systems/taiyi ];
         };
 
+        tianyi = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/tianyi ];
+        };
+
         athebyne = lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
