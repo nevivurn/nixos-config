@@ -119,12 +119,7 @@ in
       fonts = { names = [ "FiraCode Nerd Font" ]; size = 10.0; };
 
       input = {
-        "type:keyboard" = { xkb_options = "ctrl:swapcaps,korean:ralt_hangul"; };
-        "type:touch" = { events = "disabled"; };
-        "type:touchpad" = {
-          tap = "enabled";
-          dwt = "enabled";
-        };
+        "type:keyboard" = { xkb_options = "korean:ralt_hangul"; };
       };
       output = {
         "*" = { bg = "~/pics/bg fill"; };
@@ -177,12 +172,10 @@ in
           "${mod}+Shift+p" = "exec ${passMenu} -o -t";
           "${mod}+Mod1+Shift+p" = "exec ${passMenu} -o -c";
 
-          "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
-          "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
-          "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-
-          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +1%";
-          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 1%-";
+          "${mod}+Prior" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
+          "${mod}+Next" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
+          "${mod}+Home" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ 1";
+          "${mod}+End" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
 
           "Control+Space" = "exec makoctl dismiss";
           "Control+Escape" = "exec makoctl restore";
@@ -316,19 +309,7 @@ in
         settings.format_muted = "&#xf028; (%volume)";
         settings.device = "pulse";
       };
-      "wireless wlan0" = {
-        position = 4;
-        settings.format_up = "&#xf1eb; %essid";
-        settings.format_down = "&#xf1eb;";
-      };
-      "battery 0" = {
-        position = 5;
-        settings.format = "%status %percentage";
-        settings.status_chr = "&#xf0e7;";
-        settings.status_bat = "&#xf241;";
-        settings.status_unk = "&#x3f;";
-        settings.status_full = "&#xf240;";
-      };
+      # leave enough space for per-machine modules
       "time" = {
         position = 9;
         settings.format = "%Y-%m-%d (%a) %H:%M:%S";
