@@ -1,5 +1,7 @@
 {
   inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -7,25 +9,57 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-update.url = "github:Mic92/nix-update/0.19.3";
-    nix-update.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager-darwin.url = "github:nix-community/home-manager";
+    home-manager-darwin.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
   };
 
   outputs =
-    { self, nixpkgs, home-manager, nix-update, ... } @ inputs:
+    { self, flake-utils, nixpkgs, ... } @ inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
       lib = nixpkgs.lib;
     in
-    {
-      formatter.${system} = pkgs.nixpkgs-fmt;
 
+    flake-utils.lib.eachSystem systems
+      (system:
+      let pkgs = nixpkgs.legacyPackages.${system}; in
+      {
+        formatter = pkgs.nixpkgs-fmt;
+
+        # Only custom packages, included self.overlays.default.
+        # Mainly for nix-update, so it can automatically update my packages.
+        packages = import ./pkgs { inherit pkgs; };
+
+        apps = {
+          nvd-diff = flake-utils.lib.mkApp {
+            drv = pkgs.writeScriptBin "nvd-diff" ''
+              nixos-rebuild build
+              ${pkgs.nvd}/bin/nvd diff /run/current-system ./result
+            '';
+          };
+
+          nix-update = flake-utils.lib.mkApp {
+            drv =
+              let
+                upPkgs = builtins.attrNames (lib.filterAttrs
+                  (_: p:
+                    p?version &&
+                    lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file)
+                  self.packages.${system});
+              in
+              pkgs.writeScriptBin "nix-update" ''
+                for pkg in ${builtins.concatStringsSep " " upPkgs}; do
+                  ${pkgs.nix-update}/bin/nix-update -F --commit ''${pkg}
+                done
+              '';
+          };
+        };
+      }) //
+    {
       # Overlay including custom and overriden packages
       overlays.default = import ./pkgs/overlay.nix;
-      # Only custom packages, included in above overlay.
-      # Mainly for nix-update, so it can automatically update my packages.
-      packages.${system} = import ./pkgs { inherit pkgs; };
 
       nixosModules = {
         default = import ./nixos/modules;
@@ -38,39 +72,9 @@
         shell = import ./home/profiles/shell;
       };
 
-      apps.${system} = {
-        nvd-diff = {
-          type = "app";
-          program = (pkgs.writeScript "nvd-diff" ''
-            nixos-rebuild build
-            ${pkgs.nvd}/bin/nvd diff /run/current-system ./result
-          '').outPath;
-        };
-
-        nix-update = {
-          type = "app";
-          program =
-            let
-              updater = nix-update.packages.${system}.nix-update;
-              upPkgs = builtins.attrNames (lib.filterAttrs
-                (_: p:
-                  p?version &&
-                  lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file)
-                self.packages.${system});
-            in
-            (pkgs.writeScript "nix-update" ''
-              for pkg in ${builtins.concatStringsSep " " upPkgs}; do
-                ${updater}/bin/nix-update -F --commit ''${pkg}
-              done
-            '').outPath;
-        };
-      };
-
-      checks.${system} = builtins.mapAttrs (_: v: v.config.system.build.toplevel) self.nixosConfigurations;
-
       nixosConfigurations = {
         taiyi = lib.nixosSystem {
-          inherit system;
+          system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [ ./systems/taiyi ];
         };
@@ -82,17 +86,25 @@
         };
 
         athebyne = lib.nixosSystem {
-          inherit system;
+          system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [ ./systems/athebyne ];
         };
 
         funi = lib.nixosSystem {
-          inherit system;
-          specialArgs.inputs = {
-            inherit (inputs) self nixpkgs nixpkgs-unstable nixos-hardware home-manager;
-          };
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [ ./systems/funi ];
+        };
+      };
+      darwinConfigurations = {
+        dziban = inputs.nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs.inputs = inputs // {
+            nixpkgs = inputs.nixpkgs-unstable;
+            home-manager = inputs.home-manager-darwin;
+          };
+          modules = [ ./systems/dziban ];
         };
       };
     };
