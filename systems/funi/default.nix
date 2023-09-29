@@ -94,6 +94,8 @@ in
 
   hardware.enableRedistributableFirmware = true;
 
+  services.irqbalance.enable = true;
+
   # Patches adapted from OpenWRT:
   # Allow overriding firmware regulatory domain
   networking.wireless.athUserRegulatoryDomain = true;
