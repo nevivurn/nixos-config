@@ -29,9 +29,16 @@ with inputs;
   programs.bash.enable = true;
 
   services.nix-daemon.enable = true;
-  users.users.nevivurn.home = "/Users/nevivurn";
-  users.users.nevivurn.shell = pkgs.bashInteractive;
-  environment.loginShell = "${pkgs.bashInteractive}/bin/bash -l";
+
+  users.users.nevivurn = {
+    home = "/Users/nevivurn";
+    shell = pkgs.bashInteractive;
+  };
+  environment = {
+    shells = [ pkgs.bashInteractive ];
+    variables.SHELL = "/run/current-system/sw/bin/bash";
+
+  };
 
   networking = {
     hostName = "dziban";
