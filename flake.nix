@@ -61,6 +61,9 @@
       # Overlay including custom and overriden packages
       overlays.default = import ./pkgs/overlay.nix;
 
+      # Ensure dziban evaluates correctly
+      checks.aarch64-darwin.dziban = self.darwinConfigurations.dziban.system;
+
       nixosModules = {
         default = import ./nixos/modules;
         graphical = import ./nixos/profiles/graphical;
