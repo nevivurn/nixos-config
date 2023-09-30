@@ -130,12 +130,6 @@ in
 
   ## Other hardware-specific configuration
 
-  boot.kernel.sysctl = {
-    # Experimenting with bbr
-    "net.core.default_qdisc" = "fq";
-    "net.ipv4.tcp_congestion_control" = "bbr";
-  };
-
   # swaylock locks out otherwise
   security.pam.services.swaylock = { };
 

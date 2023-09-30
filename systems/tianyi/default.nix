@@ -211,12 +211,6 @@ in
 
   ## Other hardware-specific configuration
 
-  boot.kernel.sysctl = {
-    # Experimenting with bbr
-    "net.core.default_qdisc" = "fq";
-    "net.ipv4.tcp_congestion_control" = "bbr";
-  };
-
   # Keyboard setup
   services.xserver.xkbOptions = "ctrl:swapcaps,korean:ralt_hangul";
   console.useXkbConfig = true;

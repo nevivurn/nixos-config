@@ -6,6 +6,7 @@ with inputs;
   imports = [
     ./boot.nix
     ./maintenance.nix
+    ./misc.nix
     ./networking.nix
     ./nix.nix
     ./qbittorrent.nix
