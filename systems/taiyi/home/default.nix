@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 with inputs;
 
@@ -13,4 +13,8 @@ with inputs;
     scale = "ewa_lanczossharp";
     cscale = "ewa_lanczossharp";
   };
+
+  home.packages = with pkgs; [
+    picocom
+  ];
 }
