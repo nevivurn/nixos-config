@@ -108,7 +108,6 @@
             udp . 443 : 192.168.2.10,
             tcp . 5555 : 192.168.2.10,
             udp . 5555 : 192.168.2.10,
-            tcp . 7777 : 192.168.2.10
           }
         }
         chain postrouting {
@@ -156,7 +155,6 @@
             udp . 443 : accept,
             tcp . 5555 : accept,
             udp . 5555 : accept,
-            tcp . 7777 : accept
           }
         }
 
@@ -168,7 +166,7 @@
             lo : accept,
             br-lan : jump input_lan,
             wg-home : jump input_lan,
-            enp1s0 : jump input_wan
+            enp1s0 : jump input_wan,
           }
         }
 
@@ -182,6 +180,7 @@
             udp . 67 : accept, udp . 547 : accept,
             udp . 123 : accept,
             udp . 6666 : accept,
+            tcp . 7777 : accept,
             tcp . 9100 : accept,
             tcp . 9586 : accept,
           }
@@ -191,7 +190,7 @@
           icmp type { echo-request } accept
           icmpv6 type != { nd-redirect, 139, 140 } accept
           meta l4proto . th dport vmap {
-            udp . 6666 : accept
+            udp . 6666 : accept,
           }
         }
       }
