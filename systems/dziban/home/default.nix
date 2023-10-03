@@ -89,6 +89,33 @@ with inputs;
     '';
   };
 
+  programs.mpv = {
+    enable = true;
+    config = {
+      hwdec = "auto";
+      video-sync = "display-resample";
+      interpolation = true;
+      tscale = "oversample";
+
+      pause = true;
+      osc = false;
+      audio-display = false;
+
+      osd-font = "Noto Sans";
+      osd-font-size = 20;
+      osd-border-size = 1;
+
+      alang = "ja,jpn";
+      slang = "enm,eng,en";
+    };
+    bindings = {
+      WHEEL_UP = "ignore";
+      WHEEL_DOWN = "ignore";
+      WHEEL_LEFT = "ignore";
+      WHEEL_RIGHT = "ignore";
+    };
+  };
+
   programs.gpg.enable = true;
 
   programs.git.extraConfig = {
