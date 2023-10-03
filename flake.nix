@@ -30,7 +30,9 @@
 
         # Only custom packages, included self.overlays.default.
         # Mainly for nix-update, so it can automatically update my packages.
-        packages = import ./pkgs { inherit pkgs; };
+        packages =
+          import ./pkgs { inherit pkgs; } //
+          (if (pkgs.stdenv.isDarwin) then import ./pkgs/default-darwin.nix { inherit pkgs; } else { });
 
         apps = {
           nvd-diff = flake-utils.lib.mkApp {

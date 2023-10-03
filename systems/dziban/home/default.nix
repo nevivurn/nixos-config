@@ -15,6 +15,7 @@ with inputs;
     noto-fonts-emoji
     firefox
     (unison.override { enableX11 = false; })
+    unison-fsmonitor
   ];
 
   programs.neovim = {
