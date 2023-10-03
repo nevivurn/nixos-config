@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+pkgs:
 
 {
   # unison-fsmonitor for mac

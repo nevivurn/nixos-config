@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+pkgs:
 
 {
   # custom passmenu allowing generic tools for dmenu / xdotool alternatives
@@ -12,4 +12,5 @@
 
   # kubectl with plugins
   kubectlWithPlugins = pkgs.callPackage ./kubectl-with-plugins { };
-}
+} //
+pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin (import ./darwin.nix pkgs)

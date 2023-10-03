@@ -2,8 +2,6 @@ final: prev:
 
 import ./default.nix prev //
 
-(if (prev.stdenv.isDarwin) then import ./default-darwin.nix prev else { }) //
-
 {
   # Remove fractional units for KRW
   gnucash = prev.gnucash.overrideAttrs (prev: {
@@ -13,5 +11,5 @@ import ./default.nix prev //
     ];
   });
 
-  firefox = if prev.hostPlatform.isDarwin then final.callPackage ./firefox-darwin { } else prev.firefox;
+  firefox = if final.stdenv.isDarwin then final.callPackage ./firefox-darwin { } else prev.firefox;
 }
