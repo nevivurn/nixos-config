@@ -36,24 +36,27 @@
           nvd-diff = flake-utils.lib.mkApp {
             drv = pkgs.writeScriptBin "nvd-diff" ''
               nixos-rebuild build
-              ${pkgs.nvd}/bin/nvd diff /run/current-system ./result
+              ${lib.getExe pkgs.nvd} diff /run/current-system ./result
             '';
           };
 
           nix-update = flake-utils.lib.mkApp {
             drv =
               let
-                upPkgs = builtins.attrNames (lib.filterAttrs
-                  (_: p:
-                    p?version &&
-                    lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file)
-                  self.packages.${system});
+                isUpdatable = p:
+                  p?version &&
+                  lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file;
+                upPkgs = lib.flatten
+                  (builtins.map
+                    (system: builtins.map
+                      (name: { inherit system name; })
+                      (builtins.attrNames (lib.filterAttrs (_: isUpdatable) self.packages.${system})))
+                    systems);
               in
-              pkgs.writeScriptBin "nix-update" ''
-                for pkg in ${builtins.concatStringsSep " " upPkgs}; do
-                  ${pkgs.nix-update}/bin/nix-update -F --commit ''${pkg}
-                done
-              '';
+              pkgs.writeScriptBin "nix-update"
+                (lib.concatMapStringsSep "\n"
+                  (ps: "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${ps.name}")
+                  upPkgs);
           };
         };
       }) //
