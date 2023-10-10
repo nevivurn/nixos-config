@@ -116,6 +116,6 @@ in
   environment.defaultPackages = [ ];
   programs.nano.syntaxHighlight = false;
 
-  # Unlike other systems, we have a *gasp* persisten root filesystem
+  # Unlike other systems, we have a *gasp* persistent root filesystem
   boot.tmp.cleanOnBoot = true;
 }
