@@ -93,6 +93,8 @@ in
   networking.domain = "nevi.network";
   networking.timeServers = [ ];
 
+  networking.firewall.checkReversePath = "loose";
+
   systemd.network = {
     netdevs = {
       "30-wg-home" = {
