@@ -47,10 +47,7 @@ in
     webcord # for screen sharing, for now
     element-desktop-wayland
     pkgsUnstable.protonmail-bridge
-    (writeScriptBin "slack" ''
-      #!/bin/sh
-      NIXOS_OZONE_WL=1 exec ${slack}/bin/slack "$@"
-    '')
+    slack
     weechat
   ];
 
