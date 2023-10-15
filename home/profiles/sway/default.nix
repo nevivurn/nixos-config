@@ -291,8 +291,9 @@ in
       "memory" = {
         position = 1;
         settings.format = "&#xf2db; %percentage_used";
-        settings.threshold_degraded = "20%";
-        settings.threshold_critical = "10%";
+        settings.memory_used_method = "memavailable";
+        settings.threshold_degraded = "80%";
+        settings.threshold_critical = "90%";
       };
       "disk /" = {
         position = 2;
