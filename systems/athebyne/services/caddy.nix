@@ -6,10 +6,10 @@ in
 {
   services.caddy = {
     enable = true;
-    package = pkgs.pkgsUnstable.caddyWithPlugins.override (prev: {
+    package = pkgs.pkgsUnstable.caddy.withModules {
       plugins = [{ name = "github.com/caddy-dns/cloudflare"; }];
-      vendorHash = "sha256-mwIsWJYKuEZpOU38qZOG1LEh4QpK4EO0/8l4UGsroU8=";
-    });
+      vendorHash = "sha256-0KfMzTt4lNzVfoCfDHhC2ue3OWICkFCHuhREiM2JPMY=";
+    };
 
     email = "yseong.p@gmail.com";
 
