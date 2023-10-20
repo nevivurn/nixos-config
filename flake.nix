@@ -28,8 +28,9 @@
       {
         formatter = pkgs.nixpkgs-fmt;
 
-        # Only custom packages, included self.overlays.default.
+        # Only custom packages, included in self.overlays.default.
         # Mainly for nix-update, so it can automatically update my packages.
+        # Everything else just uses the overlay.
         packages = import ./pkgs pkgs;
 
         apps = {
