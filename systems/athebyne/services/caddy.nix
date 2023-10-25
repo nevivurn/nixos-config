@@ -23,16 +23,16 @@ in
         @private remote_ip 192.168.2.0/24 fdbc:ba6a:38de::/64 10.42.42.0/24 fdbc:ba6a:38de:1::/64
         encode zstd gzip
 
-        redir /jellyfin /jellyfin/
-        route /jellyfin/* {
-          reverse_proxy localhost:8096
-        }
-
         handle @private {
           redir /torrents /torrents/
           route /torrents/* {
             uri strip_prefix /torrents
             reverse_proxy localhost:8080
+          }
+
+          redir /jellyfin /jellyfin/
+          route /jellyfin/* {
+            reverse_proxy localhost:8096
           }
 
           redir /grafana /grafana/
