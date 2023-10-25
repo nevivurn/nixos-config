@@ -209,8 +209,6 @@ in
 
   # for hw accel
   hardware.opengl.enable = true;
-  # but we don't need the everything else
-  hardware.amdgpu.opencl = false;
 
   # podman requires system-level config
   virtualisation.podman = {
