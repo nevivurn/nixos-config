@@ -55,9 +55,10 @@
                     systems);
               in
               pkgs.writeScriptBin "nix-update"
-                ((lib.concatMapStringsSep "\n"
+                ("nix flake update --commit-lock-file\n" +
+                (lib.concatMapStringsSep "\n"
                   (ps: "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${ps.name}")
-                  upPkgs) + "\nnix flake update --commit-lock-file");
+                  upPkgs));
           };
         };
       }) //
