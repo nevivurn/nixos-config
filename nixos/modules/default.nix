@@ -5,6 +5,7 @@ with inputs;
 {
   imports = [
     ./boot.nix
+    ./kavita.nix
     ./maintenance.nix
     ./misc.nix
     ./networking.nix
