@@ -9,8 +9,5 @@ pkgs:
 
   # kubectl with plugins
   kubectlWithPlugins = pkgs.callPackage ./kubectl-with-plugins { };
-
-  # kavita, ref: https://github.com/NixOS/nixpkgs/pull/263649
-  kavita = pkgs.callPackage ./kavita { };
-} //
-pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin (import ./darwin.nix pkgs)
+} // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux (import ./linux.nix pkgs)
+  // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin (import ./darwin.nix pkgs)
