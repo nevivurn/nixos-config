@@ -49,4 +49,18 @@ import ./default.nix prev //
   });
 
   firefox = if final.stdenv.isDarwin then final.callPackage ./firefox-darwin { } else prev.firefox;
+
+  # ref:
+  # - https://gitlab.freedesktop.org/mesa/mesa/-/issues/9009
+  # - https://gitlab.freedesktop.org/mesa/mesa/-/commit/2c1da7fbde06900433993fda7813114510d59c0c
+  mesa = prev.mesa.overrideAttrs (finalAttrs: prevAttrs: {
+    patches = prevAttrs.patches
+    ++ final.lib.optionals (final.lib.versionOlder finalAttrs.version "23.1") [
+      (final.fetchpatch {
+        name = "mpv-segfault-patch";
+        url = "https://gitlab.freedesktop.org/mesa/mesa/-/commit/2c1da7fbde06900433993fda7813114510d59c0c.patch";
+        hash = "sha256-RMw6T4WAwoitjYO0PINGLFiOApGaN6rkgD2Da4iEeYI=";
+      })
+    ];
+  });
 }
