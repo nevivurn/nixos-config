@@ -53,6 +53,7 @@ import ./default.nix prev //
   # ref:
   # - https://gitlab.freedesktop.org/mesa/mesa/-/issues/9009
   # - https://gitlab.freedesktop.org/mesa/mesa/-/commit/2c1da7fbde06900433993fda7813114510d59c0c
+  # doesn't fix ffmpeg segfaults, hopefully fixed on 23.11? (23.3)
   mesa = prev.mesa.overrideAttrs (finalAttrs: prevAttrs: {
     patches = prevAttrs.patches
     ++ final.lib.optionals (final.lib.versionOlder finalAttrs.version "23.1") [
