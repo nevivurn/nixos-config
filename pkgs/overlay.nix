@@ -56,7 +56,7 @@ import ./default.nix prev //
   # doesn't fix ffmpeg segfaults, hopefully fixed on 23.11? (23.3)
   mesa = prev.mesa.overrideAttrs (finalAttrs: prevAttrs: {
     patches = prevAttrs.patches
-    ++ final.lib.optionals (final.lib.versionOlder finalAttrs.version "23.1") [
+    ++ final.lib.optionals (final.lib.versionOlder finalAttrs.version "23.1" && final.lib.versionAtLeast finalAttrs.version "23.0") [
       (final.fetchpatch {
         name = "mpv-segfault-patch";
         url = "https://gitlab.freedesktop.org/mesa/mesa/-/commit/2c1da7fbde06900433993fda7813114510d59c0c.patch";
