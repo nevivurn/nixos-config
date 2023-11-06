@@ -14,7 +14,7 @@ with inputs;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
     sharedModules = [{
-      home.stateVersion = "23.11";
+      home.stateVersion = "23.05";
     }];
   };
 

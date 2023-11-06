@@ -4,15 +4,18 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
+
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-darwin.url = "github:nix-community/home-manager/release-23.05";
+    home-manager-darwin.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
 
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    home-manager-darwin.url = "github:nix-community/home-manager";
-    home-manager-darwin.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   outputs =
@@ -112,7 +115,7 @@
         dziban = inputs.nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs.inputs = inputs // {
-            nixpkgs = inputs.nixpkgs-unstable;
+            nixpkgs = inputs.nixpkgs-darwin;
             home-manager = inputs.home-manager-darwin;
           };
           modules = [ ./systems/dziban ];
