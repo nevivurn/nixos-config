@@ -150,7 +150,7 @@
       dracula-vim
 
       (nvim-treesitter.withPlugins (p: with p; [ nix ]))
-      nvim-lspconfig
+      pkgs.pkgsUnstable.vimPlugins.nvim-lspconfig
 
       nvim-cmp
       cmp-nvim-lsp

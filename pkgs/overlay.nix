@@ -50,6 +50,19 @@ import ./default.nix prev //
 
   firefox = if final.stdenv.isDarwin then final.callPackage ./firefox-darwin { } else prev.firefox;
 
+  vimPlugins = prev.vimPlugins.extend (_: _: {
+    tree-sitter-templ = final.vimUtils.buildVimPlugin {
+      pname = "tree-sitter-templ";
+      version = "2023-10-28";
+      src = final.fetchFromGitHub {
+        owner = "vrischmann";
+        repo = "tree-sitter-templ";
+        rev = "89e5957b47707b16be1832a2753367b91fb85be0";
+        hash = "sha256-nNC0mMsn5KAheFqOQNbbcXYnyd2S8EoGc1k+1Zi6PVc=";
+      };
+    };
+  });
+
   # ref:
   # - https://gitlab.freedesktop.org/mesa/mesa/-/issues/9009
   # - https://gitlab.freedesktop.org/mesa/mesa/-/commit/2c1da7fbde06900433993fda7813114510d59c0c
