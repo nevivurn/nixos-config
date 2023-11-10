@@ -18,7 +18,15 @@ with inputs;
     }];
   };
 
-  nixpkgs.overlays = [ self.overlays.default ];
+  nixpkgs.overlays = [
+    self.overlays.default
+    (final: prev: {
+      pkgsUnstable = import inputs.nixpkgs-unstable {
+        inherit (pkgs) system config;
+        overlays = [ self.overlays.default ];
+      };
+    })
+  ];
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.extra-experimental-features = [ "nix-command" "flakes" ];
