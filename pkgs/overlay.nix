@@ -48,8 +48,6 @@ import ./default.nix prev //
     ;
   });
 
-  firefox = if final.stdenv.isDarwin then final.callPackage ./firefox-darwin { } else prev.firefox;
-
   vimPlugins = prev.vimPlugins.extend (_: _: {
     tree-sitter-templ = final.vimUtils.buildVimPlugin {
       pname = "tree-sitter-templ";

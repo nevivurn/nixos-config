@@ -13,7 +13,6 @@ with inputs;
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
-    firefox
     (unison.override { enableX11 = false; })
     unison-fsmonitor
   ];
