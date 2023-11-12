@@ -40,7 +40,11 @@ with inputs;
         wlp4s0 = {
           ssid = "alruba";
           apIsolate = true;
-          authentication.saePasswordsFile = "/secrets/wpa-passwords";
+          authentication = {
+            mode = "wpa3-sae-transition";
+            wpaPasswordFile = "/secrets/wpa-passwords";
+            saePasswordsFile = "/secrets/wpa-passwords";
+          };
         };
       };
     };
