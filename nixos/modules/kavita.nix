@@ -80,21 +80,6 @@ in
         User = cfg.user;
       };
     };
-
-    systemd.tmpfiles.rules = [
-      "d '${cfg.dataDir}'        0750 ${cfg.user} ${cfg.user} - -"
-      "d '${cfg.dataDir}/config' 0750 ${cfg.user} ${cfg.user} - -"
-    ];
-
-    users = {
-      users.${cfg.user} = {
-        description = "kavita service user";
-        isSystemUser = true;
-        group = cfg.user;
-        home = cfg.dataDir;
-      };
-      groups.${cfg.user} = { };
-    };
   };
 
   meta.maintainers = with lib.maintainers; [ misterio77 ];

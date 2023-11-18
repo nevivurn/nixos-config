@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 let cfg = config.services.kavita; in
 {
@@ -19,7 +19,36 @@ let cfg = config.services.kavita; in
     };
   };
 
+  systemd.services.kavita = {
+    preStart = lib.mkBefore ''
+      mkdir -p ${cfg.dataDir}/config
+    '';
+    serviceConfig = {
+      #MemoryDenyWriteExecute = false;
+      CapabilityBoundingSet = "";
+      DynamicUser = true;
+      LockPersonality = true;
+      PrivateDevices = true;
+      PrivateUsers = true;
+      ProcSubset = "pid";
+      ProtectClock = true;
+      ProtectControlGroups = true;
+      ProtectHome = true;
+      ProtectHostname = true;
+      ProtectKernelLogs = true;
+      ProtectKernelModules = true;
+      ProtectKernelTunables = true;
+      ProtectProc = "invisible";
+      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+      RestrictNamespaces = true;
+      RestrictRealtime = true;
+      StateDirectory = "kavita";
+      SystemCallArchitectures = "native";
+      SystemCallFilter = "@system-service";
+    };
+  };
+
   environment.persistence = {
-    "/persist".directories = [ cfg.dataDir ];
+    "/persist".directories = [ "/var/lib/private/kavita" ];
   };
 }
