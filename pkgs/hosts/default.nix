@@ -2,13 +2,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "hosts";
-  version = "3.14.27";
+  version = "3.14.28";
 
   src = fetchFromGitHub {
     owner = "StevenBlack";
     repo = "hosts";
     rev = version;
-    hash = "sha256-gPb9kYeekll9MavKPq6r43jMkmzQW3NLaTPss6VrM2Q=";
+    hash = "sha256-jxOIhWmrog/iVt6GXhBICK/WOKQVuO9CYAKqzLMw1zo=";
   };
 
   installPhase = ''
