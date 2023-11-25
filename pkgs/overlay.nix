@@ -75,10 +75,4 @@ import ./default.nix prev //
       })
     ];
   });
-
-  # ref: https://github.com/NixOS/nixpkgs/pull/269680
-  # remove on next 23.05 update
-  buildMozillaMach = opts: (prev.buildMozillaMach opts).overrideAttrs {
-    NIX_LDFLAGS = [ "-L${final.stdenv.cc.cc.lib}/lib" ];
-  };
 }
