@@ -2,13 +2,13 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager-darwin.url = "github:nix-community/home-manager/release-23.05";
+    home-manager-darwin.url = "github:nix-community/home-manager/release-23.11";
     home-manager-darwin.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
