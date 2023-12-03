@@ -1,17 +1,8 @@
-{ inputs, config, pkgs, ... }:
-
-with inputs;
+{ config, ... }:
 
 {
-  # Use unstable post-23.05 hostapd module.
-  disabledModules = [ "${nixpkgs}/nixos/modules/services/networking/hostapd.nix" ];
-  imports = [ "${nixpkgs-unstable}/nixos/modules/services/networking/hostapd.nix" ];
-
   services.hostapd = {
     enable = true;
-
-    # unstable post-23.05 hostapd has OCV
-    package = pkgs.pkgsUnstable.hostapd;
 
     radios.wlp4s0 = {
       countryCode = "KR";

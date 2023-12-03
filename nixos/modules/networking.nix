@@ -5,6 +5,7 @@ lib.mkMerge [
     networking = {
       nftables.enable = true;
       dhcpcd.enable = false;
+      useDHCP = false;
     };
     systemd.network.enable = true;
   }

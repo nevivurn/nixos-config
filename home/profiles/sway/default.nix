@@ -24,7 +24,7 @@ in
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
 
     (passmenu.override { pass = config.programs.password-store.package; })
     sway-contrib.grimshot
@@ -36,7 +36,7 @@ in
     mediainfo
     yt-dlp
 
-    pkgsUnstable.gnucash
+    gnucash
     liquidctl
     moonlight-qt
     pavucontrol
@@ -44,7 +44,7 @@ in
     virt-manager
 
     discord
-    pkgsUnstable.webcord # for screen sharing, for now
+    webcord # for screen sharing, for now
     element-desktop-wayland
     pkgsUnstable.protonmail-bridge
     pkgsUnstable.slack
@@ -111,7 +111,7 @@ in
 
   wayland.windowManager.sway = {
     enable = true;
-    systemdIntegration = true;
+    systemd.enable = true;
     config = {
       fonts = { names = [ "FiraCode Nerd Font" ]; size = 10.0; };
 

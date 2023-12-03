@@ -185,7 +185,7 @@ in
   users.users.nevivurn = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" ];
-    passwordFile = "/persist/secrets/passwd-nevivurn";
+    hashedPasswordFile = "/persist/secrets/passwd-nevivurn";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJ1U9//g+W2pRNdBaiADCMhAWlfWt3Ha1zwfR+iwMoZ nevivurn@tianyi"
@@ -214,7 +214,7 @@ in
   ## Other hardware-specific configuration
 
   # Keyboard setup
-  services.xserver.xkbOptions = "ctrl:swapcaps,korean:ralt_hangul";
+  services.xserver.xkb.options = "ctrl:swapcaps,korean:ralt_hangul";
   console.useXkbConfig = true;
 
   # swaylock locks out otherwise

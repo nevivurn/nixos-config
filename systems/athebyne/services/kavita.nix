@@ -4,7 +4,7 @@ let cfg = config.services.kavita; in
 {
   services.kavita = {
     enable = true;
-    package = pkgs.pkgsUnstable.kavita.overrideAttrs (prev: {
+    package = pkgs.kavita.overrideAttrs (prev: {
       frontend = prev.frontend.overrideAttrs {
         postPatch = ''
           sed -i 's|base href="/"|base href="${cfg.settings.BaseUrl}"|' src/index.html

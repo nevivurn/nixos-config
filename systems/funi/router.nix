@@ -1,5 +1,6 @@
 {
   networking.dhcpcd.enable = false;
+  networking.useDHCP = false;
   systemd.network = {
     enable = true;
     netdevs = {

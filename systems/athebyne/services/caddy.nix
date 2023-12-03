@@ -6,7 +6,7 @@ in
 {
   services.caddy = {
     enable = true;
-    package = pkgs.pkgsUnstable.caddy.withModules {
+    package = pkgs.caddy.withModules {
       plugins = [{ name = "github.com/caddy-dns/cloudflare"; }];
       vendorHash = "sha256-uyEjAktinJhV3u5xFWAHbBPAX5NZ5utLiCwUVgZVjGw=";
     };

@@ -28,7 +28,7 @@ in
     ./services/openssh.nix
   ];
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 
   ## Filesystems
 
@@ -67,7 +67,7 @@ in
     nevivurn = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
-      passwordFile = "/secrets/passwd-nevivurn";
+      hashedPasswordFile = "/secrets/passwd-nevivurn";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJ1U9//g+W2pRNdBaiADCMhAWlfWt3Ha1zwfR+iwMoZ nevivurn@tianyi"
@@ -111,10 +111,6 @@ in
       ATH10K_DFS_CERTIFIED = yes;
     };
   }];
-
-  # Remove references to unnecessary dependencies
-  environment.defaultPackages = [ ];
-  programs.nano.syntaxHighlight = false;
 
   # Unlike other systems, we have a *gasp* persistent root filesystem
   boot.tmp.cleanOnBoot = true;
