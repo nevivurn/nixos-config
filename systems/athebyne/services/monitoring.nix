@@ -75,8 +75,8 @@
         allowUiUpdates = false;
         options.path = pkgs.fetchurl {
           name = "node-exporter.json";
-          url = "https://grafana.com/api/dashboards/1860/revisions/31/download";
-          hash = "sha256-QsRHsnayYRRGc+2MfhaKGYpNdH02PesnR5b50MDzHIg=";
+          url = "https://grafana.com/api/dashboards/1860/revisions/33/download";
+          hash = "sha256-lKT6RV47W32Ho+lMkFb19h9Ys1Ms7CtEqIGf7ED6B4E=";
         };
       }];
     };
