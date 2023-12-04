@@ -47,17 +47,4 @@ import ./default.nix prev //
       }
     ;
   });
-
-  vimPlugins = prev.vimPlugins.extend (_: _: {
-    tree-sitter-templ = final.vimUtils.buildVimPlugin {
-      pname = "tree-sitter-templ";
-      version = "2023-10-28";
-      src = final.fetchFromGitHub {
-        owner = "vrischmann";
-        repo = "tree-sitter-templ";
-        rev = "89e5957b47707b16be1832a2753367b91fb85be0";
-        hash = "sha256-nNC0mMsn5KAheFqOQNbbcXYnyd2S8EoGc1k+1Zi6PVc=";
-      };
-    };
-  });
 }

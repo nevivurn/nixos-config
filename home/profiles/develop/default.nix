@@ -45,18 +45,6 @@
       let g:go_list_type = "quickfix"
 
       lua << EOF
-        local treesitter_parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-        treesitter_parser_config.templ = {
-          install_info = {
-            url = "https://github.com/vrischmann/tree-sitter-templ.git",
-            files = {"src/parser.c", "src/scanner.c"},
-            branch = "master",
-          },
-        }
-        vim.treesitter.language.register('templ', 'templ')
-      EOF
-
-      lua << EOF
         -- TODO unduplicate this part?
         local on_attach = function(client, bufnr)
           local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -88,14 +76,7 @@
       yaml-language-server
     ];
     plugins = with pkgs.vimPlugins; [
-      tree-sitter-templ
-      (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars ++ [
-        (pkgs.tree-sitter.buildGrammar {
-          language = "templ";
-          inherit (tree-sitter-templ) version src;
-          meta = { }; # errors if null
-        })
-      ]))
+      (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
       vim-go
     ];
   };
