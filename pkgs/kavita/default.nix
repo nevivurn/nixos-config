@@ -11,13 +11,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kavita";
-  version = "0.7.10.2";
+  version = "0.7.11";
 
   src = fetchFromGitHub {
     owner = "kareadita";
     repo = "kavita";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-pycWkeaMFkaGL3IcBg581Td4HZmbK+I4g0TR4nIvU8k=";
+    hash = "sha256-hJZnNWIYoixareX0Nm6txpqDOkJMMYj9aeR9D4985zo=";
   };
 
   backend = buildDotnetModule {
@@ -28,7 +28,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       # web assets and translations are hardcoded to be relative to the working directory otherwise
       (substituteAll {
         src = ./change-asset-dirs.diff;
-        web_root = "${finalAttrs.frontend}/lib/node_modules/kavita-webui/dist";
+        web_root = "${finalAttrs.frontend}/lib/node_modules/kavita-webui/dist/browser";
         # i18n_root is substituted in postPatch, as it requires backend's output path
       })
     ];
@@ -55,7 +55,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     npmBuildScript = "prod";
     npmFlags = [ "--legacy-peer-deps" ];
     npmRebuildFlags = [ "--ignore-scripts" ]; # Prevent playwright from trying to install browsers
-    npmDepsHash = "sha256-rS9EdcPRZM/dbZJ55p/VDB7B39ZrrD8TJn0DKB6hCr4=";
+    npmDepsHash = "sha256-AgNbJIdaz7ZiHIbGbMm5QV/XKeotY6G3rTnKMPDKxZo=";
   };
 
   dontBuild = true;
