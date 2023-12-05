@@ -24,7 +24,6 @@ let cfg = config.services.kavita; in
       mkdir -p ${cfg.dataDir}/config
     '';
     serviceConfig = {
-      #MemoryDenyWriteExecute = false;
       CapabilityBoundingSet = "";
       DynamicUser = true;
       LockPersonality = true;

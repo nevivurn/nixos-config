@@ -20,6 +20,7 @@ in
     ./services/caddy.nix
     ./services/jellyfin.nix
     ./services/kavita.nix
+    ./services/monero.nix
     ./services/monitoring.nix
     ./services/nfs.nix
     ./services/openssh.nix
