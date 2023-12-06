@@ -70,15 +70,16 @@
         };
 
       }];
-      dashboards.settings.providers = [{
-        name = "node-exporter";
-        allowUiUpdates = false;
-        options.path = pkgs.fetchurl {
-          name = "node-exporter.json";
-          url = "https://grafana.com/api/dashboards/1860/revisions/33/download";
-          hash = "sha256-lKT6RV47W32Ho+lMkFb19h9Ys1Ms7CtEqIGf7ED6B4E=";
-        };
-      }];
+      # broken for some reason, figure out later
+      #dashboards.settings.providers = [{
+      #  name = "node-exporter";
+      #  allowUiUpdates = false;
+      #  options.path = pkgs.fetchurl {
+      #    name = "node-exporter.json";
+      #    url = "https://grafana.com/api/dashboards/1860/revisions/33/download";
+      #    hash = "sha256-lKT6RV47W32Ho+lMkFb19h9Ys1Ms7CtEqIGf7ED6B4E=";
+      #  };
+      #}];
     };
     settings = {
       server.http_addr = "localhost";
