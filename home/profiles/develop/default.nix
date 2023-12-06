@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   imports = [ ../shell ];
@@ -26,50 +26,9 @@
   };
 
   programs.neovim = {
-    extraConfig = ''
-      " go settings
-      function! s:build_go_files()
-        let l:file = expand('%')
-        if l:file =~# '^\f\+_test\.go$'
-          call go#test#Test(0, 1)
-        elseif l:file =~# '^\f\+\.go$'
-          call go#cmd#Build(0)
-        endif
-      endfunction
-
-      " go keybinds
-      autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-      autocmd FileType go nmap <leader>t <Plug>(go-test)
-      autocmd FileType go nmap <leader>c <Plug>(go-coverage-toggle)
-      autocmd FileType go nmap <leader>a <Plug>(go-alternate-edit)
-      let g:go_list_type = "quickfix"
-
-      lua << EOF
-        -- TODO unduplicate this part?
-        local on_attach = function(client, bufnr)
-          local bufopts = { noremap=true, silent=true, buffer=bufnr }
-
-          if client.server_capabilities.documentFormattingProvider then
-            vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-              buffer = bufnr,
-              callback = function() vim.lsp.buf.format() end,
-            })
-          end
-        end
-
-        require'lspconfig'.terraformls.setup { on_attach = on_attach }
-        require'lspconfig'.templ.setup { on_attach = on_attach }
-        require'lspconfig'.texlab.setup { on_attach = on_attach }
-        require'lspconfig'.tsserver.setup { on_attach = on_attach }
-        require'lspconfig'.yamlls.setup {
-          on_attach = on_attach,
-          settings = {
-            yaml = { keyOrdering = false }
-          },
-        }
-      EOF
-    '';
+    extraLuaConfig = lib.mkAfter (builtins.readFile ./nvim.lua);
     extraPackages = with pkgs; [
+      gopls
       nodePackages.typescript-language-server
       terraform-ls
       texlab
@@ -77,6 +36,7 @@
     ];
     plugins = with pkgs.vimPlugins; [
       (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
+      copilot-vim
       vim-go
     ];
   };
@@ -128,6 +88,7 @@
     allowOther = true;
     directories = [
       ".cache"
+      ".config/github-copilot"
       ".terraform.d"
       ".unison"
     ];
