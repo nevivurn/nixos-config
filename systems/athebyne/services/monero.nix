@@ -5,8 +5,6 @@
     enable = true;
     extraConfig = ''
       no-igd=1
-      no-zmq=1
-
       zmq-pub=tcp://127.0.0.1:18083
 
       out-peers=32
@@ -23,6 +21,9 @@
   };
 
   systemd.services.monero.serviceConfig = {
+    # disable RANDOMX_FLAG_JIT, otherwise segfaults for some reason
+    Environment = "MONERO_RANDOMX_UMASK=8";
+
     CapabilityBoundingSet = "";
     LockPersonality = true;
     MemoryDenyWriteExecute = true;
@@ -41,7 +42,7 @@
     ProtectProc = "invisible";
     ProtectSystem = "strict";
     RemoveIPC = true;
-    RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+    RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_NETLINK" ];
     RestrictNamespaces = true;
     RestrictRealtime = true;
     StateDirectory = "monero";
@@ -59,7 +60,7 @@
     serviceConfig = {
       User = "monero-p2pool";
       Group = "monero-p2pool";
-      ExecStart = "${pkgs.p2pool}/bin/p2pool --wallet 44nMXAaeWu26HnPSDXXNWWCcr2Bs9uBZtfd2r72VyjAbXKCFWBr6RMQdKpnYE8BWwR5SXwV7dJJHefSedd7rEsZTHQUUH3U --mini";
+      ExecStart = "${pkgs.p2pool}/bin/p2pool --wallet 44nMXAaeWu26HnPSDXXNWWCcr2Bs9uBZtfd2r72VyjAbXKCFWBr6RMQdKpnYE8BWwR5SXwV7dJJHefSedd7rEsZTHQUUH3U --no-randomx --no-igd --mini";
       WorkingDirectory = "%S/monero-p2pool";
       Restart = "always";
 
@@ -82,7 +83,7 @@
       ProtectProc = "invisible";
       #ProtectSystem = "strict";
       #RemoveIPC = true;
-      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
+      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" "AF_NETLINK" ];
       RestrictNamespaces = true;
       RestrictRealtime = true;
       StateDirectory = "monero-p2pool";
@@ -91,7 +92,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 18080 18081 ];
+  networking.firewall.allowedTCPPorts = [ 18080 18081 37888 ];
 
   environment.persistence = {
     "/persist/cache".directories = [
