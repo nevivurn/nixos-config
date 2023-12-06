@@ -108,14 +108,7 @@
           end
         end
 
-        require'lspconfig'.nil_ls.setup {
-          on_attach = on_attach,
-          settings = {
-            ['nil'] = {
-              formatting = { command = { 'nixpkgs-fmt' } }
-            },
-          },
-        }
+        require'lspconfig'.nixd.setup { on_attach = on_attach }
       EOF
 
       lua << EOF
@@ -143,7 +136,7 @@
       EOF
     '';
     extraPackages = with pkgs; [
-      nil
+      nixd
       nixpkgs-fmt
     ];
     plugins = with pkgs.vimPlugins; [
