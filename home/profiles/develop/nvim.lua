@@ -13,7 +13,7 @@ lspconfig.gopls.setup {
 
 				local ret = client.request_sync('textDocument/codeAction', params, 1000, bufnr)
 				if ret and ret.result then
-					for res in ret.result do
+					for _, res in pairs(ret.result) do
 						if res.edit then
 							local enc = client.offset_encoding or 'utf-16'
 							vim.lsp.util.apply_workspace_edit(res.edit, enc)
@@ -44,6 +44,7 @@ lspconfig.gopls.setup {
 }
 
 -- Simpler configs
+lspconfig.templ.setup {}
 lspconfig.terraformls.setup {}
 lspconfig.tsserver.setup {}
 lspconfig.yamlls.setup {}

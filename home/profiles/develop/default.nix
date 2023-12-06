@@ -31,7 +31,6 @@
       gopls
       nodePackages.typescript-language-server
       terraform-ls
-      texlab
       yaml-language-server
     ];
     plugins = with pkgs.vimPlugins; [
