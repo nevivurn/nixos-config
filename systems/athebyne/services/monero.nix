@@ -66,9 +66,7 @@
       CapabilityBoundingSet = "";
       LockPersonality = true;
       MemoryDenyWriteExecute = true;
-      #NoNewPrivileges = true;
       PrivateDevices = true;
-      #PrivateTmp = true;
       DynamicUser = true;
       PrivateUsers = true;
       ProcSubset = "pid";
@@ -80,8 +78,6 @@
       ProtectKernelModules = true;
       ProtectKernelTunables = true;
       ProtectProc = "invisible";
-      #ProtectSystem = "strict";
-      #RemoveIPC = true;
       RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" "AF_NETLINK" ];
       RestrictNamespaces = true;
       RestrictRealtime = true;
