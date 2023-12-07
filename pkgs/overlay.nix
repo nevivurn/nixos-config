@@ -31,7 +31,6 @@ import ./default.nix prev //
         buildGoModule = args: final.buildGoModule (args // {
           postPatch = patchScript;
           postConfigure = ''
-            ls
             cp vendor/go.mod vendor/go.sum ./
           '';
 
