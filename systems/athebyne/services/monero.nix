@@ -14,7 +14,6 @@
       sync-pruned-blocks=1
 
       confirm-external-bind=1
-      restricted-rpc=1
     '';
 
     rpc.address = "0.0.0.0";
@@ -92,7 +91,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 18080 18081 37888 ];
+  networking.firewall.allowedTCPPorts = [ 18080 18081 37888 3333 ];
 
   environment.persistence = {
     "/persist/cache".directories = [
