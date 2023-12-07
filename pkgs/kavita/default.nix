@@ -11,13 +11,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kavita";
-  version = "0.7.11";
+  version = "0.7.11.1";
 
   src = fetchFromGitHub {
     owner = "kareadita";
     repo = "kavita";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-hJZnNWIYoixareX0Nm6txpqDOkJMMYj9aeR9D4985zo=";
+    hash = "sha256-BdXdxDMXKT6EjTCYlVKQlKt8dTe4NjCFQt0k/eoOzc4=";
   };
 
   backend = buildDotnetModule {
