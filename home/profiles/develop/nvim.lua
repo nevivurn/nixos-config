@@ -46,5 +46,6 @@ lspconfig.gopls.setup {
 -- Simpler configs
 lspconfig.templ.setup {}
 lspconfig.terraformls.setup {}
+lspconfig.texlab.setup {}
 lspconfig.tsserver.setup {}
 lspconfig.yamlls.setup {}
