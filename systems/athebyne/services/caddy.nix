@@ -8,7 +8,7 @@ in
     enable = true;
     package = pkgs.caddy.withModules {
       plugins = [{ name = "github.com/caddy-dns/cloudflare"; }];
-      vendorHash = "sha256-uyEjAktinJhV3u5xFWAHbBPAX5NZ5utLiCwUVgZVjGw=";
+      vendorHash = "sha256-LxnYnkFpQFPZfEcJOMJSTkJ3pLSp7VXZUDMf6iH9qk4=";
     };
 
     email = "yseong.p@gmail.com";
