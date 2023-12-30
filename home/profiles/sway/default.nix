@@ -375,7 +375,7 @@ in
   programs.mpv = {
     enable = true;
     config = {
-      hwdec = "auto";
+      hwdec = "auto-safe";
       video-sync = "display-resample";
       interpolation = true;
       tscale = "oversample";
