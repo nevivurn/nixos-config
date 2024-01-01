@@ -82,9 +82,6 @@ with inputs;
         cscale = "ewa_lanczos";
         scale-blur = 0.981251;
         cscale-blur = 0.981251;
-
-        # default A
-        glsl-shaders = makeShaderHQ a4k_A;
       };
       bindings = {
         "D" = "cycle deband";
