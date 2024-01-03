@@ -87,7 +87,7 @@
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
-      { directory = ".cache"; method = "symlink"; }
+      ".cache"
       ".config/github-copilot"
       ".terraform.d"
       ".unison"
