@@ -322,43 +322,16 @@ in
       lines = 5;
       width = "15%";
     };
-    # from https://github.com/dracula/wofi/blob/master/style.css
-    style = ''
-      window {
-        margin: 0px;
-        border: 1px solid #bd93f9;
-        background-color: #282a36;
-        font-family: 'FiraCode Nerd Font';
-      }
-      #input {
-        margin: 5px;
-        border: none;
-        color: #f8f8f2;
-        background-color: #44475a;
-      }
-      #inner-box {
-        margin: 5px;
-        border: none;
-        background-color: #282a36;
-      }
-      #outer-box {
-        margin: 5px;
-        border: none;
-        background-color: #282a36;
-      }
-      #scroll {
-        margin: 0px;
-        border: none;
-      }
-      #text {
-        margin: 5px;
-        border: none;
-        color: #f8f8f2;
-      }
-      #entry:selected {
-        background-color: #44475a;
-      }
-    '';
+    style =
+      let
+        dracula = pkgs.fetchFromGitHub {
+          owner = "dracula";
+          repo = "wofi";
+          rev = "9180ba3ddda7d339293e8a1bf6a67b5ce37fdd6e";
+          hash = "sha256-qC1IvVJv1AmnGKm+bXadSgbc6MnrTzyUxGH2ogBOHQA=";
+        };
+      in
+      builtins.readFile "${dracula}/style.css";
   };
 
   services.mako = {
