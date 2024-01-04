@@ -322,17 +322,17 @@ in
       lines = 5;
       width = "15%";
     };
-    style =
-      let
-        dracula = pkgs.fetchFromGitHub {
-          owner = "dracula";
-          repo = "wofi";
-          rev = "9180ba3ddda7d339293e8a1bf6a67b5ce37fdd6e";
-          hash = "sha256-qC1IvVJv1AmnGKm+bXadSgbc6MnrTzyUxGH2ogBOHQA=";
-        };
-      in
-      builtins.readFile "${dracula}/style.css";
   };
+  xdg.configFile."wofi/style.css".source =
+    let
+      dracula = pkgs.fetchFromGitHub {
+        owner = "dracula";
+        repo = "wofi";
+        rev = "9180ba3ddda7d339293e8a1bf6a67b5ce37fdd6e";
+        hash = "sha256-qC1IvVJv1AmnGKm+bXadSgbc6MnrTzyUxGH2ogBOHQA=";
+      };
+    in
+    "${dracula}/style.css";
 
   services.mako = {
     enable = true;
