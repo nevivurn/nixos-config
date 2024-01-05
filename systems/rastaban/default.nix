@@ -82,10 +82,17 @@ in
         wireguardConfig = {
           PrivateKeyFile = "/persist/secrets/wg-proxy-priv";
           ListenPort = 6667;
+          RouteTable = "main";
         };
         wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
           {
-            AllowedIPs = [ "10.42.43.1/32" "fdbc:ba6a:38de:2::1/128" ];
+            AllowedIPs = [
+              "10.42.43.1/32"
+              # specify all subnets for ipv6 as we don't NAT on ipv6
+              "fdbc:ba6a:38de::/64" # lan
+              "fdbc:ba6a:38de:1::/64" # wg-home
+              "fdbc:ba6a:38de:2::/64" # wg-proxy
+            ];
             PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
             PresharedKeyFile = "/persist/secrets/wg-proxy-rastaban-psk";
             Endpoint = "athebyne.nevi.network:6667";
