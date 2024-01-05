@@ -110,6 +110,12 @@
           specialArgs = { inherit inputs; };
           modules = [ ./systems/funi ];
         };
+
+        iso = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/iso ];
+        };
       };
       darwinConfigurations = {
         dziban = inputs.nix-darwin.lib.darwinSystem {
