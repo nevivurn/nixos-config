@@ -209,12 +209,6 @@ in
     settings.allow-writes = "on";
   };
 
-  boot.kernel.sysctl = {
-    # For caddy (quic-go)
-    "net.core.rmem_max" = 2500000;
-    "net.core.wmem_max" = 2500000;
-  };
-
   # for hw accel
   hardware.opengl.enable = true;
 
