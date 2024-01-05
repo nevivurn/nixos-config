@@ -59,7 +59,7 @@
           {
             # rastaban
             AllowedIPs = [ "10.42.43.2/24" "fdbc:ba6a:38de:2::2/128" ];
-            PublicKey = "eauCcE4i8sBDFPXbiilSRmK1CQwrWy9nDM0EecGotzs=";
+            PublicKey = "6kG5+Yv6/PYyvK1Z9m/dbQs5MX14Sdo/N7FPONo6/30=";
             PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
           }
         ];
