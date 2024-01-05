@@ -72,15 +72,18 @@ with inputs;
       domain = "nevi.network";
       dhcp-fqdn = true;
 
-      conf-file = (pkgs.runCommand "dnsmasq-hosts" { } ''
-        < ${self.packages.${pkgs.system}.hosts}/hosts \
-            grep ^0.0.0.0 \
-          | awk '{print $2}' \
-          | tail -n+2 \
-        > hosts
-        awk '{print "local=/" $0 "/"}' hosts >> $out
-        awk '{print "address=/" $0 "/0.0.0.0"}' hosts >> $out
-      '').outPath;
+      conf-file = [
+        (pkgs.runCommand "dnsmasq-hosts" { } ''
+          < ${self.packages.${pkgs.system}.hosts}/hosts \
+              grep ^0.0.0.0 \
+            | awk '{print $2}' \
+            | tail -n+2 \
+          > hosts
+          awk '{print "local=/" $0 "/"}' hosts >> $out
+          awk '{print "address=/" $0 "/0.0.0.0"}' hosts >> $out
+        '').outPath
+        "/secrets/dnsmasq-extra-conf"
+      ];
     };
   };
   systemd.services.dnsmasq = {
