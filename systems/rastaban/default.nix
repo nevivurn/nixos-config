@@ -4,7 +4,7 @@ with inputs;
 
 let
   hostname = "rastaban";
-  machineId = "3eda2a5d5b1d4799b06be1becca6c37a";
+  machineId = "ecad351b4ef642f08efe0328a1972d60";
 in
 
 {
@@ -26,7 +26,7 @@ in
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-partuuid/ca6eab9a-2783-47eb-9578-6582ce9aa41e";
+      device = "/dev/disk/by-partuuid/fdfa2fb0-07d1-4d7e-a99b-84ca052d0cf4";
       fsType = "ext2";
       options = [ "noatime" ];
     };
@@ -50,7 +50,7 @@ in
     };
   };
   swapDevices = [{
-    device = "/dev/disk/by-partuuid/1eac4ac5-11c6-439f-8d11-228cddbc88f3";
+    device = "/dev/disk/by-partuuid/52a23b9b-4eb7-4ced-b5a8-1bf671dad89e";
   }];
   boot.zfs.devNodes = "/dev/disk/by-partuuid";
 
@@ -85,7 +85,7 @@ in
         };
         wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
           {
-            AllowedIPs = [ "10.42.43.1/24" "fdbc:ba6a:38de:2::1/128" ];
+            AllowedIPs = [ "10.42.43.1/32" "fdbc:ba6a:38de:2::1/128" ];
             PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
             PresharedKeyFile = "/persist/secrets/wg-proxy-rastaban-psk";
             Endpoint = "athebyne.nevi.network:6667";

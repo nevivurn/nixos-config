@@ -58,8 +58,8 @@
         wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
           {
             # rastaban
-            AllowedIPs = [ "10.42.43.2/24" "fdbc:ba6a:38de:2::2/128" ];
-            PublicKey = "6kG5+Yv6/PYyvK1Z9m/dbQs5MX14Sdo/N7FPONo6/30=";
+            AllowedIPs = [ "10.42.43.2/32" "fdbc:ba6a:38de:2::2/128" ];
+            PublicKey = "lU6yIAptWnX/kzYhdYucNYLgSya1xe8q+6Jvi6j7oQw=";
             PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
           }
         ];
