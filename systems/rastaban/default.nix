@@ -13,6 +13,7 @@ in
 
     self.nixosModules.default
 
+    ./services/caddy.nix
     ./services/openssh.nix
   ];
 
