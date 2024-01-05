@@ -25,8 +25,8 @@ in
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-partuuid/8cc75ee1-7928-4221-b15a-b24e0abd73e2";
-      fsType = "vfat";
+      device = "/dev/disk/by-partuuid/ca6eab9a-2783-47eb-9578-6582ce9aa41e";
+      fsType = "ext2";
       options = [ "noatime" ];
     };
 
@@ -51,9 +51,14 @@ in
   swapDevices = [{
     device = "/dev/disk/by-partuuid/1eac4ac5-11c6-439f-8d11-228cddbc88f3";
   }];
+  boot.zfs.devNodes = "/dev/disk/by-partuuid";
 
   ## Boot
 
+  # force BIOS boot
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+
+  boot.loader.grub.device = "/dev/vda";
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback rpool/local/root@empty
   '';
