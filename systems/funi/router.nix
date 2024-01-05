@@ -46,6 +46,24 @@
           }
         ];
       };
+      "50-wg-proxy" = {
+        netdevConfig = {
+          Name = "wg-proxy";
+          Kind = "wireguard";
+        };
+        wireguardConfig = {
+          PrivateKeyFile = "/secrets/wg-proxy-priv";
+          ListenPort = 6667;
+        };
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+          {
+            # rastaban
+            AllowedIPs = [ "10.42.43.2/24" "fdbc:ba6a:38de:2::2/128" ];
+            PublicKey = "eauCcE4i8sBDFPXbiilSRmK1CQwrWy9nDM0EecGotzs=";
+            PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
+          }
+        ];
+      };
     };
     networks = {
       # WAN
@@ -91,6 +109,10 @@
         matchConfig.Name = "wg-home";
         networkConfig.Address = [ "10.42.42.1/24" "fdbc:ba6a:38de:1::1/64" ];
       };
+      "50-wg-home" = {
+        matchConfig.Name = "wg-proxy";
+        networkConfig.Address = [ "10.42.43.1/24" "fdbc:ba6a:38de:2::1/64" ];
+      };
     };
   };
 
@@ -116,6 +138,7 @@
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
           iifname { "br-lan", "wg-home" } oifname "enp1s0" masquerade
+          iifname { "br-lan", "wg-home" } oifname "wg-proxy" masquerade
         }
       }
 
@@ -147,7 +170,7 @@
         }
 
         chain forward_lan {
-          oifname { "br-lan", "wg-home", "enp1s0" } accept
+          oifname { "br-lan", "wg-home", "wg-proxy", "enp1s0" } accept
         }
 
         chain forward_wan {
@@ -194,6 +217,7 @@
           icmpv6 type != { nd-redirect, 139, 140 } accept
           meta l4proto . th dport vmap {
             udp . 6666 : accept,
+            udp . 6667 : accept,
           }
         }
       }
