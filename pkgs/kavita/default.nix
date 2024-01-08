@@ -11,13 +11,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kavita";
-  version = "0.7.11.2";
+  version = "0.7.12";
 
   src = fetchFromGitHub {
     owner = "kareadita";
     repo = "kavita";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-3C53fD+0bCnhdSGpCaOPBdXxDI2S++gwkZkX5Vyn/Tw=";
+    hash = "sha256-U3YWyTXNQ+NDERFnDTwaRZBXO7muBzIgbWYoliSUiKc=";
   };
 
   backend = buildDotnetModule {
@@ -42,8 +42,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     projectFile = "API/API.csproj";
     nugetDeps = ./nuget-deps.nix;
-    dotnet-sdk = dotnetCorePackages.sdk_7_0;
-    dotnet-runtime = dotnetCorePackages.aspnetcore_7_0;
+    dotnet-sdk = dotnetCorePackages.sdk_8_0;
+    dotnet-runtime = dotnetCorePackages.aspnetcore_8_0;
   };
 
   frontend = buildNpmPackage {
@@ -55,7 +55,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     npmBuildScript = "prod";
     npmFlags = [ "--legacy-peer-deps" ];
     npmRebuildFlags = [ "--ignore-scripts" ]; # Prevent playwright from trying to install browsers
-    npmDepsHash = "sha256-AgNbJIdaz7ZiHIbGbMm5QV/XKeotY6G3rTnKMPDKxZo=";
+    npmDepsHash = "sha256-FT1kh3Fa172PkCX+kDNh13bTTwfTzh67EIm/1Zrr7NQ=";
   };
 
   dontBuild = true;
