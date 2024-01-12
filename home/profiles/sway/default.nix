@@ -97,6 +97,8 @@ in
     };
     extraConfig = ''
       include ${pkgs.kitty-themes}/share/kitty-themes/themes/Dracula.conf
+      # disable link clicks
+      mouse_map left click ungrabbed no_op
     '';
   };
 
