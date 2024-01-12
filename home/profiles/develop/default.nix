@@ -25,8 +25,6 @@
     config.whitelist.prefix = [ "/persist/home/nevivurn/code/nevi" ];
   };
 
-  programs.nix-index.enable = true;
-
   programs.neovim = {
     extraLuaConfig = lib.mkAfter (builtins.readFile ./nvim.lua);
     extraPackages = with pkgs; [
