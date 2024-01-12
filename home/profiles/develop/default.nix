@@ -87,12 +87,14 @@
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
-      ".cache"
+      { directory = ".cache"; method = "symlink"; }
       ".config/github-copilot"
       ".terraform.d"
       ".unison"
     ];
   };
+  # disable ~/.cache/keep, use symlink
+  home.file."${config.xdg.cacheHome}/.keep".enable = false;
   home.persistence."/persist${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
