@@ -415,11 +415,12 @@ in
   };
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     directories = [
-      ".config/Slack"
-      ".config/discord"
-      ".config/WebCord"
+      ".cache/mozilla"
+      ".cache/thunderbird"
       ".config/Element"
-
+      ".config/Slack"
+      ".config/WebCord"
+      ".config/discord"
       ".local/state/wireplumber"
     ];
   };

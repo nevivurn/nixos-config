@@ -100,8 +100,6 @@
   programs.lesspipe.enable = true;
   programs.man.enable = true;
 
-  programs.nix-index.enable = true;
-
   programs.git = {
     enable = true;
     aliases = {

@@ -25,6 +25,8 @@
     config.whitelist.prefix = [ "/persist/home/nevivurn/code/nevi" ];
   };
 
+  programs.nix-index.enable = true;
+
   programs.neovim = {
     extraLuaConfig = lib.mkAfter (builtins.readFile ./nvim.lua);
     extraPackages = with pkgs; [
@@ -87,7 +89,8 @@
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
-      ".cache"
+      ".cache/nix"
+      ".cache/nix-index"
       ".config/github-copilot"
       ".terraform.d"
       ".unison"
