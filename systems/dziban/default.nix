@@ -31,6 +31,10 @@ with inputs;
   nixpkgs.config.allowUnfree = true;
   nix.settings.extra-experimental-features = [ "nix-command" "flakes" ];
 
+  # let nix-shell and flake commands follow system inputs
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" ];
+  nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
+
   home-manager.users.nevivurn = import ./home;
 
   programs.zsh.enable = true;
@@ -45,7 +49,17 @@ with inputs;
   environment = {
     shells = [ pkgs.bashInteractive ];
     variables.SHELL = "/run/current-system/sw/bin/bash";
+  };
 
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      dejavu_fonts
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+    ];
   };
 
   networking = {

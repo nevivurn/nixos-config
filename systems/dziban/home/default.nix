@@ -9,10 +9,6 @@ with inputs;
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
     (unison.override { enableX11 = false; })
     unison-fsmonitor
   ];
@@ -135,9 +131,6 @@ with inputs;
         deband-threshold = 48;
         deband-range = 24;
         deband-grain = 16;
-
-        dither-depth = "auto";
-        dither = "error-diffusion";
 
         scale = "ewa_lanczos";
         cscale = "ewa_lanczos";
