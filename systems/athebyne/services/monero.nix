@@ -59,7 +59,7 @@
     serviceConfig = {
       User = "monero-p2pool";
       Group = "monero-p2pool";
-      ExecStart = "${pkgs.p2pool}/bin/p2pool --wallet 44nMXAaeWu26HnPSDXXNWWCcr2Bs9uBZtfd2r72VyjAbXKCFWBr6RMQdKpnYE8BWwR5SXwV7dJJHefSedd7rEsZTHQUUH3U --no-randomx --no-igd --mini";
+      ExecStart = "${pkgs.pkgsUnstable.p2pool}/bin/p2pool --wallet 44nMXAaeWu26HnPSDXXNWWCcr2Bs9uBZtfd2r72VyjAbXKCFWBr6RMQdKpnYE8BWwR5SXwV7dJJHefSedd7rEsZTHQUUH3U --no-randomx --no-igd --mini";
       WorkingDirectory = "%S/monero-p2pool";
       Restart = "always";
 
