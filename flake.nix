@@ -22,7 +22,7 @@
     { self, flake-utils, nixpkgs, ... } @ inputs:
     let
       systems = [ "x86_64-linux" "aarch64-darwin" ];
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib;
     in
 
     flake-utils.lib.eachSystem systems
