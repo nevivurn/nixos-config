@@ -7,11 +7,35 @@ with inputs;
   services.unbound = {
     enable = true;
     resolveLocalQueries = false;
-    settings = {
-      server = {
-        interface = [ "127.0.0.1@5353" ];
-      };
+    settings.server = {
+      interface = [ "127.0.0.1@5353" ];
+
+      num-threads = 4;
+      msg-cache-slabs = 4;
+      rrset-cache-slabs = 4;
+      infra-cache-slabs = 4;
+      key-cache-slabs = 4;
+      outgoing-range = 200;
+
+      jostle-timeout = 500;
+      infra-keep-probing = true;
+
+      # also sysctl, below
+      so-rcvbuf = "4m";
+      so-sndbuf = "4m";
+
+      msg-cache-size = "128m";
+      rrset-cache-size = "256m";
+
+      serve-expired = true;
+      serve-expired-ttl = 86400;
+      serve-expired-client-timeout = 1800;
     };
+  };
+
+  boot.kernel.sysctl = {
+    "net.core.rmem_max" = 4 * 1024 * 1024;
+    "net.core.wmem_max" = 4 * 1024 * 1024;
   };
 
   # dnsmasq as forwarding DNS + DHCP + some filtering
