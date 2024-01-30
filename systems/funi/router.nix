@@ -96,7 +96,6 @@
       "30-bridge" = {
         matchConfig.Type = "bridge";
         networkConfig = {
-          IPForward = "yes";
           Address = [
             "192.168.2.1/24"
             "fdbc:ba6a:38de::1/64"
@@ -223,5 +222,10 @@
         }
       }
     '';
+  };
+
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
   };
 }
