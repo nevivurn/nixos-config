@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 with inputs;
 
@@ -141,4 +141,10 @@ with inputs;
   home.packages = with pkgs; [
     picocom
   ];
+
+  home.persistence."/persist${config.home.homeDirectory}" = {
+    directories = [
+      { directory = "games"; method = "symlink"; }
+    ];
+  };
 }
