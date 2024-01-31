@@ -51,8 +51,7 @@
 
   systemd.services.monero-p2pool = {
     description = "Decentralized pool for Monero mining";
-    after = [ "network.target" ];
-    before = [ "monero.service" ];
+    after = [ "network.target" "monero.service" ];
     requires = [ "monero.service" ];
     wantedBy = [ "multi-user.target" ];
 
