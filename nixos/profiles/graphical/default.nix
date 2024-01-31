@@ -13,5 +13,10 @@
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General.Experimental = true;
+    };
+  };
 }
