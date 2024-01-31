@@ -40,6 +40,7 @@ in
     liquidctl
     moonlight-qt
     pavucontrol
+    easyeffects
     thunderbird
     virt-manager
 
@@ -403,6 +404,7 @@ in
       ".config/Moonlight Game Streaming Project"
       ".config/dconf"
       ".config/desmume"
+      ".config/easyeffects"
       ".config/fcitx5"
       ".config/protonmail"
       ".config/weechat"
