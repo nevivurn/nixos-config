@@ -8,6 +8,7 @@
     docker-compose
     (google-cloud-sdk.withExtraComponents (with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]))
     (kubectlWithPlugins.override { plugins = [ kubelogin-oidc ]; })
+    kubernetes-helm
     terraform
 
     restic
