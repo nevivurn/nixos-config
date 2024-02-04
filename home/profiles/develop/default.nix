@@ -33,6 +33,7 @@
       nodePackages.typescript-language-server
       terraform-ls
       texlab
+      vscode-langservers-extracted
       yaml-language-server
     ];
     plugins = with pkgs.vimPlugins; [
