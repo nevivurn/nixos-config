@@ -10,6 +10,7 @@
     (kubectlWithPlugins.override { plugins = [ kubelogin-oidc ]; })
     kubernetes-helm
     terraform
+    vault
 
     restic
     (unison.override { enableX11 = false; })
