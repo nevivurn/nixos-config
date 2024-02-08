@@ -30,11 +30,6 @@ in
             reverse_proxy localhost:8080
           }
 
-          redir /kavita /kavita/
-          route /kavita/* {
-            reverse_proxy localhost:5000
-          }
-
           redir /jellyfin /jellyfin/
           route /jellyfin/* {
             reverse_proxy localhost:8096
