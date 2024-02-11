@@ -16,6 +16,7 @@ in
     nixos-hardware.nixosModules.common-cpu-amd-pstate
     nixos-hardware.nixosModules.common-gpu-amd
 
+    ./services/audiobookshelf.nix
     ./services/backups.nix
     ./services/caddy.nix
     ./services/jellyfin.nix
