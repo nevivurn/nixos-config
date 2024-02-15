@@ -24,6 +24,7 @@ in
     ./services/dns.nix
     ./services/hostapd.nix
     ./services/inadyn.nix
+    ./services/mitm.nix
     ./services/monitoring.nix
     ./services/openssh.nix
   ];

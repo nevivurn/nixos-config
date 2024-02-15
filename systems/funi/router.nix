@@ -209,6 +209,8 @@
             tcp . 7777 : accept,
             tcp . 9100 : accept,
             tcp . 9586 : accept,
+            tcp . 80 : accept,
+            tcp . 443 : accept,
           }
         }
 
