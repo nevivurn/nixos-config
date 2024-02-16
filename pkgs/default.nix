@@ -12,5 +12,4 @@ pkgs:
 
   # orpheusbetter
   orpheusbetter = pkgs.callPackage ./orpheusbetter { };
-} // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux (import ./linux.nix pkgs)
-  // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin (import ./darwin.nix pkgs)
+}
