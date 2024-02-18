@@ -117,6 +117,12 @@
           modules = [ ./systems/rastaban ];
         };
 
+        nvidia-vm = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [ ./systems/nvidia-vm ];
+        };
+
         iso = lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
