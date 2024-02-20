@@ -60,7 +60,6 @@ in
             --relative-fastresume \
             --webui-port=${toString cfg.webuiPort}
         '';
-        LimitNOFILE = 8192;
 
         # Hardening
         CapabilityBoundingSet = "";
