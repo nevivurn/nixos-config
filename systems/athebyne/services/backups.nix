@@ -27,6 +27,7 @@
     paths = [ "/persist" "/data" ];
     extraBackupArgs = [
       "--exclude=/persist/cache"
+      "--exclude=/persist/var/lib/libvirt/images"
       "--exclude=/data/backups"
       "--exclude=/data/torrents/incomplete"
       "--exclude=/data/vm"
