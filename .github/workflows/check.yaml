@@ -17,4 +17,4 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - run: nix fmt -- --check .
-      - run: nix flake check --no-build --all-systems
+      - run: nix flake check --no-build --all-systems --no-allow-import-from-derivation
