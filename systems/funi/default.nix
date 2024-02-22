@@ -113,4 +113,7 @@ in
 
   # Unlike other systems, we have a *gasp* persistent root filesystem
   boot.tmp.cleanOnBoot = true;
+
+  # we don't pull in nixos/modules/networking.nix
+  environment.systemPackages = with pkgs; [ wireguard-tools ];
 }
