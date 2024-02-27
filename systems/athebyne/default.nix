@@ -29,7 +29,6 @@ in
     ./services/samba.nix
     ./services/smartd.nix
     ./services/synapse.nix
-    ./services/tor.nix
   ];
 
   ## Filesystems
