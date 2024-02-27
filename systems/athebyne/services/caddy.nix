@@ -22,6 +22,12 @@ let cfg = config.services.caddy; in
         @private remote_ip 192.168.2.0/24 fdbc:ba6a:38de::/64 10.42.42.0/24 fdbc:ba6a:38de:1::/64
         encode zstd gzip
 
+        redir /public /public/
+        handle_path /public/* {
+          root * /data/share/public
+          file_server browse
+        }
+
         handle @private {
           redir /torrents /torrents/
           route /torrents/* {
