@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 
 {
   home.packages = with pkgs; [
@@ -68,14 +68,17 @@
       nixd
       nixpkgs-fmt
     ];
-    plugins = with pkgs.vimPlugins; [
-      dracula-vim
-
-      (nvim-treesitter.withPlugins (p: with p; [ nix ]))
-      nvim-lspconfig
-      nvim-cmp
-      cmp-buffer
-      cmp-nvim-lsp
+    plugins = with pkgs.vimPlugins; lib.mkMerge [
+      [
+        dracula-vim
+        nvim-lspconfig
+        nvim-cmp
+        cmp-buffer
+        cmp-nvim-lsp
+      ]
+      (lib.mkIf (!config.home.sessionVariables?DOCKER_HOST) [
+        (nvim-treesitter.withPlugins (p: with p; [ nix ]))
+      ])
     ];
 
     viAlias = true;
