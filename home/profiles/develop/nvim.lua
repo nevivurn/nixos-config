@@ -44,15 +44,10 @@ lspconfig.gopls.setup {
 }
 
 -- templ not autodetected for some reason
-vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'}, {
-	pattern = '*.templ',
-	callback = function()
-		vim.bo.filetype = 'templ'
-	end
-})
+vim.filetype.add { extension = { templ = 'templ' } }
 
 -- Simpler configs
-lspconfig.jsonls.setup{}
+lspconfig.jsonls.setup {}
 lspconfig.templ.setup {}
 lspconfig.terraformls.setup {}
 lspconfig.texlab.setup {}
