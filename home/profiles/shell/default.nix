@@ -76,6 +76,8 @@
         cmp-buffer
         cmp-nvim-lsp
       ]
+      # hacky way to detect home/profiles/develop.nix
+      # TODO: better detection?
       (lib.mkIf (!config.home.sessionVariables?DOCKER_HOST) [
         (nvim-treesitter.withPlugins (p: with p; [ nix ]))
       ])

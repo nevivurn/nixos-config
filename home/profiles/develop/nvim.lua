@@ -43,6 +43,14 @@ lspconfig.gopls.setup {
 	end
 }
 
+-- templ not autodetected for some reason
+vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'}, {
+	pattern = '*.templ',
+	callback = function()
+		vim.bo.filetype = 'templ'
+	end
+})
+
 -- Simpler configs
 lspconfig.jsonls.setup{}
 lspconfig.templ.setup {}
