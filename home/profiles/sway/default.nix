@@ -34,6 +34,7 @@ in
     ffmpeg
     imv
     mediainfo
+    mupdf
     yt-dlp
 
     gnucash
