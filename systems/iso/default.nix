@@ -4,6 +4,7 @@ with inputs;
 
 {
   imports = [
+    (self + "/nixos/modules/misc.nix")
     (self + "/nixos/modules/nix.nix")
     (self + "/nixos/modules/users.nix")
 
