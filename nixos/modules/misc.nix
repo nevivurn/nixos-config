@@ -26,5 +26,5 @@
     ''
   ];
 
-  environment.systemPackages = [ pkgs.kitty.terminfo ];
+  environment.systemPackages = lib.mkIf (config.services.openssh.enable) [ pkgs.kitty.terminfo ];
 }
