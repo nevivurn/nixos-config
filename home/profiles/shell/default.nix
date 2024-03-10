@@ -65,7 +65,7 @@
     enable = true;
     extraLuaConfig = builtins.readFile ./nvim.lua;
     extraPackages = with pkgs; [
-      nixd
+      nil
       nixpkgs-fmt
     ];
     plugins = with pkgs.vimPlugins; lib.mkMerge [

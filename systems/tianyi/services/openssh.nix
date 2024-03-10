@@ -6,8 +6,6 @@
   };
   networking.firewall.interfaces."wg-home".allowedTCPPorts = [ 22 ];
 
-  environment.enableAllTerminfo = true;
-
   environment.persistence = {
     "/persist".files = [
       "/etc/ssh/ssh_host_ed25519_key"

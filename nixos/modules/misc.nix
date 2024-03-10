@@ -1,3 +1,5 @@
+{ lib, config, pkgs, ... }:
+
 {
   services.irqbalance.enable = true;
 
@@ -23,4 +25,6 @@
       -----END CERTIFICATE-----
     ''
   ];
+
+  environment.systemPackages = [ pkgs.kitty.terminfo ];
 }

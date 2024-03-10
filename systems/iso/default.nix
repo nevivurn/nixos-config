@@ -39,7 +39,6 @@ with inputs;
     settings.PasswordAuthentication = false;
     openFirewall = true;
   };
-  environment.enableAllTerminfo = true;
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
