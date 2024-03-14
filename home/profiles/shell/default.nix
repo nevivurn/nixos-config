@@ -24,6 +24,7 @@
     binutils
     gnumake
 
+    man-pages
   ] ++ lib.optionals pkgs.hostPlatform.isLinux [
     psmisc
     ethtool
