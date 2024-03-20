@@ -43,7 +43,7 @@ vim.opt.foldenable = false
 local lspconfig = require'lspconfig'
 
 -- servers
-lspconfig.nil_ls.setup {}
+lspconfig.nixd.setup {}
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
