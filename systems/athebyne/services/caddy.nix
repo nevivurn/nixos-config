@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 let cfg = config.services.caddy;
-
 in {
   services.caddy = {
     enable = true;

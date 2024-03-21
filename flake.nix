@@ -22,7 +22,6 @@
     let
       systems = [ "x86_64-linux" "aarch64-darwin" ];
       inherit (nixpkgs) lib;
-
     in flake-utils.lib.eachSystem systems (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {

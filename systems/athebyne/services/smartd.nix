@@ -22,7 +22,6 @@ let
 
   padz = n: s: if (builtins.stringLength s) >= n then s else padz n ("0" + s);
   pad2n = n: padz 2 (builtins.toString n);
-
 in {
   services.smartd = {
     enable = true;

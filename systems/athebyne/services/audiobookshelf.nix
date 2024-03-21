@@ -1,7 +1,6 @@
 { lib, config, ... }:
 
 let cfg = config.services.audiobookshelf;
-
 in {
   services.audiobookshelf = { enable = true; };
 

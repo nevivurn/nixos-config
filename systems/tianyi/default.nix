@@ -5,7 +5,6 @@ with inputs;
 let
   hostname = "tianyi";
   machineId = "438ba1d86084426fa0ceab1771e01586";
-
 in {
   imports = [
     ./hardware-configuration.nix

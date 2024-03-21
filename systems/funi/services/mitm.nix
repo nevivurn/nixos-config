@@ -8,7 +8,6 @@ let
       header_up Accept "image/*"
     '';
   };
-
 in {
   services.caddy = {
     enable = true;
