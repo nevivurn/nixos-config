@@ -16,9 +16,8 @@ let
     ${pkgs.coreutils}/bin/install -m600 ${configFilePre} ${configFile}
     ${pkgs.replace-secret}/bin/replace-secret @password@ /secrets/cf-nevi-network ${configFile}
   '';
-in
 
-{
+in {
   users.users.inadyn = {
     isSystemUser = true;
     group = "inadyn";

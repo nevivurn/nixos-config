@@ -3,7 +3,5 @@
 with inputs;
 
 {
-  imports = [
-    self.homeModules.develop
-  ];
+  imports = [ self.homeModules.develop ];
 }

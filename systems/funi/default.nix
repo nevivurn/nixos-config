@@ -5,9 +5,8 @@ with inputs;
 let
   hostname = "funi";
   machineId = "580b38632f5347f9eefb6ade40e88402";
-in
 
-{
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -47,7 +46,9 @@ in
 
   ## Networking
 
-  environment.etc."machine-id".text = "${machineId}\n";
+  environment.etc."machine-id".text = ''
+    ${machineId}
+  '';
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
@@ -79,9 +80,7 @@ in
 
   nixpkgs.overlays = [
     (final: prev: {
-      pkgsUnstable = import nixpkgs-unstable {
-        inherit (pkgs) system config;
-      };
+      pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; };
     })
   ];
 

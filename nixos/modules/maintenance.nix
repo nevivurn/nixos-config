@@ -15,30 +15,28 @@ lib.mkMerge [
       automatic = true;
       dates = [ "monthly" ];
     };
-    systemd.timers.nix-optimise.timerConfig.RandomizedDelaySec = lib.mkForce "12h";
+    systemd.timers.nix-optimise.timerConfig.RandomizedDelaySec =
+      lib.mkForce "12h";
   }
 
-  (
-    lib.mkIf (lib.any (fs: fs == "zfs") config.boot.supportedFilesystems)
-      {
-        boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  (lib.mkIf (lib.any (fs: fs == "zfs") config.boot.supportedFilesystems) {
+    boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
-        services.zfs.autoScrub = {
-          enable = true;
-          interval = "monthly";
-        };
-        systemd.timers.zfs-scrub.timerConfig.RandomizedDelaySec = "12h";
+    services.zfs.autoScrub = {
+      enable = true;
+      interval = "monthly";
+    };
+    systemd.timers.zfs-scrub.timerConfig.RandomizedDelaySec = "12h";
 
-        services.zfs.trim = {
-          enable = true;
-          interval = "monthly";
-        };
-        systemd.timers.zpool-trim.timerConfig.RandomizedDelaySec = "12h";
+    services.zfs.trim = {
+      enable = true;
+      interval = "monthly";
+    };
+    systemd.timers.zpool-trim.timerConfig.RandomizedDelaySec = "12h";
 
-        services.zfs.autoSnapshot = {
-          enable = true;
-          flags = "-k -p -u";
-        };
-      }
-  )
+    services.zfs.autoSnapshot = {
+      enable = true;
+      flags = "-k -p -u";
+    };
+  })
 ]

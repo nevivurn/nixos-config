@@ -3,20 +3,23 @@
 with inputs;
 
 {
-  imports = [
-    self.homeModules.sway
-  ];
+  imports = [ self.homeModules.sway ];
 
   wayland.windowManager.sway.config = {
     keybindings = {
-      "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
-      "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
-      "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      "XF86AudioRaiseVolume" =
+        "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
+      "XF86AudioLowerVolume" =
+        "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
+      "XF86AudioMute" =
+        "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
       "XF86MonBrightnessUp" = "exec ${lib.getExe pkgs.brightnessctl} set +5%";
       "XF86MonBrightnessDown" = "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
     };
     input = {
-      "type:keyboard" = { xkb_options = lib.mkForce "ctrl:swapcaps,korean:ralt_hangul"; };
+      "type:keyboard" = {
+        xkb_options = lib.mkForce "ctrl:swapcaps,korean:ralt_hangul";
+      };
       "type:touch" = { events = "disabled"; };
       "type:touchpad" = {
         tap = "enabled";

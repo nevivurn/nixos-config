@@ -58,7 +58,8 @@
     serviceConfig = {
       User = "monero-p2pool";
       Group = "monero-p2pool";
-      ExecStart = "${pkgs.pkgsUnstable.p2pool}/bin/p2pool --wallet 44nMXAaeWu26HnPSDXXNWWCcr2Bs9uBZtfd2r72VyjAbXKCFWBr6RMQdKpnYE8BWwR5SXwV7dJJHefSedd7rEsZTHQUUH3U --no-randomx --no-igd --mini";
+      ExecStart =
+        "${pkgs.pkgsUnstable.p2pool}/bin/p2pool --wallet 44nMXAaeWu26HnPSDXXNWWCcr2Bs9uBZtfd2r72VyjAbXKCFWBr6RMQdKpnYE8BWwR5SXwV7dJJHefSedd7rEsZTHQUUH3U --no-randomx --no-igd --mini";
       WorkingDirectory = "%S/monero-p2pool";
       Restart = "always";
 
@@ -89,9 +90,7 @@
   networking.firewall.allowedTCPPorts = [ 18080 18081 37888 3333 ];
 
   environment.persistence = {
-    "/persist/cache".directories = [
-      "/var/lib/monero"
-      "/var/lib/private/monero-p2pool"
-    ];
+    "/persist/cache".directories =
+      [ "/var/lib/monero" "/var/lib/private/monero-p2pool" ];
   };
 }

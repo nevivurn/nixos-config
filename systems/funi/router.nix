@@ -55,15 +55,13 @@
           PrivateKeyFile = "/secrets/wg-proxy-priv";
           ListenPort = 6667;
         };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
-          {
-            # rastaban
-            AllowedIPs = [ "10.42.43.2/32" "fdbc:ba6a:38de:2::2/128" ];
-            PublicKey = "lU6yIAptWnX/kzYhdYucNYLgSya1xe8q+6Jvi6j7oQw=";
-            PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
-            Endpoint = "rastaban.nevi.network:6667";
-          }
-        ];
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [{
+          # rastaban
+          AllowedIPs = [ "10.42.43.2/32" "fdbc:ba6a:38de:2::2/128" ];
+          PublicKey = "lU6yIAptWnX/kzYhdYucNYLgSya1xe8q+6Jvi6j7oQw=";
+          PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
+          Endpoint = "rastaban.nevi.network:6667";
+        }];
       };
     };
     networks = {
@@ -84,9 +82,7 @@
         #  UseNTP = false;
         #  UseHostname = false;
         #};
-        ipv6AcceptRAConfig = {
-          UseDNS = false;
-        };
+        ipv6AcceptRAConfig = { UseDNS = false; };
       };
       "20-lan-bridge" = {
         matchConfig.Type = "ether";
@@ -96,10 +92,7 @@
       "30-bridge" = {
         matchConfig.Type = "bridge";
         networkConfig = {
-          Address = [
-            "192.168.2.1/24"
-            "fdbc:ba6a:38de::1/64"
-          ];
+          Address = [ "192.168.2.1/24" "fdbc:ba6a:38de::1/64" ];
           DNS = [ "127.0.0.1" "::1" ];
           DHCP = "no";
           IPv6AcceptRA = false;

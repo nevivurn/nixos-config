@@ -15,8 +15,6 @@
 
   hardware.bluetooth = {
     enable = true;
-    settings = {
-      General.Experimental = true;
-    };
+    settings = { General.Experimental = true; };
   };
 }

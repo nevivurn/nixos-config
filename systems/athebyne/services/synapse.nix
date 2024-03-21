@@ -61,14 +61,12 @@
 
   services.prometheus.scrapeConfigs = [{
     job_name = "matrix-synapse";
-    static_configs =
-      let
-        cfg = config.services.matrix-synapse;
-        port = (builtins.elemAt (builtins.filter (l: l.type == "metrics") cfg.settings.listeners) 0).port;
-      in
-      [{
-        targets = [ "athebyne.nevi.network:${builtins.toString port}" ];
-      }];
+    static_configs = let
+      cfg = config.services.matrix-synapse;
+      port = (builtins.elemAt
+        (builtins.filter (l: l.type == "metrics") cfg.settings.listeners)
+        0).port;
+    in [{ targets = [ "athebyne.nevi.network:${builtins.toString port}" ]; }];
   }];
 
   environment.persistence = {

@@ -52,15 +52,11 @@ with inputs;
         "/tianyi.home.nevi.network/10.42.42.2"
         "/tianyi.home.nevi.network/fdbc:ba6a:38de:1::2"
       ];
-      cname = [
-        "matrix.nevi.network,athebyne.nevi.network"
-      ];
+      cname = [ "matrix.nevi.network,athebyne.nevi.network" ];
       interface = "br-lan";
       bind-interfaces = true;
 
-      interface-name = [
-        "public.nevi.network,enp1s0/4"
-      ];
+      interface-name = [ "public.nevi.network,enp1s0/4" ];
 
       addn-hosts = [ "/secrets/dnsmasq-hosts" ];
 
@@ -88,10 +84,8 @@ with inputs;
       ];
       enable-ra = true;
 
-      dhcp-option = [
-        "option:ntp-server,0.0.0.0"
-        "option6:ntp-server,[fd00::]"
-      ];
+      dhcp-option =
+        [ "option:ntp-server,0.0.0.0" "option6:ntp-server,[fd00::]" ];
 
       domain = "nevi.network";
       dhcp-fqdn = true;

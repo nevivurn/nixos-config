@@ -5,9 +5,8 @@ with inputs;
 let
   hostname = "tianyi";
   machineId = "438ba1d86084426fa0ceab1771e01586";
-in
 
-{
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -29,7 +28,8 @@ in
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part1";
+      device =
+        "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part1";
       fsType = "vfat";
       options = [ "noatime" ];
     };
@@ -67,7 +67,10 @@ in
 
     unitConfig.DefaultDependencies = false;
     before = [ "unmount.target" "remote-fs.target" ];
-    after = [ "remote-fs-pre.target" "systemd-network-wait-online@wg\\x2dhome.service" ];
+    after = [
+      "remote-fs-pre.target"
+      "systemd-network-wait-online@wg\\x2dhome.service"
+    ];
     requires = [ "systemd-network-wait-online@wg\\x2dhome.service" ];
     wantedBy = [ "multi-user.target" ];
     conflicts = [ "unmount.target" ];
@@ -87,7 +90,9 @@ in
 
   ## Networking
 
-  environment.etc."machine-id".text = "${machineId}\n";
+  environment.etc."machine-id".text = ''
+    ${machineId}
+  '';
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
@@ -132,10 +137,7 @@ in
         matchConfig.Name = "wg-home";
         linkConfig.RequiredForOnline = false;
         networkConfig = {
-          Address = [
-            "10.42.42.2/24"
-            "fdbc:ba6a:38de:1::2/64"
-          ];
+          Address = [ "10.42.42.2/24" "fdbc:ba6a:38de:1::2/64" ];
           DNS = "192.168.2.1";
           NTP = "funi.nevi.network";
           Domains = [ "~." ];
@@ -197,9 +199,7 @@ in
   ## Persistence
 
   environment.persistence = {
-    "/persist".directories = [
-      "/etc/nixos"
-    ];
+    "/persist".directories = [ "/etc/nixos" ];
     "/persist/cache".directories = [
       "/home/nevivurn/.local/share/containers" # cannot be fuse
       "/root/.cache"

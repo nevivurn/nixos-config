@@ -5,9 +5,8 @@ with inputs;
 let
   hostname = "taiyi";
   machineId = "62a136e793c240c588c6ddca2ed9d402";
-in
 
-{
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -76,7 +75,9 @@ in
 
   ## Networking
 
-  environment.etc."machine-id".text = "${machineId}\n";
+  environment.etc."machine-id".text = ''
+    ${machineId}
+  '';
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
@@ -121,9 +122,7 @@ in
   ## Persistence
 
   environment.persistence = {
-    "/persist".directories = [
-      "/etc/nixos"
-    ];
+    "/persist".directories = [ "/etc/nixos" ];
     "/persist/cache".directories = [
       "/home/nevivurn/.local/share/containers" # cannot be fuse
       "/root/.cache"

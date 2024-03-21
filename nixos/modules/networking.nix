@@ -9,7 +9,9 @@ lib.mkMerge [
     };
     systemd.network.enable = true;
   }
-  (lib.mkIf (lib.any (t: t) (lib.mapAttrsToList (_: v: v.netdevConfig.Kind == "wireguard") config.systemd.network.netdevs)) {
-    environment.systemPackages = with pkgs; [ wireguard-tools ];
-  })
+  (lib.mkIf (lib.any (t: t)
+    (lib.mapAttrsToList (_: v: v.netdevConfig.Kind == "wireguard")
+      config.systemd.network.netdevs)) {
+        environment.systemPackages = with pkgs; [ wireguard-tools ];
+      })
 ]

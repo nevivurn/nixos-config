@@ -5,9 +5,8 @@ with inputs;
 let
   hostname = "athebyne";
   machineId = "c41424cc1cd14395a864f52437bece7b";
-in
 
-{
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -45,7 +44,8 @@ in
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part1";
+      device =
+        "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part1";
       fsType = "vfat";
       options = [ "noatime" ];
     };
@@ -68,7 +68,8 @@ in
     };
   };
   swapDevices = [{
-    device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part2";
+    device =
+      "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part2";
     randomEncryption = {
       enable = true;
       allowDiscards = true;
@@ -78,11 +79,8 @@ in
   ## Boot
 
   # pci passthrough
-  boot.kernelParams = [
-    "iommu=pt"
-    "vfio-pci.ids=10de:2504,10de:228e"
-    "video=efifb:off"
-  ];
+  boot.kernelParams =
+    [ "iommu=pt" "vfio-pci.ids=10de:2504,10de:228e" "video=efifb:off" ];
   boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
 
   boot.initrd.postDeviceCommands = lib.mkAfter ''
@@ -93,8 +91,10 @@ in
   boot.initrd.network = {
     enable = true;
     ssh.enable = true;
-    ssh.authorizedKeys = config.users.users."nevivurn".openssh.authorizedKeys.keys;
-    ssh.hostKeys = [ /persist/secrets/initrd_ssh_host_ed25519_key ]; # world-readable!
+    ssh.authorizedKeys =
+      config.users.users."nevivurn".openssh.authorizedKeys.keys;
+    ssh.hostKeys =
+      [ /persist/secrets/initrd_ssh_host_ed25519_key ]; # world-readable!
     postCommands = ''
       zpool import -N dpool
 
@@ -114,7 +114,9 @@ in
 
   ## Networking
 
-  environment.etc."machine-id".text = "${machineId}\n";
+  environment.etc."machine-id".text = ''
+    ${machineId}
+  '';
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
@@ -137,9 +139,7 @@ in
     networks = {
       "10-uplink" = {
         matchConfig.Type = "ether";
-        networkConfig = {
-          Bridge = "virbr0";
-        };
+        networkConfig = { Bridge = "virbr0"; };
       };
 
       "20-lan" = {
@@ -186,11 +186,8 @@ in
   ## Persistence
 
   environment.persistence = {
-    "/persist".directories = [
-      "/etc/nixos"
-      "/var/lib/libvirt"
-      "/var/lib/qbittorrent"
-    ];
+    "/persist".directories =
+      [ "/etc/nixos" "/var/lib/libvirt" "/var/lib/qbittorrent" ];
     "/persist/cache".directories = [
       "/root/.cache"
       "/var/cache/libvirt"

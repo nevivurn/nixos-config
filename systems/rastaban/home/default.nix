@@ -3,7 +3,5 @@
 with inputs;
 
 {
-  imports = [
-    self.homeModules.shell
-  ];
+  imports = [ self.homeModules.shell ];
 }

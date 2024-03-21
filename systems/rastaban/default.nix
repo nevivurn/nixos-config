@@ -5,9 +5,8 @@ with inputs;
 let
   hostname = "rastaban";
   machineId = "ecad351b4ef642f08efe0328a1972d60";
-in
 
-{
+in {
   imports = [
     ./hardware-configuration.nix
 
@@ -66,7 +65,9 @@ in
 
   ## Networking
 
-  environment.etc."machine-id".text = "${machineId}\n";
+  environment.etc."machine-id".text = ''
+    ${machineId}
+  '';
   networking.hostId = builtins.substring 0 8 machineId;
   networking.hostName = hostname;
   networking.domain = "nevi.network";
@@ -84,20 +85,18 @@ in
           ListenPort = 6667;
           RouteTable = "main";
         };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
-          {
-            AllowedIPs = [
-              "10.42.43.1/32"
-              # specify all subnets for ipv6 as we don't NAT on ipv6
-              "fdbc:ba6a:38de::/64" # lan
-              "fdbc:ba6a:38de:1::/64" # wg-home
-              "fdbc:ba6a:38de:2::/64" # wg-proxy
-            ];
-            PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
-            PresharedKeyFile = "/persist/secrets/wg-proxy-rastaban-psk";
-            Endpoint = "athebyne.nevi.network:6667";
-          }
-        ];
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [{
+          AllowedIPs = [
+            "10.42.43.1/32"
+            # specify all subnets for ipv6 as we don't NAT on ipv6
+            "fdbc:ba6a:38de::/64" # lan
+            "fdbc:ba6a:38de:1::/64" # wg-home
+            "fdbc:ba6a:38de:2::/64" # wg-proxy
+          ];
+          PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
+          PresharedKeyFile = "/persist/secrets/wg-proxy-rastaban-psk";
+          Endpoint = "athebyne.nevi.network:6667";
+        }];
       };
     };
     networks = {
@@ -137,15 +136,9 @@ in
   ## Persistence
 
   environment.persistence = {
-    "/persist".directories = [
-      "/etc/nixos"
-    ];
-    "/persist/cache".directories = [
-      "/root/.cache"
-      "/var/lib/nixos"
-      "/var/lib/systemd/timers"
-      "/var/log"
-    ];
+    "/persist".directories = [ "/etc/nixos" ];
+    "/persist/cache".directories =
+      [ "/root/.cache" "/var/lib/nixos" "/var/lib/systemd/timers" "/var/log" ];
   };
 
   ## Other hardware-specific configuration

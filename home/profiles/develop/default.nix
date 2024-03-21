@@ -6,7 +6,8 @@
   home.packages = with pkgs; [
     awscli2
     docker-compose
-    (google-cloud-sdk.withExtraComponents (with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]))
+    (google-cloud-sdk.withExtraComponents
+      (with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]))
     (kubectlWithPlugins.override { plugins = [ kubelogin-oidc ]; })
     kubernetes-helm
     terraform
@@ -18,7 +19,8 @@
     cryptsetup
   ];
   home.sessionVariables = {
-    DOCKER_HOST = "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
+    DOCKER_HOST =
+      "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
   };
 
   programs.direnv = {
@@ -38,9 +40,9 @@
       yaml-language-server
     ];
     plugins = with pkgs.vimPlugins;
-      # unstable treesitter includes eg. templ
-      let inherit (pkgs.pkgsUnstable.vimPlugins) nvim-treesitter; in
-      [
+    # unstable treesitter includes eg. templ
+      let inherit (pkgs.pkgsUnstable.vimPlugins) nvim-treesitter;
+      in [
         (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
         copilot-vim
         vim-go
@@ -49,15 +51,13 @@
 
   programs.password-store = {
     enable = true;
-    package =
-      let
-        pass = pkgs.pass.override {
-          inherit pass;
-          dmenuSupport = false;
-          waylandSupport = true;
-        };
-      in
-      pass.withExtensions (ext: with ext; [ pass-otp ]);
+    package = let
+      pass = pkgs.pass.override {
+        inherit pass;
+        dmenuSupport = false;
+        waylandSupport = true;
+      };
+    in pass.withExtensions (ext: with ext; [ pass-otp ]);
   };
 
   programs.gpg.enable = true;
@@ -107,7 +107,10 @@
       ".config/gcloud"
       ".kube"
       ".ssh"
-      { directory = "code"; method = "symlink"; }
+      {
+        directory = "code";
+        method = "symlink";
+      }
     ];
   };
 }

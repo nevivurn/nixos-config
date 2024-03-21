@@ -1,11 +1,4 @@
-{ lib
-, fetchFromGitHub
-, python3Packages
-, makeWrapper
-, flac
-, lame
-, mktorrent
-, sox
+{ lib, fetchFromGitHub, python3Packages, makeWrapper, flac, lame, mktorrent, sox
 }:
 
 python3Packages.buildPythonPackage rec {
@@ -32,7 +25,7 @@ python3Packages.buildPythonPackage rec {
 
   postInstall = ''
     wrapProgram $out/bin/orpheusbetter \
-      --prefix PATH : ${lib.makeBinPath  [ flac lame mktorrent sox ]}
+      --prefix PATH : ${lib.makeBinPath [ flac lame mktorrent sox ]}
   '';
 
   meta.mainProgram = "orpheusbetter";

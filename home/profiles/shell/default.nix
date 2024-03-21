@@ -1,36 +1,33 @@
 { lib, pkgs, config, ... }:
 
 {
-  home.packages = with pkgs; [
-    file
-    pv
-    tree
+  home.packages = with pkgs;
+    [
+      file
+      pv
+      tree
 
-    unixtools.xxd
+      unixtools.xxd
 
-    curl
-    wget
+      curl
+      wget
 
-    (p7zip.override { enableUnfree = true; })
-    unzip
+      (p7zip.override { enableUnfree = true; })
+      unzip
 
-    ldns
-    mtr
-    openssl
-    tcpdump
+      ldns
+      mtr
+      openssl
+      tcpdump
 
-    python3
+      python3
 
-    binutils
-    gnumake
+      binutils
+      gnumake
 
-    man-pages
-  ] ++ lib.optionals pkgs.hostPlatform.isLinux [
-    psmisc
-    ethtool
-    iw
-    lm_sensors
-  ];
+      man-pages
+    ]
+    ++ lib.optionals pkgs.hostPlatform.isLinux [ psmisc ethtool iw lm_sensors ];
 
   home.shellAliases = {
     ls = "ls --color=tty";
@@ -65,24 +62,21 @@
   programs.neovim = {
     enable = true;
     extraLuaConfig = builtins.readFile ./nvim.lua;
-    extraPackages = with pkgs; [
-      nixd
-      nixpkgs-fmt
-    ];
-    plugins = with pkgs.vimPlugins; lib.mkMerge [
-      [
-        dracula-vim
-        nvim-lspconfig
-        nvim-cmp
-        cmp-buffer
-        cmp-nvim-lsp
-      ]
-      # hacky way to detect home/profiles/develop.nix
-      # TODO: better detection?
-      (lib.mkIf (!config.home.sessionVariables?DOCKER_HOST) [
-        (nvim-treesitter.withPlugins (p: with p; [ nix ]))
-      ])
-    ];
+    extraPackages = with pkgs; [ nixd nixfmt ];
+    plugins = with pkgs.vimPlugins;
+      lib.mkMerge [
+        [
+          dracula-vim
+          nvim-lspconfig
+          nvim-cmp
+          cmp-buffer
+          cmp-nvim-lsp
+        ]
+        # hacky way to detect home/profiles/develop.nix
+        # TODO: better detection?
+        (lib.mkIf (!config.home.sessionVariables ? DOCKER_HOST)
+          [ (nvim-treesitter.withPlugins (p: with p; [ nix ])) ])
+      ];
 
     viAlias = true;
     vimAlias = true;
@@ -110,18 +104,13 @@
 
   programs.git = {
     enable = true;
-    aliases = {
-      graph = "log --graph --all --oneline";
-    };
+    aliases = { graph = "log --graph --all --oneline"; };
     extraConfig = {
       init.defaultBranch = "master";
       core.pager = "less -+X";
       core.quotePath = false;
     };
-    ignores = [
-      ".direnv"
-      ".envrc"
-    ];
+    ignores = [ ".direnv" ".envrc" ];
     userName = "Yongun Seong";
     userEmail = "nevivurn@nevi.dev";
   };
@@ -133,10 +122,10 @@
 
       "cse.snu.ac.kr".user = "bacchus";
       "*.snucse.org".user = "bacchus";
-      "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
-        { user = "sherry"; };
-      "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ]
-        { user = "yseong"; };
+      "sherry.snucse.org" =
+        lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "sherry"; };
+      "martini.snucse.org" =
+        lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
 
       "datium.github.com" = {
         hostname = "github.com";

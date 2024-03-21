@@ -15,8 +15,7 @@ let
     red = "#ff5555";
     yellow = "#f1fa8c";
   };
-in
-{
+in {
   imports = [ ../develop ];
 
   fonts.fontconfig.enable = true;
@@ -54,7 +53,10 @@ in
   ];
 
   gtk.enable = true;
-  gtk.theme = { package = pkgs.dracula-theme; name = "Dracula"; };
+  gtk.theme = {
+    package = pkgs.dracula-theme;
+    name = "Dracula";
+  };
   gtk.gtk2.extraConfig = ''
     gtk-button-images = 0
     gtk-menu-images = 0
@@ -106,22 +108,19 @@ in
 
   i18n.inputMethod = {
     enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-gtk
-      fcitx5-hangul
-      fcitx5-mozc
-    ];
+    fcitx5.addons = with pkgs; [ fcitx5-gtk fcitx5-hangul fcitx5-mozc ];
   };
 
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
     config = {
-      fonts = { names = [ "FiraCode Nerd Font" ]; size = 10.0; };
-
-      input = {
-        "type:keyboard" = { xkb_options = "korean:ralt_hangul"; };
+      fonts = {
+        names = [ "FiraCode Nerd Font" ];
+        size = 10.0;
       };
+
+      input = { "type:keyboard" = { xkb_options = "korean:ralt_hangul"; }; };
       output = {
         "*" = { bg = "~/pics/bg fill"; };
         HDMI-A-1 = { pos = "0 0"; };
@@ -132,111 +131,107 @@ in
       workspaceAutoBackAndForth = true;
       floating.modifier = "Mod4";
 
-      keybindings =
-        let
-          mod = "Mod4";
-          left = "h";
-          right = "l";
-          up = "k";
-          down = "j";
+      keybindings = let
+        mod = "Mod4";
+        left = "h";
+        right = "l";
+        up = "k";
+        down = "j";
 
-          term = "kitty";
+        term = "kitty";
 
-          menu = "wofi --show run";
-          passMenu = "PASSMENU_DMENU='wofi --show dmenu' PASSMENU_XDOTOOL='${pkgs.wtype}/bin/wtype -s 100 -d 20 -' passmenu";
-        in
-        {
-          "${mod}+Return" = "exec ${term}";
+        menu = "wofi --show run";
+        passMenu =
+          "PASSMENU_DMENU='wofi --show dmenu' PASSMENU_XDOTOOL='${pkgs.wtype}/bin/wtype -s 100 -d 20 -' passmenu";
+      in {
+        "${mod}+Return" = "exec ${term}";
 
-          "${mod}+Space" = "focus mode_toggle";
-          "${mod}+Shift+Space" = "floating toggle";
+        "${mod}+Space" = "focus mode_toggle";
+        "${mod}+Shift+Space" = "floating toggle";
 
-          "${mod}+a" = "focus parent";
-          "${mod}+q" = "focus child";
+        "${mod}+a" = "focus parent";
+        "${mod}+q" = "focus child";
 
-          "${mod}+f" = "fullscreen toggle";
-          "${mod}+s" = "split toggle";
-          "${mod}+e" = "layout toggle split";
-          "${mod}+w" = "layout tabbed";
+        "${mod}+f" = "fullscreen toggle";
+        "${mod}+s" = "split toggle";
+        "${mod}+e" = "layout toggle split";
+        "${mod}+w" = "layout tabbed";
 
-          "${mod}+Shift+q" = "kill";
-          #"${mod}+Shift+o" = "exec loginctl lock-session";
+        "${mod}+Shift+q" = "kill";
+        #"${mod}+Shift+o" = "exec loginctl lock-session";
 
-          "${mod}+r" = "mode resize";
-          "${mod}+Shift+e" = "mode exit";
-          "${mod}+Shift+o" = "exec loginctl lock-session";
+        "${mod}+r" = "mode resize";
+        "${mod}+Shift+e" = "mode exit";
+        "${mod}+Shift+o" = "exec loginctl lock-session";
 
-          "${mod}+d" = "exec ${menu}";
+        "${mod}+d" = "exec ${menu}";
 
-          "${mod}+p" = "exec ${passMenu} -t";
-          "${mod}+Mod1+p" = "exec ${passMenu} -c";
-          "${mod}+Shift+p" = "exec ${passMenu} -o -t";
-          "${mod}+Mod1+Shift+p" = "exec ${passMenu} -o -c";
+        "${mod}+p" = "exec ${passMenu} -t";
+        "${mod}+Mod1+p" = "exec ${passMenu} -c";
+        "${mod}+Shift+p" = "exec ${passMenu} -o -t";
+        "${mod}+Mod1+Shift+p" = "exec ${passMenu} -o -c";
 
-          "${mod}+Prior" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
-          "${mod}+Next" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
-          "${mod}+Home" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ 1";
-          "${mod}+End" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "${mod}+Prior" =
+          "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
+        "${mod}+Next" =
+          "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
+        "${mod}+Home" =
+          "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ 1";
+        "${mod}+End" =
+          "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
 
-          "Control+Space" = "exec makoctl dismiss";
-          "Control+Escape" = "exec makoctl restore";
-        } //
-        (
-          lib.foldl' (a: b: a // b) { }
-            (lib.mapAttrsToList
-              (dir: key: {
-                "${mod}+${key}" = "focus ${dir}";
-                "${mod}+Shift+${key}" = "move ${dir}";
-                "${mod}+Control+${key}" = "move workspace to output ${dir}";
-              })
-              { inherit up down left right; })
-        ) //
-        (
-          lib.foldl' (a: b: a // b) { }
-            (map
-              (num:
-                let
-                  ws = toString num;
-                  key = if num != 10 then toString num else "0";
-                in
-                {
-                  "${mod}+${key}" = "workspace number ${ws}";
-                  "${mod}+Shift+${key}" = "move container to workspace number ${ws}; workspace number ${ws}";
-                })
-              (lib.range 1 10))
-        );
+        "Control+Space" = "exec makoctl dismiss";
+        "Control+Escape" = "exec makoctl restore";
+      } // (lib.foldl' (a: b: a // b) { } (lib.mapAttrsToList (dir: key: {
+        "${mod}+${key}" = "focus ${dir}";
+        "${mod}+Shift+${key}" = "move ${dir}";
+        "${mod}+Control+${key}" = "move workspace to output ${dir}";
+      }) { inherit up down left right; })) // (lib.foldl' (a: b: a // b) { }
+        (map (num:
+          let
+            ws = toString num;
+            key = if num != 10 then toString num else "0";
+          in {
+            "${mod}+${key}" = "workspace number ${ws}";
+            "${mod}+Shift+${key}" =
+              "move container to workspace number ${ws}; workspace number ${ws}";
+          }) (lib.range 1 10)));
 
-      modes =
-        let
-          left = "h";
-          right = "l";
-          up = "k";
-          down = "j";
-          reset = { Return = "mode default"; Escape = "mode default"; };
-        in
-        {
-          resize = {
-            ${left} = "resize shrink width 5";
-            ${right} = "resize grow width 5";
-            ${up} = "resize shrink height 5";
-            ${down} = "resize grow height 5";
-          } // reset;
-          exit = {
-            e = "exit";
-            "Shift+r" = "exec systemctl reboot";
-            "Shift+p" = "exec systemctl poweroff";
-          } // reset;
+      modes = let
+        left = "h";
+        right = "l";
+        up = "k";
+        down = "j";
+        reset = {
+          Return = "mode default";
+          Escape = "mode default";
         };
+      in {
+        resize = {
+          ${left} = "resize shrink width 5";
+          ${right} = "resize grow width 5";
+          ${up} = "resize shrink height 5";
+          ${down} = "resize grow height 5";
+        } // reset;
+        exit = {
+          e = "exit";
+          "Shift+r" = "exec systemctl reboot";
+          "Shift+p" = "exec systemctl poweroff";
+        } // reset;
+      };
 
       bars = [{
         statusCommand = "i3status";
 
         trayOutput = "none";
-        extraConfig = lib.concatMapStrings
-          (x: "bindsym button${toString x} nop\n")
-          (lib.range 1 9);
+        extraConfig = lib.concatMapStrings (x: ''
+          bindsym button${toString x} nop
+        '') (lib.range 1 9);
 
-        fonts = { names = [ "FiraCode Nerd Font" ]; size = 10.0; };
+        fonts = {
+          names = [ "FiraCode Nerd Font" ];
+          size = 10.0;
+        };
 
         colors = with draculaColors; {
           background = bg;
@@ -248,19 +243,63 @@ in
           statusline = fg;
           focusedStatusline = fg;
 
-          focusedWorkspace = { background = purple; border = purple; text = fg; };
-          activeWorkspace = { background = com; border = com; text = fg; };
-          inactiveWorkspace = { background = bg; border = bg; text = fg; };
-          urgentWorkspace = { background = red; border = red; text = fg; };
-          bindingMode = { background = red; border = red; text = fg; };
+          focusedWorkspace = {
+            background = purple;
+            border = purple;
+            text = fg;
+          };
+          activeWorkspace = {
+            background = com;
+            border = com;
+            text = fg;
+          };
+          inactiveWorkspace = {
+            background = bg;
+            border = bg;
+            text = fg;
+          };
+          urgentWorkspace = {
+            background = red;
+            border = red;
+            text = fg;
+          };
+          bindingMode = {
+            background = red;
+            border = red;
+            text = fg;
+          };
         };
       }];
 
       colors = with draculaColors; {
-        focused = { background = purple; border = purple; childBorder = purple; indicator = pink; text = fg; };
-        focusedInactive = { background = com; border = com; childBorder = com; indicator = com; text = fg; };
-        unfocused = { background = bg; border = bg; childBorder = bg; indicator = bg; text = fg; };
-        urgent = { background = red; border = red; childBorder = red; indicator = red; text = fg; };
+        focused = {
+          background = purple;
+          border = purple;
+          childBorder = purple;
+          indicator = pink;
+          text = fg;
+        };
+        focusedInactive = {
+          background = com;
+          border = com;
+          childBorder = com;
+          indicator = com;
+          text = fg;
+        };
+        unfocused = {
+          background = bg;
+          border = bg;
+          childBorder = bg;
+          indicator = bg;
+          text = fg;
+        };
+        urgent = {
+          background = red;
+          border = red;
+          childBorder = red;
+          indicator = red;
+          text = fg;
+        };
       };
       floating.border = 3;
       floating.titlebar = false;
@@ -327,23 +366,20 @@ in
       width = "15%";
     };
   };
-  xdg.configFile."wofi/style.css".source =
-    let
-      dracula = pkgs.fetchFromGitHub {
-        owner = "dracula";
-        repo = "wofi";
-        rev = "9180ba3ddda7d339293e8a1bf6a67b5ce37fdd6e";
-        hash = "sha256-qC1IvVJv1AmnGKm+bXadSgbc6MnrTzyUxGH2ogBOHQA=";
-      };
-    in
-    "${dracula}/style.css";
+  xdg.configFile."wofi/style.css".source = let
+    dracula = pkgs.fetchFromGitHub {
+      owner = "dracula";
+      repo = "wofi";
+      rev = "9180ba3ddda7d339293e8a1bf6a67b5ce37fdd6e";
+      hash = "sha256-qC1IvVJv1AmnGKm+bXadSgbc6MnrTzyUxGH2ogBOHQA=";
+    };
+  in "${dracula}/style.css";
 
   services.mako = {
     enable = true;
     layer = "overlay";
     font = "Noto Sans";
-  } //
-  (with draculaColors; {
+  } // (with draculaColors; {
     backgroundColor = bg;
     borderColor = purple;
     textColor = fg;
@@ -380,18 +416,21 @@ in
 
   services.swayidle = {
     enable = true;
-    events =
-      let swaylock = config.programs.swaylock.package; in
-      [
-        { command = "${swaylock}/bin/swaylock -f"; event = "lock"; }
-        { command = "${swaylock}/bin/swaylock -f"; event = "before-sleep"; }
-      ];
+    events = let swaylock = config.programs.swaylock.package;
+    in [
+      {
+        command = "${swaylock}/bin/swaylock -f";
+        event = "lock";
+      }
+      {
+        command = "${swaylock}/bin/swaylock -f";
+        event = "before-sleep";
+      }
+    ];
   };
   programs.swaylock = {
     enable = true;
-    settings = {
-      image = "~/pics/bg";
-    };
+    settings = { image = "~/pics/bg"; };
   };
 
   services.gammastep = {

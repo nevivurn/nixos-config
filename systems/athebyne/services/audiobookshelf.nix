@@ -1,11 +1,9 @@
 { lib, config, ... }:
 
-let cfg = config.services.audiobookshelf; in
+let cfg = config.services.audiobookshelf;
 
-{
-  services.audiobookshelf = {
-    enable = true;
-  };
+in {
+  services.audiobookshelf = { enable = true; };
 
   services.caddy.virtualHosts."audiobookshelf.nevi.network".extraConfig = ''
     tls {

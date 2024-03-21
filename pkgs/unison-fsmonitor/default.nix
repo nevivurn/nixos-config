@@ -1,10 +1,5 @@
 # upstream to nixpkgs if it works well
-{ lib
-, fetchFromGitHub
-, stdenv
-, rustPlatform
-, CoreServices
-}:
+{ lib, fetchFromGitHub, stdenv, rustPlatform, CoreServices }:
 
 rustPlatform.buildRustPackage rec {
   pname = "unison-fsmonitor";

@@ -29,9 +29,7 @@ with inputs;
 
   nixpkgs.overlays = [
     (final: prev: {
-      pkgsUnstable = import nixpkgs-unstable {
-        inherit (pkgs) system config;
-      };
+      pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; };
     })
   ];
 
@@ -45,10 +43,7 @@ with inputs;
     extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.nixos.imports = [
-      self.homeModules.default
-      self.homeModules.shell
-    ];
+    users.nixos.imports = [ self.homeModules.default self.homeModules.shell ];
   };
 
   ## Other hardware-specific configuration

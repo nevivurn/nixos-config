@@ -1,9 +1,6 @@
 { lib, runCommand, makeWrapper, kubectl, plugins ? [ ] }:
 
-runCommand "kubectl-with-plugins"
-{
-  nativeBuildInputs = [ makeWrapper ];
-} ''
+runCommand "kubectl-with-plugins" { nativeBuildInputs = [ makeWrapper ]; } ''
   mkdir $out
   ln -s ${kubectl}/share $out/share
 

@@ -22,19 +22,16 @@ let
 
   padz = n: s: if (builtins.stringLength s) >= n then s else padz n ("0" + s);
   pad2n = n: padz 2 (builtins.toString n);
-in
 
-{
+in {
   services.smartd = {
     enable = true;
     autodetect = false;
-    devices = lib.imap0
-      (i: v: {
-        device = "/dev/disk/by-id/${v}";
-        options = "-a -o on -S on -s (" +
-          "S/../.././${pad2n (modHr (24 / dlen * i))}|" +
-          "L/../15/./${pad2n (modHr (12 + 24 / dlen * i))})";
-      })
-      disks;
+    devices = lib.imap0 (i: v: {
+      device = "/dev/disk/by-id/${v}";
+      options = "-a -o on -S on -s ("
+        + "S/../.././${pad2n (modHr (24 / dlen * i))}|"
+        + "L/../15/./${pad2n (modHr (12 + 24 / dlen * i))})";
+    }) disks;
   };
 }

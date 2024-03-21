@@ -1,9 +1,7 @@
 { lib, config, pkgs, ... }:
 
-let
-  cfg = config.services.qbittorrent;
-in
-{
+let cfg = config.services.qbittorrent;
+in {
   options = {
     services = {
       qbittorrent = {
@@ -102,9 +100,7 @@ in
     };
 
     users.groups = lib.mkIf (cfg.group == "qbittorrent") {
-      qbittorrent = {
-        name = "qbittorrent";
-      };
+      qbittorrent = { name = "qbittorrent"; };
     };
   };
 }

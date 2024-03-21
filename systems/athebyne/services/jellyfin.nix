@@ -12,11 +12,7 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [
-      "/var/lib/jellyfin"
-    ];
-    "/persist/cache".directories = [
-      "/var/cache/jellyfin"
-    ];
+    "/persist".directories = [ "/var/lib/jellyfin" ];
+    "/persist/cache".directories = [ "/var/cache/jellyfin" ];
   };
 }

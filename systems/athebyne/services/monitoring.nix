@@ -8,33 +8,34 @@
     listenAddress = "localhost";
     retentionTime = "30d";
 
-    scrapeConfigs =
-      let exporters = config.services.prometheus.exporters;
-      in [
-        {
-          job_name = "node_exporter";
-          static_configs = [{
-            targets = [
-              "athebyne.nevi.network:${toString exporters.node.port}"
-              "funi.nevi.network:${toString exporters.node.port}"
-              "taiyi.nevi.network:${toString exporters.node.port}"
-              "tianyi.home.nevi.network:${toString exporters.node.port}"
-            ];
-          }];
-        }
-        {
-          job_name = "smartctl";
-          static_configs = [{
-            targets = [ "athebyne.nevi.network:${toString exporters.smartctl.port}" ];
-          }];
-        }
-        {
-          job_name = "wireguard";
-          static_configs = [{
-            targets = [ "funi.nevi.network:${toString exporters.wireguard.port}" ];
-          }];
-        }
-      ];
+    scrapeConfigs = let exporters = config.services.prometheus.exporters;
+    in [
+      {
+        job_name = "node_exporter";
+        static_configs = [{
+          targets = [
+            "athebyne.nevi.network:${toString exporters.node.port}"
+            "funi.nevi.network:${toString exporters.node.port}"
+            "taiyi.nevi.network:${toString exporters.node.port}"
+            "tianyi.home.nevi.network:${toString exporters.node.port}"
+          ];
+        }];
+      }
+      {
+        job_name = "smartctl";
+        static_configs = [{
+          targets =
+            [ "athebyne.nevi.network:${toString exporters.smartctl.port}" ];
+        }];
+      }
+      {
+        job_name = "wireguard";
+        static_configs = [{
+          targets =
+            [ "funi.nevi.network:${toString exporters.wireguard.port}" ];
+        }];
+      }
+    ];
 
     exporters.node.enable = true;
     exporters.smartctl = {
@@ -59,14 +60,15 @@
         name = "Prometheus";
         type = "prometheus";
 
-        url = let prom = config.services.prometheus; in
-          "http://${prom.listenAddress}:${toString prom.port}";
+        url = let prom = config.services.prometheus;
+        in "http://${prom.listenAddress}:${toString prom.port}";
 
         isDefault = true;
         jsonData = {
           manageAlerts = false;
-          timeInterval = let interval = config.services.prometheus.globalConfig.scrape_interval; in
-            if interval != null then interval else "1m";
+          timeInterval = let
+            interval = config.services.prometheus.globalConfig.scrape_interval;
+          in if interval != null then interval else "1m";
         };
 
       }];
@@ -93,8 +95,7 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [
-      "/var/lib/${config.services.prometheus.stateDir}"
-    ];
+    "/persist".directories =
+      [ "/var/lib/${config.services.prometheus.stateDir}" ];
   };
 }

@@ -8,36 +8,31 @@ let
       header_up Accept "image/*"
     '';
   };
-in
 
-{
+in {
   services.caddy = {
     enable = true;
-    virtualHosts = lib.mapAttrs
-      (name: value: {
-        extraConfig = ''
-          tls internal
-          reverse_proxy {
-            to https://${name}
-            transport http {
-              resolvers 127.0.0.1:5353
-            }
-            header_up -X-Forwarded-For
-            header_up -X-Forwarded-Proto
-            header_up -X-Forwarded-Host
-            ${value}
+    virtualHosts = lib.mapAttrs (name: value: {
+      extraConfig = ''
+        tls internal
+        reverse_proxy {
+          to https://${name}
+          transport http {
+            resolvers 127.0.0.1:5353
           }
-        '';
-      })
-      mitmHosts;
+          header_up -X-Forwarded-For
+          header_up -X-Forwarded-Proto
+          header_up -X-Forwarded-Host
+          ${value}
+        }
+      '';
+    }) mitmHosts;
   };
 
-  services.dnsmasq.settings.cname = lib.mkAfter (
-    lib.pipe mitmHosts [
-      lib.attrNames
-      (builtins.map (name: "${name},funi.nevi.network"))
-    ]
-  );
+  services.dnsmasq.settings.cname = lib.mkAfter (lib.pipe mitmHosts [
+    lib.attrNames
+    (builtins.map (name: "${name},funi.nevi.network"))
+  ]);
 
   systemd.services.caddy.serviceConfig = {
     CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";

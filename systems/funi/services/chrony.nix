@@ -1,9 +1,6 @@
 {
-  networking.timeServers = [
-    "time.cloudflare.com"
-    "nts.netnod.se"
-    "paris.time.system76.com"
-  ];
+  networking.timeServers =
+    [ "time.cloudflare.com" "nts.netnod.se" "paris.time.system76.com" ];
   services.chrony = {
     enable = true;
     enableNTS = true;
