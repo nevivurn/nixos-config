@@ -10,6 +10,7 @@ in {
     ./hardware-configuration.nix
 
     self.nixosModules.default
+    ../../private/systems/athebyne/default.nix
 
     nixos-hardware.nixosModules.common-cpu-amd-pstate
     nixos-hardware.nixosModules.common-gpu-amd

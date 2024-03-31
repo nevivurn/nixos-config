@@ -112,6 +112,12 @@
             modules = [ ./systems/rastaban ];
           };
 
+          giausar = lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = { inherit inputs; };
+            modules = [ ./systems/giausar ];
+          };
+
           iso = lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = { inherit inputs; };

@@ -55,13 +55,22 @@
           PrivateKeyFile = "/secrets/wg-proxy-priv";
           ListenPort = 6667;
         };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [{
-          # rastaban
-          AllowedIPs = [ "10.42.43.2/32" "fdbc:ba6a:38de:2::2/128" ];
-          PublicKey = "lU6yIAptWnX/kzYhdYucNYLgSya1xe8q+6Jvi6j7oQw=";
-          PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
-          Endpoint = "rastaban.nevi.network:6667";
-        }];
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+          {
+            # rastaban
+            AllowedIPs = [ "10.42.43.2/32" "fdbc:ba6a:38de:2::2/128" ];
+            PublicKey = "lU6yIAptWnX/kzYhdYucNYLgSya1xe8q+6Jvi6j7oQw=";
+            PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
+            Endpoint = "rastaban.nevi.network:6667";
+          }
+          {
+            # giausar
+            AllowedIPs = [ "10.42.43.3/32" "fdbc:ba6a:38de:2::3/128" ];
+            PublicKey = "IhmbixqrWYfXtj3lHvFAXQknaN/HP8w/nqnc+tcH+1c=";
+            PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
+            Endpoint = "giausar.nevi.network:6667";
+          }
+        ];
       };
     };
     networks = {
@@ -159,6 +168,7 @@
             br-lan : jump forward_lan,
             wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
+            wg-proxy : jump forward_proxy,
           }
         }
 
@@ -174,6 +184,12 @@
             udp . 443 : accept,
             tcp . 5555 : accept,
             udp . 5555 : accept,
+          }
+        }
+
+        chain forward_proxy {
+          ip saddr . ip daddr . meta l4proto . th dport vmap {
+            10.42.43.3 . 192.168.2.10 . tcp . 2049 : accept,
           }
         }
 
@@ -204,6 +220,7 @@
             tcp . 9586 : accept,
             tcp . 80 : accept,
             tcp . 443 : accept,
+            udp . 443 : accept,
           }
         }
 
