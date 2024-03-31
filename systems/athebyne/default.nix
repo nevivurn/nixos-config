@@ -19,7 +19,6 @@ in {
     ./services/backups.nix
     ./services/caddy.nix
     ./services/jellyfin.nix
-    ./services/monero.nix
     ./services/monitoring.nix
     ./services/nfs.nix
     ./services/openssh.nix
