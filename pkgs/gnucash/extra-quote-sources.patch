@@ -1,13 +1,13 @@
-diff --git a/libgnucash/engine/gnc-commodity.c b/libgnucash/engine/gnc-commodity.c
+diff --git a/libgnucash/engine/gnc-commodity.cpp b/libgnucash/engine/gnc-commodity.cpp
 index 79d988a212..f33dbf1cd0 100644
---- a/libgnucash/engine/gnc-commodity.c
-+++ b/libgnucash/engine/gnc-commodity.c
-@@ -236,6 +236,8 @@ static gnc_quote_source single_quote_sources[] =
-     { FALSE, 0, 0, "VWD, DE (unmaintained)", "VWD", "vwd" },
-     { FALSE, 0, 0, "Yahoo as JSON", "YAHOO_JSON", "yahoo_json" },
-     { FALSE, 0, 0, "Yahoo as YQL", "YAHOO_YQL", "yahoo_yql" },
-+    { FALSE, 0, 0, "Yahoo Web", "YAHOOWEB", "yahooweb" },
-+    { FALSE, 0, 0, "Google Web", "GOOGLEWEB", "googleweb" },
+--- a/libgnucash/engine/gnc-commodity.cpp
++++ b/libgnucash/engine/gnc-commodity.cpp
+@@ -248,6 +248,8 @@
+     { false, SOURCE_SINGLE, "VWD, DE (unmaintained)", "vwd" },
+     { false, SOURCE_SINGLE, "Yahoo as JSON", "yahoo_json" },
+     { false, SOURCE_SINGLE, "Yahoo as YQL", "yahoo_yql" },
++    { false, SOURCE_SINGLE, "Yahoo Web", "yahooweb" },
++    { false, SOURCE_SINGLE, "Google Web", "googleweb" },
  };
- 
- static gnc_quote_source multiple_quote_sources[] =
+
+ static QuoteSourceVec multiple_quote_sources =
