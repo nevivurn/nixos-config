@@ -4,9 +4,8 @@ let
   cfg = config.services.caddy;
 
   mitmHosts = {
-    "i.redd.it" = ''
-      header_up Accept "image/*"
-    '';
+    "i.redd.it" = ''header_up Accept "image/*"'';
+    "i.imgur.com" = ''header_up Accept "image/*"'';
   };
 in {
   services.caddy = {
