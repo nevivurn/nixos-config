@@ -45,6 +45,12 @@
         disable_existing_loggers: false
       '';
 
+      media_retention = {
+        local_media_lifetime = "1y";
+        remote_media_lifetime = "3w";
+      };
+
+      suppress_key_server_warning = true;
       enable_registration = false;
       report_stats = false;
       enable_metrics = true;
