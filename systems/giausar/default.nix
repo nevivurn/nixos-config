@@ -24,11 +24,10 @@ in {
       fsType = "ext4";
       options = [ "noatime" ];
     };
-
-    "/mnt/athebyne" = {
-      device = "192.168.2.10:/data";
-      fsType = "nfs";
-      options = [ "soft,softreval,ac,actimeo=60,bg,fsc" ];
+    "/mnt/slab" = {
+      device = "/dev/disk/by-uuid/7af86277-fd69-4bc4-88c9-190256a2f0ed";
+      fsType = "ext4";
+      options = [ "noatime" ];
     };
   };
   swapDevices = [{
@@ -92,12 +91,6 @@ in {
       "50-wg-home" = {
         matchConfig.Name = "wg-proxy";
         networkConfig.Address = [ "10.42.43.3/24" "fdbc:ba6a:38de:2::3/64" ];
-        routes = [{
-          routeConfig = {
-            Destination = "192.168.2.10/32";
-            Gateway = "10.42.43.1";
-          };
-        }];
       };
     };
   };

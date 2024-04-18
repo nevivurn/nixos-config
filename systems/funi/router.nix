@@ -168,7 +168,7 @@
             br-lan : jump forward_lan,
             wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
-            wg-proxy : jump forward_proxy,
+            wg-proxy : jump forward_wan,
           }
         }
 
@@ -184,12 +184,6 @@
             udp . 443 : accept,
             tcp . 5555 : accept,
             udp . 5555 : accept,
-          }
-        }
-
-        chain forward_proxy {
-          ip saddr . ip daddr . meta l4proto . th dport vmap {
-            10.42.43.3 . 192.168.2.10 . tcp . 2049 : accept,
           }
         }
 
