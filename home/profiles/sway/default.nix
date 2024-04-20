@@ -49,7 +49,6 @@ in {
     element-desktop-wayland
     pkgsUnstable.protonmail-bridge
     pkgsUnstable.slack
-    weechat
   ];
 
   gtk.enable = true;
@@ -447,12 +446,10 @@ in {
       ".config/easyeffects"
       ".config/fcitx5"
       ".config/protonmail"
-      ".config/weechat"
       ".gnupg"
       ".local/share/gnucash"
       ".local/share/password-store"
       ".local/share/protonmail"
-      ".local/share/weechat"
       ".mozilla"
       ".thunderbird"
       "dl"
