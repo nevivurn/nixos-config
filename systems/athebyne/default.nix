@@ -19,6 +19,7 @@ in {
     ./services/backups.nix
     ./services/caddy.nix
     ./services/jellyfin.nix
+    ./services/kavita.nix
     ./services/monitoring.nix
     ./services/nfs.nix
     ./services/openssh.nix
