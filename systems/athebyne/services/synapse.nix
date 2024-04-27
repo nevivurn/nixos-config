@@ -55,13 +55,24 @@
       report_stats = false;
       enable_metrics = true;
     };
+
+    sliding-sync = {
+      enable = true;
+      environmentFile = "/persist/secrets/synapse-sliding-sync";
+      settings.SYNCV3_SERVER = "https://matrix.nevi.network";
+      settings.SYNCV3_BINDADDR = "localhost:8010";
+    };
   };
 
-  services.caddy.virtualHosts."matrix.nevi.network" = {
-    extraConfig = ''
+  services.caddy.virtualHosts = {
+    "matrix.nevi.network".extraConfig = ''
       encode zstd gzip
       reverse_proxy /_matrix/* localhost:8008
       reverse_proxy /_synapse/client/* localhost:8008
+    '';
+    "matrix-msc3575.nevi.network".extraConfig = ''
+      encode zstd gzip
+      reverse_proxy localhost:8010
     '';
   };
 

@@ -52,7 +52,10 @@ with inputs;
         "/tianyi.home.nevi.network/10.42.42.2"
         "/tianyi.home.nevi.network/fdbc:ba6a:38de:1::2"
       ];
-      cname = [ "matrix.nevi.network,athebyne.nevi.network" ];
+      cname = [
+        "matrix.nevi.network,athebyne.nevi.network"
+        "matrix-msc3575.nevi.network,athebyne.nevi.network"
+      ];
       interface = "br-lan";
       bind-interfaces = true;
 
