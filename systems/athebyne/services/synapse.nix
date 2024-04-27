@@ -64,6 +64,28 @@
     };
   };
 
+  systemd.services.matrix-sliding-sync.serviceConfig = {
+    CapabilityBoundingSet = "";
+    LockPersonality = true;
+    MemoryDenyWriteExecute = true;
+    PrivateDevices = true;
+    PrivateUsers = true;
+    ProcSubset = "pid";
+    ProtectClock = true;
+    ProtectControlGroups = true;
+    ProtectHome = true;
+    ProtectHostname = true;
+    ProtectKernelLogs = true;
+    ProtectKernelModules = true;
+    ProtectKernelTunables = true;
+    ProtectProc = "invisible";
+    RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
+    RestrictNamespaces = true;
+    RestrictRealtime = true;
+    SystemCallArchitectures = "native";
+    SystemCallFilter = "@system-service";
+  };
+
   services.caddy.virtualHosts = {
     "matrix.nevi.network".extraConfig = ''
       encode zstd gzip
@@ -87,6 +109,7 @@
   }];
 
   environment.persistence = {
-    "/persist".directories = [ "/var/lib/matrix-synapse" ];
+    "/persist".directories =
+      [ "/var/lib/matrix-synapse" "/var/lib/private/matrix-sliding-sync" ];
   };
 }
