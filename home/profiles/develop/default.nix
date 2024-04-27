@@ -32,6 +32,7 @@
     extraPackages = with pkgs; [
       gopls
       nodePackages.typescript-language-server
+      tailwindcss-language-server
       terraform-ls
       texlab
       vscode-langservers-extracted
