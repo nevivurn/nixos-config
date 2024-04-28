@@ -2,7 +2,11 @@
 
 with inputs;
 
-let cfg = config.services.kavita.settings;
+let
+  cfg = config.services.kavita.settings;
+  inherit ((builtins.getFlake
+    "github:r-ryantm/nixpkgs/bfb6097470e4826ef4d11c92dd539df0b874979b").legacyPackages.${pkgs.system})
+    kavita;
 in {
   disabledModules = [ "${nixpkgs}/nixos/modules/services/web-apps/kavita.nix" ];
   imports =
@@ -10,7 +14,7 @@ in {
 
   services.kavita = {
     enable = true;
-    package = pkgs.pkgsUnstable.kavita;
+    package = kavita;
     tokenKeyFile = "/persist/secrets/kavita-token";
     settings.IpAddresses = "127.0.0.1";
   };
