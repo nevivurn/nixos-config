@@ -5,7 +5,7 @@ with inputs;
 let
   cfg = config.services.kavita.settings;
   inherit ((builtins.getFlake
-    "github:r-ryantm/nixpkgs/bfb6097470e4826ef4d11c92dd539df0b874979b").legacyPackages.${pkgs.system})
+    "github:nevivurn/nixpkgs/c6ffdd6a964698770fee1c5013cfd083f801d879").legacyPackages.${pkgs.system})
     kavita;
 in {
   disabledModules = [ "${nixpkgs}/nixos/modules/services/web-apps/kavita.nix" ];
