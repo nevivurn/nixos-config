@@ -199,12 +199,6 @@ in {
 
   ## Other hardware-specific configuration
 
-  # hardware MSRs
-  hardware.cpu.x86.msr = {
-    enable = true;
-    settings.allow-writes = "on";
-  };
-
   # for hw accel
   hardware.opengl.enable = true;
 

@@ -134,12 +134,6 @@ in {
 
   ## Other hardware-specific configuration
 
-  # hardware MSRs
-  hardware.cpu.x86.msr = {
-    enable = true;
-    settings.allow-writes = "on";
-  };
-
   # swaylock locks out otherwise
   security.pam.services.swaylock = { };
 
