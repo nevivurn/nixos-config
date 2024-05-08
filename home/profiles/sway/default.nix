@@ -232,42 +232,44 @@ in {
           size = 10.0;
         };
 
-        colors = with draculaColors; {
-          background = bg;
-          focusedBackground = bg;
+        colors = with draculaColors;
+          let wallBg = "#44444f";
+          in {
+            background = wallBg;
+            focusedBackground = wallBg;
 
-          separator = com;
-          focusedSeparator = com;
+            separator = com;
+            focusedSeparator = com;
 
-          statusline = fg;
-          focusedStatusline = fg;
+            statusline = fg;
+            focusedStatusline = fg;
 
-          focusedWorkspace = {
-            background = purple;
-            border = purple;
-            text = fg;
+            focusedWorkspace = {
+              background = purple;
+              border = purple;
+              text = fg;
+            };
+            activeWorkspace = {
+              background = com;
+              border = com;
+              text = fg;
+            };
+            inactiveWorkspace = {
+              background = wallBg;
+              border = wallBg;
+              text = fg;
+            };
+            urgentWorkspace = {
+              background = red;
+              border = red;
+              text = fg;
+            };
+            bindingMode = {
+              background = red;
+              border = red;
+              text = fg;
+            };
           };
-          activeWorkspace = {
-            background = com;
-            border = com;
-            text = fg;
-          };
-          inactiveWorkspace = {
-            background = bg;
-            border = bg;
-            text = fg;
-          };
-          urgentWorkspace = {
-            background = red;
-            border = red;
-            text = fg;
-          };
-          bindingMode = {
-            background = red;
-            border = red;
-            text = fg;
-          };
-        };
       }];
 
       colors = with draculaColors; {
