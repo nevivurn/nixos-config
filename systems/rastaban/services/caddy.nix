@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.caddy.withModules {
       plugins = [{ name = "github.com/mholt/caddy-l4"; }];
-      vendorHash = "sha256-JxPWB/T+n+NylkKX0NIMRkr73MOnAWyVBPYtYCyArL4=";
+      vendorHash = "sha256-BsCEPDWIhdiS0dcFyNdZA+vjsPRDGRHDTgnPwqbVD04=";
     };
     settings = {
       apps.layer4.servers = {
