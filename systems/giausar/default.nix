@@ -50,12 +50,14 @@ in {
   networking.domain = "nevi.network";
   networking.timeServers = [ ];
 
-  systemd.network = {
+  systemd.network = let mtu = 1450;
+  in {
     netdevs = {
       "50-wg-proxy" = {
         netdevConfig = {
           Name = "wg-proxy";
           Kind = "wireguard";
+          MTUBytes = builtins.toString (mtu - 80);
         };
         wireguardConfig = {
           PrivateKeyFile = "/secrets/wg-proxy-priv";
@@ -87,6 +89,7 @@ in {
           Gateway = [ "209.141.54.1" "2605:6400:20::1" ];
           DNS = [ "205.185.112.68" "205.185.112.69" ];
         };
+        linkConfig.MTUBytes = builtins.toString mtu;
       };
       "50-wg-home" = {
         matchConfig.Name = "wg-proxy";
