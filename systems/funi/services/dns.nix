@@ -59,6 +59,8 @@ with inputs;
       interface = "br-lan";
       bind-interfaces = true;
 
+      rebind-domain-ok = [ "junebug.bacchus.io" ];
+
       interface-name = [ "public.nevi.network,enp1s0/4" ];
 
       addn-hosts = [ "/secrets/dnsmasq-hosts" ];
