@@ -8,25 +8,44 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        nix-version:
-          - 2.18.1 # 23.11
-          - 2.18.2 # unstable
-          #- 2.22.1 # latest, but broken
-
     steps:
       - uses: actions/checkout@v4
         with:
           ssh-key: ${{secrets.SSH_KEY}}
           submodules: 'true'
       - uses: cachix/install-nix-action@v27
-        with:
-          install_url: ${{ matrix.nix-version == 'latest' && '' || format('https://releases.nixos.org/nix/nix-{0}/install', matrix.nix-version) }}
 
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - uses: DeterminateSystems/flake-checker-action@v7
 
       - run: nix fmt -- --check .
-      - run: nix flake check '.?submodules=1' --no-build --all-systems --no-allow-import-from-derivation
+
+  eval-check:
+    name: Eval
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        nix-version:
+          - 2.18.1 # 23.11
+          - 2.18.2 # unstable
+          - latest
+
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
+    steps:
+      - uses: cachix/install-nix-action@v27
+        with:
+          install_url: ${{ matrix.nix-version != 'latest' && format('https://releases.nixos.org/nix/nix-{0}/install', matrix.nix-version) || '' }}
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
+
+      - name: Add SSH key to agent
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "$SSH_KEY"
+
+      - run: nix flake check 'git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1' --no-build --all-systems --no-allow-import-from-derivation
