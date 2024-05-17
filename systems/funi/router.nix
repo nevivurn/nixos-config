@@ -134,7 +134,7 @@
             tcp . 5555 : 192.168.2.10,
             udp . 5555 : 192.168.2.10,
             tcp . 18080 : 192.168.2.10,
-            tcp . 37888 : 192.168.2.10,
+            # tcp . 37888 : 192.168.2.10,
           }
         }
         chain postrouting {
@@ -209,9 +209,8 @@
             udp . 67 : accept, udp . 547 : accept,
             udp . 123 : accept,
             udp . 6666 : accept,
-            tcp . 7777 : accept,
+            tcp . 7777 : accept, # spare open port
             tcp . 9100 : accept,
-            tcp . 9586 : accept,
             tcp . 80 : accept,
             tcp . 443 : accept,
             udp . 443 : accept,

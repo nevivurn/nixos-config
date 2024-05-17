@@ -28,13 +28,6 @@
             [ "athebyne.nevi.network:${toString exporters.smartctl.port}" ];
         }];
       }
-      {
-        job_name = "wireguard";
-        static_configs = [{
-          targets =
-            [ "funi.nevi.network:${toString exporters.wireguard.port}" ];
-        }];
-      }
     ];
 
     exporters.node.enable = true;
