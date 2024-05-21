@@ -12,9 +12,7 @@
 
     curl
     wget
-
     (p7zip.override { enableUnfree = true; })
-    unzip
 
     ethtool
     iw

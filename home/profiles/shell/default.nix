@@ -11,9 +11,7 @@
 
       curl
       wget
-
       (p7zip.override { enableUnfree = true; })
-      unzip
 
       ldns
       mtr
