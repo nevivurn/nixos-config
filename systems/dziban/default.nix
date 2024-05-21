@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 with inputs;
 
@@ -24,7 +24,8 @@ with inputs;
     })
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate =
+    (pkg: builtins.elem (lib.getName pkg) [ "p7zip" ]);
   nix.settings.extra-experimental-features = [ "nix-command" "flakes" ];
 
   # let nix-shell and flake commands follow system inputs

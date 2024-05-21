@@ -44,11 +44,9 @@ in {
     thunderbird
     virt-manager
 
-    discord
     webcord # for screen sharing, for now
     element-desktop-wayland
     pkgsUnstable.protonmail-bridge
-    pkgsUnstable.slack
   ];
 
   gtk.enable = true;
@@ -463,9 +461,7 @@ in {
       ".cache/mozilla"
       ".cache/thunderbird"
       ".config/Element"
-      ".config/Slack"
       ".config/WebCord"
-      ".config/discord"
       ".local/state/wireplumber"
     ];
   };
