@@ -68,6 +68,10 @@ in {
 
   ## Boot
 
+  # try to address crashes
+  # ref: https://bugzilla.kernel.org/show_bug.cgi?id=206903#c322
+  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xfff7bffb" ];
+
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback rpool/local/root@empty
   '';
