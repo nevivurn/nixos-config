@@ -15,7 +15,7 @@ with inputs;
     extraLuaConfig =
       lib.mkAfter (builtins.readFile ../../../home/profiles/develop/nvim.lua);
     extraPackages = with pkgs; [
-      gopls
+      pkgsUnstable.gopls
       nodePackages.typescript-language-server
       terraform-ls
       texlab

@@ -31,7 +31,7 @@
   programs.neovim = {
     extraLuaConfig = lib.mkAfter (builtins.readFile ./nvim.lua);
     extraPackages = with pkgs; [
-      gopls
+      pkgsUnstable.gopls
       nodePackages.typescript-language-server
       tailwindcss-language-server
       terraform-ls
