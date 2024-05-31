@@ -29,8 +29,7 @@ jobs:
       fail-fast: false
       matrix:
         nix-version:
-          - 2.18.1 # 23.11
-          - 2.18.2 # unstable
+          - 2.18.2 # 24.05, unstable
           - latest
 
     env:
