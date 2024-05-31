@@ -19,20 +19,20 @@ lib.mkMerge [
       lib.mkForce "12h";
   }
 
-  (lib.mkIf (lib.any (fs: fs == "zfs") config.boot.supportedFilesystems) {
+  (lib.mkIf config.boot.supportedFilesystems.zfs or false {
     boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
     services.zfs.autoScrub = {
       enable = true;
       interval = "monthly";
+      randomizedDelaySec = "12h";
     };
-    systemd.timers.zfs-scrub.timerConfig.RandomizedDelaySec = "12h";
 
     services.zfs.trim = {
       enable = true;
       interval = "monthly";
+      randomizedDelaySec = "12h";
     };
-    systemd.timers.zpool-trim.timerConfig.RandomizedDelaySec = "12h";
 
     services.zfs.autoSnapshot = {
       enable = true;
