@@ -121,6 +121,7 @@ in
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
+    checkConfig = false; # fails due to bg
     config = {
       fonts = {
         names = [ "FiraCode Nerd Font" ];
