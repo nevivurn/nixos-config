@@ -28,10 +28,6 @@ with inputs;
     (pkg: builtins.elem (lib.getName pkg) [ "p7zip" ]);
   nix.settings.extra-experimental-features = [ "nix-command" "flakes" ];
 
-  # let nix-shell and flake commands follow system inputs
-  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" ];
-  nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
-
   home-manager.users.nevivurn = import ./home;
 
   programs.zsh.enable = true;
