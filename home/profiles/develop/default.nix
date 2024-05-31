@@ -39,14 +39,11 @@
       vscode-langservers-extracted
       yaml-language-server
     ];
-    plugins = with pkgs.vimPlugins;
-    # unstable treesitter includes eg. templ
-      let inherit (pkgs.pkgsUnstable.vimPlugins) nvim-treesitter;
-      in [
-        (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
-        copilot-vim
-        vim-go
-      ];
+    plugins = with pkgs.vimPlugins; [
+      (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
+      copilot-vim
+      vim-go
+    ];
   };
 
   programs.password-store = {
