@@ -1,6 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
-
-with inputs;
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.services.kavita.settings;
@@ -8,10 +6,6 @@ let
     "github:nevivurn/nixpkgs/c6ffdd6a964698770fee1c5013cfd083f801d879").legacyPackages.${pkgs.system})
     kavita;
 in {
-  disabledModules = [ "${nixpkgs}/nixos/modules/services/web-apps/kavita.nix" ];
-  imports =
-    [ "${nixpkgs-unstable}/nixos/modules/services/web-apps/kavita.nix" ];
-
   services.kavita = {
     enable = true;
     package = kavita;
