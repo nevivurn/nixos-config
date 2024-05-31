@@ -15,8 +15,7 @@ lib.mkMerge [
       automatic = true;
       dates = [ "monthly" ];
     };
-    systemd.timers.nix-optimise.timerConfig.RandomizedDelaySec =
-      lib.mkForce "12h";
+    systemd.timers.nix-optimise.timerConfig.RandomizedDelaySec = lib.mkForce "12h";
   }
 
   (lib.mkIf config.boot.supportedFilesystems.zfs or false {

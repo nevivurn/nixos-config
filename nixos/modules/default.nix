@@ -34,7 +34,9 @@ with inputs;
   ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
   };

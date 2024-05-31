@@ -42,8 +42,7 @@
         beacon_prot = true;
         ocv = true;
         okc = true;
-        vht_oper_centr_freq_seg0_idx =
-          config.services.hostapd.radios.wlp4s0.channel + 6;
+        vht_oper_centr_freq_seg0_idx = config.services.hostapd.radios.wlp4s0.channel + 6;
       };
 
       networks = {

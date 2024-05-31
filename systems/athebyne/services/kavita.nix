@@ -1,11 +1,20 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.kavita.settings;
-  inherit ((builtins.getFlake
-    "github:nevivurn/nixpkgs/c6ffdd6a964698770fee1c5013cfd083f801d879").legacyPackages.${pkgs.system})
-    kavita;
-in {
+  inherit
+    ((builtins.getFlake "github:nevivurn/nixpkgs/c6ffdd6a964698770fee1c5013cfd083f801d879")
+      .legacyPackages.${pkgs.system}
+    )
+    kavita
+    ;
+in
+{
   services.kavita = {
     enable = true;
     package = kavita;
@@ -43,7 +52,10 @@ in {
     ProtectKernelModules = true;
     ProtectKernelTunables = true;
     ProtectProc = "invisible";
-    RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+    RestrictAddressFamilies = [
+      "AF_INET"
+      "AF_INET6"
+    ];
     RestrictNamespaces = true;
     RestrictRealtime = true;
     StateDirectory = "kavita";

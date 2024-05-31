@@ -44,7 +44,10 @@ with inputs;
     resolveLocalQueries = false;
 
     settings = {
-      server = [ "127.0.0.1#5353" "/nevi.network/" ];
+      server = [
+        "127.0.0.1#5353"
+        "/nevi.network/"
+      ];
       address = [
         "/funi.nevi.network/192.168.2.1"
         "/funi.nevi.network/fdbc:ba6a:38de::1"
@@ -89,8 +92,10 @@ with inputs;
       ];
       enable-ra = true;
 
-      dhcp-option =
-        [ "option:ntp-server,0.0.0.0" "option6:ntp-server,[fd00::]" ];
+      dhcp-option = [
+        "option:ntp-server,0.0.0.0"
+        "option6:ntp-server,[fd00::]"
+      ];
 
       domain = "nevi.network";
       dhcp-fqdn = true;
@@ -116,6 +121,10 @@ with inputs;
 
   networking.firewall.interfaces."br-lan" = {
     allowedTCPPorts = [ 53 ];
-    allowedUDPPorts = [ 53 67 547 ];
+    allowedUDPPorts = [
+      53
+      67
+      547
+    ];
   };
 }

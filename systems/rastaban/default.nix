@@ -1,11 +1,17 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 with inputs;
 
 let
   hostname = "rastaban";
   machineId = "ecad351b4ef642f08efe0328a1972d60";
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -47,9 +53,7 @@ in {
       neededForBoot = true;
     };
   };
-  swapDevices = [{
-    device = "/dev/disk/by-partuuid/52a23b9b-4eb7-4ced-b5a8-1bf671dad89e";
-  }];
+  swapDevices = [ { device = "/dev/disk/by-partuuid/52a23b9b-4eb7-4ced-b5a8-1bf671dad89e"; } ];
   boot.zfs.devNodes = "/dev/disk/by-partuuid";
 
   ## Boot
@@ -84,18 +88,20 @@ in {
           ListenPort = 6667;
           RouteTable = "main";
         };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [{
-          AllowedIPs = [
-            "10.42.43.1/32"
-            # specify all subnets for ipv6 as we don't NAT on ipv6
-            "fdbc:ba6a:38de::/64" # lan
-            "fdbc:ba6a:38de:1::/64" # wg-home
-            "fdbc:ba6a:38de:2::/64" # wg-proxy
-          ];
-          PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
-          PresharedKeyFile = "/persist/secrets/wg-proxy-rastaban-psk";
-          Endpoint = "athebyne.nevi.network:6667";
-        }];
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+          {
+            AllowedIPs = [
+              "10.42.43.1/32"
+              # specify all subnets for ipv6 as we don't NAT on ipv6
+              "fdbc:ba6a:38de::/64" # lan
+              "fdbc:ba6a:38de:1::/64" # wg-home
+              "fdbc:ba6a:38de:2::/64" # wg-proxy
+            ];
+            PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
+            PresharedKeyFile = "/persist/secrets/wg-proxy-rastaban-psk";
+            Endpoint = "athebyne.nevi.network:6667";
+          }
+        ];
       };
     };
     networks = {
@@ -108,7 +114,10 @@ in {
       };
       "50-wg-home" = {
         matchConfig.Name = "wg-proxy";
-        networkConfig.Address = [ "10.42.43.2/24" "fdbc:ba6a:38de:2::2/64" ];
+        networkConfig.Address = [
+          "10.42.43.2/24"
+          "fdbc:ba6a:38de:2::2/64"
+        ];
       };
     };
   };
@@ -136,8 +145,12 @@ in {
 
   environment.persistence = {
     "/persist".directories = [ "/etc/nixos" ];
-    "/persist/cache".directories =
-      [ "/root/.cache" "/var/lib/nixos" "/var/lib/systemd/timers" "/var/log" ];
+    "/persist/cache".directories = [
+      "/root/.cache"
+      "/var/lib/nixos"
+      "/var/lib/systemd/timers"
+      "/var/log"
+    ];
   };
 
   ## Other hardware-specific configuration

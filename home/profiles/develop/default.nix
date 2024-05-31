@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ../shell ];
@@ -6,8 +11,9 @@
   home.packages = with pkgs; [
     awscli2
     docker-compose
-    (google-cloud-sdk.withExtraComponents
-      (with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]))
+    (google-cloud-sdk.withExtraComponents (
+      with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]
+    ))
     kubectl
     kubelogin-oidc
     kubernetes-helm
@@ -18,8 +24,7 @@
     cryptsetup
   ];
   home.sessionVariables = {
-    DOCKER_HOST =
-      "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
+    DOCKER_HOST = "unix://\${XDG_RUNTIME_DIR:-/run/user/\${UID}}/podman/podman.sock";
   };
 
   programs.direnv = {
@@ -48,13 +53,15 @@
 
   programs.password-store = {
     enable = true;
-    package = let
-      pass = pkgs.pass.override {
-        inherit pass;
-        dmenuSupport = false;
-        waylandSupport = true;
-      };
-    in pass.withExtensions (ext: with ext; [ pass-otp ]);
+    package =
+      let
+        pass = pkgs.pass.override {
+          inherit pass;
+          dmenuSupport = false;
+          waylandSupport = true;
+        };
+      in
+      pass.withExtensions (ext: with ext; [ pass-otp ]);
   };
 
   programs.gpg.enable = true;

@@ -1,10 +1,19 @@
-{ lib, stdenvNoCC, makeWrapper, bash, pass }:
+{
+  lib,
+  stdenvNoCC,
+  makeWrapper,
+  bash,
+  pass,
+}:
 
 stdenvNoCC.mkDerivation {
   name = "passmenu";
   src = ./.;
 
-  buildInputs = [ bash pass ];
+  buildInputs = [
+    bash
+    pass
+  ];
   nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''

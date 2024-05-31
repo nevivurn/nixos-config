@@ -1,11 +1,17 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 with inputs;
 
 let
   hostname = "taiyi";
   machineId = "62a136e793c240c588c6ddca2ed9d402";
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -58,19 +64,24 @@ in {
       options = [ "soft" ];
     };
   };
-  swapDevices = [{
-    device = "/dev/disk/by-id/nvme-Lexar_500GB_SSD_J46138J003679-part2";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-id/nvme-Lexar_500GB_SSD_J46138J003679-part2";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+    }
+  ];
 
   ## Boot
 
   # try to address crashes
   # ref: https://bugzilla.kernel.org/show_bug.cgi?id=206903#c322
-  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xfff7bffb" "iommu=pt" ];
+  boot.kernelParams = [
+    "amdgpu.ppfeaturemask=0xfff7bffb"
+    "iommu=pt"
+  ];
 
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback rpool/local/root@empty
@@ -112,7 +123,10 @@ in {
 
   users.users.nevivurn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" ];
+    extraGroups = [
+      "wheel"
+      "video"
+    ];
     hashedPasswordFile = "/persist/secrets/passwd-nevivurn";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"

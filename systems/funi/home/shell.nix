@@ -57,7 +57,10 @@
   programs.neovim = {
     enable = true;
     extraLuaConfig = builtins.readFile ./nvim.lua;
-    extraPackages = with pkgs; [ nixd nixfmt-rfc-style ];
+    extraPackages = with pkgs; [
+      nixd
+      nixfmt-rfc-style
+    ];
     plugins = with pkgs.vimPlugins; [
       dracula-vim
 
@@ -86,13 +89,18 @@
 
   programs.git = {
     enable = true;
-    aliases = { graph = "log --graph --all --oneline"; };
+    aliases = {
+      graph = "log --graph --all --oneline";
+    };
     extraConfig = {
       init.defaultBranch = "master";
       core.pager = "less -+X";
       core.quotePath = false;
     };
-    ignores = [ ".direnv" ".envrc" ];
+    ignores = [
+      ".direnv"
+      ".envrc"
+    ];
     userName = "Yongun Seong";
     userEmail = "nevivurn@nevi.dev";
   };

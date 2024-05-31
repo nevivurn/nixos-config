@@ -1,12 +1,17 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 with inputs;
 
 let
   hostname = "giausar";
   machineId = "401e4bf51dd84326a81c99126117cee6";
-
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -30,9 +35,7 @@ in {
       options = [ "noatime" ];
     };
   };
-  swapDevices = [{
-    device = "/dev/disk/by-partuuid/00a97514-ce47-41c6-adce-91c1f4f61b2e";
-  }];
+  swapDevices = [ { device = "/dev/disk/by-partuuid/00a97514-ce47-41c6-adce-91c1f4f61b2e"; } ];
 
   ## Boot
 
@@ -50,53 +53,69 @@ in {
   networking.domain = "nevi.network";
   networking.timeServers = [ ];
 
-  systemd.network = let mtu = 1450;
-  in {
-    netdevs = {
-      "50-wg-proxy" = {
-        netdevConfig = {
-          Name = "wg-proxy";
-          Kind = "wireguard";
-          MTUBytes = builtins.toString (mtu - 80);
-        };
-        wireguardConfig = {
-          PrivateKeyFile = "/secrets/wg-proxy-priv";
-          ListenPort = 6667;
-          RouteTable = "main";
-        };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [{
-          AllowedIPs = [
-            "10.42.43.1/32"
-            # specify all subnets for ipv6 as we don't NAT on ipv6
-            "fdbc:ba6a:38de::/64" # lan
-            "fdbc:ba6a:38de:1::/64" # wg-home
-            "fdbc:ba6a:38de:2::/64" # wg-proxy
-            # athebyne
-            "192.168.2.10/32"
+  systemd.network =
+    let
+      mtu = 1450;
+    in
+    {
+      netdevs = {
+        "50-wg-proxy" = {
+          netdevConfig = {
+            Name = "wg-proxy";
+            Kind = "wireguard";
+            MTUBytes = builtins.toString (mtu - 80);
+          };
+          wireguardConfig = {
+            PrivateKeyFile = "/secrets/wg-proxy-priv";
+            ListenPort = 6667;
+            RouteTable = "main";
+          };
+          wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+            {
+              AllowedIPs = [
+                "10.42.43.1/32"
+                # specify all subnets for ipv6 as we don't NAT on ipv6
+                "fdbc:ba6a:38de::/64" # lan
+                "fdbc:ba6a:38de:1::/64" # wg-home
+                "fdbc:ba6a:38de:2::/64" # wg-proxy
+                # athebyne
+                "192.168.2.10/32"
+              ];
+              PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
+              PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
+              Endpoint = "athebyne.nevi.network:6667";
+            }
           ];
-          PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
-          PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
-          Endpoint = "athebyne.nevi.network:6667";
-        }];
-      };
-    };
-    networks = {
-      "20-lan" = {
-        matchConfig.Type = "ether";
-        networkConfig = {
-          Address =
-            [ "209.141.54.223/24" "2605:6400:20:ef2:53ea:a240:c175:dbe6/48" ];
-          Gateway = [ "209.141.54.1" "2605:6400:20::1" ];
-          DNS = [ "205.185.112.68" "205.185.112.69" ];
         };
-        linkConfig.MTUBytes = builtins.toString mtu;
       };
-      "50-wg-home" = {
-        matchConfig.Name = "wg-proxy";
-        networkConfig.Address = [ "10.42.43.3/24" "fdbc:ba6a:38de:2::3/64" ];
+      networks = {
+        "20-lan" = {
+          matchConfig.Type = "ether";
+          networkConfig = {
+            Address = [
+              "209.141.54.223/24"
+              "2605:6400:20:ef2:53ea:a240:c175:dbe6/48"
+            ];
+            Gateway = [
+              "209.141.54.1"
+              "2605:6400:20::1"
+            ];
+            DNS = [
+              "205.185.112.68"
+              "205.185.112.69"
+            ];
+          };
+          linkConfig.MTUBytes = builtins.toString mtu;
+        };
+        "50-wg-home" = {
+          matchConfig.Name = "wg-proxy";
+          networkConfig.Address = [
+            "10.42.43.3/24"
+            "fdbc:ba6a:38de:2::3/64"
+          ];
+        };
       };
     };
-  };
   networking.firewall.allowedUDPPorts = [ 6667 ];
 
   ## Basic config

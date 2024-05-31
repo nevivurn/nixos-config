@@ -8,27 +8,29 @@
     listenAddress = "localhost";
     retentionTime = "30d";
 
-    scrapeConfigs = let exporters = config.services.prometheus.exporters;
-    in [
-      {
-        job_name = "node_exporter";
-        static_configs = [{
-          targets = [
-            "athebyne.nevi.network:${toString exporters.node.port}"
-            "funi.nevi.network:${toString exporters.node.port}"
-            "taiyi.nevi.network:${toString exporters.node.port}"
-            "tianyi.home.nevi.network:${toString exporters.node.port}"
+    scrapeConfigs =
+      let
+        exporters = config.services.prometheus.exporters;
+      in
+      [
+        {
+          job_name = "node_exporter";
+          static_configs = [
+            {
+              targets = [
+                "athebyne.nevi.network:${toString exporters.node.port}"
+                "funi.nevi.network:${toString exporters.node.port}"
+                "taiyi.nevi.network:${toString exporters.node.port}"
+                "tianyi.home.nevi.network:${toString exporters.node.port}"
+              ];
+            }
           ];
-        }];
-      }
-      {
-        job_name = "smartctl";
-        static_configs = [{
-          targets =
-            [ "athebyne.nevi.network:${toString exporters.smartctl.port}" ];
-        }];
-      }
-    ];
+        }
+        {
+          job_name = "smartctl";
+          static_configs = [ { targets = [ "athebyne.nevi.network:${toString exporters.smartctl.port}" ]; } ];
+        }
+      ];
 
     exporters.node.enable = true;
     exporters.smartctl = {
@@ -49,31 +51,39 @@
   services.grafana = {
     enable = true;
     provision = {
-      datasources.settings.datasources = [{
-        name = "Prometheus";
-        type = "prometheus";
+      datasources.settings.datasources = [
+        {
+          name = "Prometheus";
+          type = "prometheus";
 
-        url = let prom = config.services.prometheus;
-        in "http://${prom.listenAddress}:${toString prom.port}";
+          url =
+            let
+              prom = config.services.prometheus;
+            in
+            "http://${prom.listenAddress}:${toString prom.port}";
 
-        isDefault = true;
-        jsonData = {
-          manageAlerts = false;
-          timeInterval = let
-            interval = config.services.prometheus.globalConfig.scrape_interval;
-          in if interval != null then interval else "1m";
-        };
-
-      }];
-      dashboards.settings.providers = [{
-        name = "node-exporter";
-        allowUiUpdates = false;
-        options.path = pkgs.fetchurl {
-          name = "node-exporter.json";
-          url = "https://grafana.com/api/dashboards/1860/revisions/36/download";
-          hash = "sha256-cwmR0Wu0+v2N3KZiE4FDttQW5dW45Pzcn3lcNRDDbJc=";
-        };
-      }];
+          isDefault = true;
+          jsonData = {
+            manageAlerts = false;
+            timeInterval =
+              let
+                interval = config.services.prometheus.globalConfig.scrape_interval;
+              in
+              if interval != null then interval else "1m";
+          };
+        }
+      ];
+      dashboards.settings.providers = [
+        {
+          name = "node-exporter";
+          allowUiUpdates = false;
+          options.path = pkgs.fetchurl {
+            name = "node-exporter.json";
+            url = "https://grafana.com/api/dashboards/1860/revisions/36/download";
+            hash = "sha256-cwmR0Wu0+v2N3KZiE4FDttQW5dW45Pzcn3lcNRDDbJc=";
+          };
+        }
+      ];
     };
     settings = {
       server.http_addr = "localhost";
@@ -87,7 +97,6 @@
   };
 
   environment.persistence = {
-    "/persist".directories =
-      [ "/var/lib/${config.services.prometheus.stateDir}" ];
+    "/persist".directories = [ "/var/lib/${config.services.prometheus.stateDir}" ];
   };
 }

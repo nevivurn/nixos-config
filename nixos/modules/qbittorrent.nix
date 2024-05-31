@@ -1,7 +1,14 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
-let cfg = config.services.qbittorrent;
-in {
+let
+  cfg = config.services.qbittorrent;
+in
+{
   options = {
     services = {
       qbittorrent = {
@@ -78,7 +85,10 @@ in {
         ProtectKernelTunables = true;
         ProtectProc = "invisible";
         ProtectSystem = "strict";
-        ReadWritePaths = [ cfg.profileDir cfg.saveDir ];
+        ReadWritePaths = [
+          cfg.profileDir
+          cfg.saveDir
+        ];
         RemoveIPC = true;
         RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_NETLINK";
         RestrictNamespaces = true;
@@ -100,7 +110,9 @@ in {
     };
 
     users.groups = lib.mkIf (cfg.group == "qbittorrent") {
-      qbittorrent = { name = "qbittorrent"; };
+      qbittorrent = {
+        name = "qbittorrent";
+      };
     };
   };
 }

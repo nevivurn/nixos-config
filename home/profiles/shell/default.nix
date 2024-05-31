@@ -1,7 +1,13 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 {
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       file
       pv
@@ -25,7 +31,12 @@
 
       man-pages
     ]
-    ++ lib.optionals pkgs.hostPlatform.isLinux [ psmisc ethtool iw lm_sensors ];
+    ++ lib.optionals pkgs.hostPlatform.isLinux [
+      psmisc
+      ethtool
+      iw
+      lm_sensors
+    ];
 
   home.shellAliases = {
     ls = "ls --color=tty";
@@ -60,8 +71,12 @@
   programs.neovim = {
     enable = true;
     extraLuaConfig = builtins.readFile ./nvim.lua;
-    extraPackages = with pkgs; [ nixd nixfmt-rfc-style ];
-    plugins = with pkgs.vimPlugins;
+    extraPackages = with pkgs; [
+      nixd
+      nixfmt-rfc-style
+    ];
+    plugins =
+      with pkgs.vimPlugins;
       lib.mkMerge [
         [
           dracula-vim
@@ -72,8 +87,9 @@
         ]
         # hacky way to detect home/profiles/develop.nix
         # TODO: better detection?
-        (lib.mkIf (!config.home.sessionVariables ? DOCKER_HOST)
-          [ (nvim-treesitter.withPlugins (p: with p; [ nix ])) ])
+        (lib.mkIf (!config.home.sessionVariables ? DOCKER_HOST) [
+          (nvim-treesitter.withPlugins (p: with p; [ nix ]))
+        ])
       ];
 
     viAlias = true;
@@ -102,13 +118,18 @@
 
   programs.git = {
     enable = true;
-    aliases = { graph = "log --graph --all --oneline"; };
+    aliases = {
+      graph = "log --graph --all --oneline";
+    };
     extraConfig = {
       init.defaultBranch = "master";
       core.pager = "less -+X";
       core.quotePath = false;
     };
-    ignores = [ ".direnv" ".envrc" ];
+    ignores = [
+      ".direnv"
+      ".envrc"
+    ];
     userName = "Yongun Seong";
     userEmail = "nevivurn@nevi.dev";
   };
@@ -120,10 +141,8 @@
 
       "cse.snu.ac.kr".user = "bacchus";
       "*.snucse.org".user = "bacchus";
-      "sherry.snucse.org" =
-        lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "sherry"; };
-      "martini.snucse.org" =
-        lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
+      "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "sherry"; };
+      "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
 
       "datium.github.com" = {
         hostname = "github.com";

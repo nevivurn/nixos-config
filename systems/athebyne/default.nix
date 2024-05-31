@@ -1,11 +1,17 @@
-{ lib, config, inputs, ... }:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}:
 
 with inputs;
 
 let
   hostname = "athebyne";
   machineId = "c41424cc1cd14395a864f52437bece7b";
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -44,8 +50,7 @@ in {
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device =
-        "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part1";
+      device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part1";
       fsType = "vfat";
       options = [ "noatime" ];
     };
@@ -67,21 +72,30 @@ in {
       neededForBoot = true;
     };
   };
-  swapDevices = [{
-    device =
-      "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part2";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_500GB_S4EVNM0T210690N-part2";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+    }
+  ];
 
   ## Boot
 
   # pci passthrough
-  boot.kernelParams =
-    [ "iommu=pt" "vfio-pci.ids=10de:2504,10de:228e" "video=efifb:off" ];
-  boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+  boot.kernelParams = [
+    "iommu=pt"
+    "vfio-pci.ids=10de:2504,10de:228e"
+    "video=efifb:off"
+  ];
+  boot.kernelModules = [
+    "vfio"
+    "vfio_iommu_type1"
+    "vfio_pci"
+    "vfio_virqfd"
+  ];
 
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback rpool/local/root@empty
@@ -91,10 +105,8 @@ in {
   boot.initrd.network = {
     enable = true;
     ssh.enable = true;
-    ssh.authorizedKeys =
-      config.users.users."nevivurn".openssh.authorizedKeys.keys;
-    ssh.hostKeys =
-      [ /persist/secrets/initrd_ssh_host_ed25519_key ]; # world-readable!
+    ssh.authorizedKeys = config.users.users."nevivurn".openssh.authorizedKeys.keys;
+    ssh.hostKeys = [ /persist/secrets/initrd_ssh_host_ed25519_key ]; # world-readable!
     postCommands = ''
       zpool import -N dpool
 
@@ -139,7 +151,9 @@ in {
     networks = {
       "10-uplink" = {
         matchConfig.Type = "ether";
-        networkConfig = { Bridge = "virbr0"; };
+        networkConfig = {
+          Bridge = "virbr0";
+        };
       };
 
       "20-lan" = {
@@ -166,7 +180,10 @@ in {
 
   users.users.nevivurn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" ];
+    extraGroups = [
+      "wheel"
+      "libvirtd"
+    ];
     hashedPasswordFile = "/persist/secrets/passwd-nevivurn";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
@@ -186,8 +203,11 @@ in {
   ## Persistence
 
   environment.persistence = {
-    "/persist".directories =
-      [ "/etc/nixos" "/var/lib/libvirt" "/var/lib/qbittorrent" ];
+    "/persist".directories = [
+      "/etc/nixos"
+      "/var/lib/libvirt"
+      "/var/lib/qbittorrent"
+    ];
     "/persist/cache".directories = [
       "/root/.cache"
       "/var/cache/libvirt"

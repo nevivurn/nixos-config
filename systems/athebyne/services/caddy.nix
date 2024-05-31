@@ -1,11 +1,13 @@
 { config, pkgs, ... }:
 
-let cfg = config.services.caddy;
-in {
+let
+  cfg = config.services.caddy;
+in
+{
   services.caddy = {
     enable = true;
     package = pkgs.caddy.withModules {
-      plugins = [{ name = "github.com/caddy-dns/cloudflare"; }];
+      plugins = [ { name = "github.com/caddy-dns/cloudflare"; } ];
       vendorHash = "sha256-XucTo6zMHXQfyAQU/V/eveQTZh4hzLhkUFv2mD3Jxi0=";
     };
 
@@ -78,8 +80,13 @@ in {
     SystemCallFilter = [ "@system-service" ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   networking.firewall.allowedUDPPorts = [ 443 ];
 
-  environment.persistence = { "/persist".directories = [ "/var/lib/caddy" ]; };
+  environment.persistence = {
+    "/persist".directories = [ "/var/lib/caddy" ];
+  };
 }

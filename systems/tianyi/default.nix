@@ -5,7 +5,8 @@ with inputs;
 let
   hostname = "tianyi";
   machineId = "438ba1d86084426fa0ceab1771e01586";
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -27,8 +28,7 @@ in {
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device =
-        "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part1";
+      device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part1";
       fsType = "vfat";
       options = [ "noatime" ];
     };
@@ -51,35 +51,44 @@ in {
       neededForBoot = true;
     };
   };
-  swapDevices = [{
-    device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part2";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part2";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+    }
+  ];
 
   boot.supportedFilesystems = [ "nfs" ];
-  systemd.automounts = [{
-    where = "/mnt/athebyne";
-    automountConfig.TimeoutIdleSec = "5min";
+  systemd.automounts = [
+    {
+      where = "/mnt/athebyne";
+      automountConfig.TimeoutIdleSec = "5min";
 
-    unitConfig.DefaultDependencies = false;
-    before = [ "unmount.target" "remote-fs.target" ];
-    after = [
-      "remote-fs-pre.target"
-      "systemd-network-wait-online@wg\\x2dhome.service"
-    ];
-    requires = [ "systemd-network-wait-online@wg\\x2dhome.service" ];
-    wantedBy = [ "multi-user.target" ];
-    conflicts = [ "unmount.target" ];
-  }];
-  systemd.mounts = [{
-    type = "nfs";
-    what = "athebyne.nevi.network:/data";
-    where = "/mnt/athebyne";
-    options = "soft";
-  }];
+      unitConfig.DefaultDependencies = false;
+      before = [
+        "unmount.target"
+        "remote-fs.target"
+      ];
+      after = [
+        "remote-fs-pre.target"
+        "systemd-network-wait-online@wg\\x2dhome.service"
+      ];
+      requires = [ "systemd-network-wait-online@wg\\x2dhome.service" ];
+      wantedBy = [ "multi-user.target" ];
+      conflicts = [ "unmount.target" ];
+    }
+  ];
+  systemd.mounts = [
+    {
+      type = "nfs";
+      what = "athebyne.nevi.network:/data";
+      where = "/mnt/athebyne";
+      options = "soft";
+    }
+  ];
 
   ## Boot
 
@@ -111,14 +120,19 @@ in {
           FirewallMark = 51820;
           RouteTable = 51820;
         };
-        wireguardPeers = [{
-          wireguardPeerConfig = {
-            Endpoint = "public.nevi.network:6666";
-            PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-            PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
-            AllowedIPs = [ "0.0.0.0/0" "::/0" ];
-          };
-        }];
+        wireguardPeers = [
+          {
+            wireguardPeerConfig = {
+              Endpoint = "public.nevi.network:6666";
+              PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
+              PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
+              AllowedIPs = [
+                "0.0.0.0/0"
+                "::/0"
+              ];
+            };
+          }
+        ];
       };
     };
 
@@ -136,19 +150,24 @@ in {
         matchConfig.Name = "wg-home";
         linkConfig.RequiredForOnline = false;
         networkConfig = {
-          Address = [ "10.42.42.2/24" "fdbc:ba6a:38de:1::2/64" ];
+          Address = [
+            "10.42.42.2/24"
+            "fdbc:ba6a:38de:1::2/64"
+          ];
           DNS = "192.168.2.1";
           NTP = "funi.nevi.network";
           Domains = [ "~." ];
         };
-        routingPolicyRules = [{
-          routingPolicyRuleConfig = {
-            Family = "both";
-            FirewallMark = 51820;
-            InvertRule = true;
-            Table = 51820;
-          };
-        }];
+        routingPolicyRules = [
+          {
+            routingPolicyRuleConfig = {
+              Family = "both";
+              FirewallMark = 51820;
+              InvertRule = true;
+              Table = 51820;
+            };
+          }
+        ];
       };
     };
   };
@@ -185,7 +204,10 @@ in {
 
   users.users.nevivurn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" ];
+    extraGroups = [
+      "wheel"
+      "video"
+    ];
     hashedPasswordFile = "/persist/secrets/passwd-nevivurn";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"

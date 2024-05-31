@@ -1,4 +1,9 @@
-{ inputs, config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 with inputs;
 
@@ -8,6 +13,9 @@ with inputs;
   home.packages = with pkgs; [ weechat ];
 
   home.persistence."/persist${config.home.homeDirectory}" = {
-    directories = [ ".config/weechat" ".local/share/weechat" ];
+    directories = [
+      ".config/weechat"
+      ".local/share/weechat"
+    ];
   };
 }

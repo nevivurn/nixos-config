@@ -22,25 +22,37 @@
         wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
           {
             # tianyi
-            AllowedIPs = [ "10.42.42.2/32" "fdbc:ba6a:38de:1::2/128" ];
+            AllowedIPs = [
+              "10.42.42.2/32"
+              "fdbc:ba6a:38de:1::2/128"
+            ];
             PublicKey = "JR9Zu+6QO8yBBE9WwbwEcdo6JVZ1pHsjb3P+mQIy3mY=";
             PresharedKeyFile = "/secrets/wg-home-tianyi-psk";
           }
           {
             # fafnir
-            AllowedIPs = [ "10.42.42.3/32" "fdbc:ba6a:38de:1::3/128" ];
+            AllowedIPs = [
+              "10.42.42.3/32"
+              "fdbc:ba6a:38de:1::3/128"
+            ];
             PublicKey = "W2634QLtmqji5pZzlDh5Z02KegcCf3uleQqbtctOsTk=";
             PresharedKeyFile = "/secrets/wg-home-fafnir-psk";
           }
           {
             # dziban
-            AllowedIPs = [ "10.42.42.4/32" "fdbc:ba6a:38de:1::4/128" ];
+            AllowedIPs = [
+              "10.42.42.4/32"
+              "fdbc:ba6a:38de:1::4/128"
+            ];
             PublicKey = "WAIgHHOWecTbkNv7dnwH98FDFjDmKIf1zno/+Lu+3ws=";
             PresharedKeyFile = "/secrets/wg-home-dziban-psk";
           }
           {
             # altais
-            AllowedIPs = [ "10.42.42.6/32" "fdbc:ba6a:38de:1::6/128" ];
+            AllowedIPs = [
+              "10.42.42.6/32"
+              "fdbc:ba6a:38de:1::6/128"
+            ];
             PublicKey = "F+Gz+s93TCYuFMYawdLF56gsjL6JNqOR7PglXbTZJgs=";
             PresharedKeyFile = "/secrets/wg-home-altais-psk";
           }
@@ -58,14 +70,20 @@
         wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
           {
             # rastaban
-            AllowedIPs = [ "10.42.43.2/32" "fdbc:ba6a:38de:2::2/128" ];
+            AllowedIPs = [
+              "10.42.43.2/32"
+              "fdbc:ba6a:38de:2::2/128"
+            ];
             PublicKey = "lU6yIAptWnX/kzYhdYucNYLgSya1xe8q+6Jvi6j7oQw=";
             PresharedKeyFile = "/secrets/wg-proxy-rastaban-psk";
             Endpoint = "rastaban.nevi.network:6667";
           }
           {
             # giausar
-            AllowedIPs = [ "10.42.43.3/32" "fdbc:ba6a:38de:2::3/128" ];
+            AllowedIPs = [
+              "10.42.43.3/32"
+              "fdbc:ba6a:38de:2::3/128"
+            ];
             PublicKey = "IhmbixqrWYfXtj3lHvFAXQknaN/HP8w/nqnc+tcH+1c=";
             PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
             Endpoint = "giausar.nevi.network:6667";
@@ -91,7 +109,9 @@
         #  UseNTP = false;
         #  UseHostname = false;
         #};
-        ipv6AcceptRAConfig = { UseDNS = false; };
+        ipv6AcceptRAConfig = {
+          UseDNS = false;
+        };
       };
       "20-lan-bridge" = {
         matchConfig.Type = "ether";
@@ -101,19 +121,31 @@
       "30-bridge" = {
         matchConfig.Type = "bridge";
         networkConfig = {
-          Address = [ "192.168.2.1/24" "fdbc:ba6a:38de::1/64" ];
-          DNS = [ "127.0.0.1" "::1" ];
+          Address = [
+            "192.168.2.1/24"
+            "fdbc:ba6a:38de::1/64"
+          ];
+          DNS = [
+            "127.0.0.1"
+            "::1"
+          ];
           DHCP = "no";
           IPv6AcceptRA = false;
         };
       };
       "40-wg-home" = {
         matchConfig.Name = "wg-home";
-        networkConfig.Address = [ "10.42.42.1/24" "fdbc:ba6a:38de:1::1/64" ];
+        networkConfig.Address = [
+          "10.42.42.1/24"
+          "fdbc:ba6a:38de:1::1/64"
+        ];
       };
       "50-wg-home" = {
         matchConfig.Name = "wg-proxy";
-        networkConfig.Address = [ "10.42.43.1/24" "fdbc:ba6a:38de:2::1/64" ];
+        networkConfig.Address = [
+          "10.42.43.1/24"
+          "fdbc:ba6a:38de:2::1/64"
+        ];
       };
     };
   };

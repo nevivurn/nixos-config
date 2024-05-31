@@ -18,13 +18,26 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
-  outputs = { self, flake-utils, nixpkgs, ... }@inputs:
+  outputs =
+    {
+      self,
+      flake-utils,
+      nixpkgs,
+      ...
+    }@inputs:
     let
-      systems = [ "x86_64-linux" "aarch64-darwin" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
       inherit (nixpkgs) lib;
-    in flake-utils.lib.eachSystem systems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in {
+    in
+    flake-utils.lib.eachSystem systems (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
         formatter = pkgs.nixfmt-rfc-style;
 
         # Only custom packages, included in self.overlays.default.
@@ -41,98 +54,122 @@
           };
 
           nix-update = flake-utils.lib.mkApp {
-            drv = let
-              isUpdatable = p:
-                p ? version && lib.hasPrefix self.outPath
-                (builtins.unsafeGetAttrPos "src" p).file;
-              upPkgs = lib.flatten (builtins.map (system:
-                builtins.map (name: { inherit system name; })
-                (builtins.attrNames
-                  (lib.filterAttrs (_: isUpdatable) self.packages.${system})))
-                systems);
-            in pkgs.writeScriptBin "nix-update" (''
-              nix flake update --commit-lock-file
-            '' + (lib.concatMapStringsSep "\n" (ps:
-              "${
-                lib.getExe pkgs.nix-update
-              } -F --commit --system ${ps.system} ${ps.name}") upPkgs));
+            drv =
+              let
+                isUpdatable = p: p ? version && lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file;
+                upPkgs = lib.flatten (
+                  builtins.map (
+                    system:
+                    builtins.map (name: { inherit system name; }) (
+                      builtins.attrNames (lib.filterAttrs (_: isUpdatable) self.packages.${system})
+                    )
+                  ) systems
+                );
+              in
+              pkgs.writeScriptBin "nix-update" (
+                ''
+                  nix flake update --commit-lock-file
+                ''
+                + (lib.concatMapStringsSep "\n" (
+                  ps: "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${ps.name}"
+                ) upPkgs)
+              );
           };
         };
-      }) // {
-        # Overlay including custom and overriden packages
-        overlays.default = import ./pkgs/overlay.nix;
+      }
+    )
+    // {
+      # Overlay including custom and overriden packages
+      overlays.default = import ./pkgs/overlay.nix;
 
-        # Ensure systems evaluate correctly
-        checks = lib.genAttrs systems (system:
-          lib.mapAttrs (_: c: c.config.system.build.toplevel)
-          (lib.filterAttrs (_: c: c.pkgs.system == system)
-            self.nixosConfigurations) // lib.mapAttrs (_: c: c.system)
-          (lib.filterAttrs (_: c: c.pkgs.system == system)
-            self.darwinConfigurations));
+      # Ensure systems evaluate correctly
+      checks = lib.genAttrs systems (
+        system:
+        lib.mapAttrs (_: c: c.config.system.build.toplevel) (
+          lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations
+        )
+        // lib.mapAttrs (_: c: c.system) (
+          lib.filterAttrs (_: c: c.pkgs.system == system) self.darwinConfigurations
+        )
+      );
 
-        nixosModules = {
-          default = import ./nixos/modules;
-          graphical = import ./nixos/profiles/graphical;
+      nixosModules = {
+        default = import ./nixos/modules;
+        graphical = import ./nixos/profiles/graphical;
+      };
+      homeModules = {
+        default = import ./home/modules;
+        sway = import ./home/profiles/sway;
+        develop = import ./home/profiles/develop;
+        shell = import ./home/profiles/shell;
+      };
+
+      nixosConfigurations = {
+        taiyi = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./systems/taiyi ];
         };
-        homeModules = {
-          default = import ./home/modules;
-          sway = import ./home/profiles/sway;
-          develop = import ./home/profiles/develop;
-          shell = import ./home/profiles/shell;
+
+        tianyi = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./systems/tianyi ];
         };
 
-        nixosConfigurations = {
-          taiyi = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/taiyi ];
+        athebyne = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
           };
-
-          tianyi = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/tianyi ];
-          };
-
-          athebyne = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/athebyne ];
-          };
-
-          funi = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/funi ];
-          };
-
-          rastaban = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/rastaban ];
-          };
-
-          giausar = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/giausar ];
-          };
-
-          iso = lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = { inherit inputs; };
-            modules = [ ./systems/iso ];
-          };
+          modules = [ ./systems/athebyne ];
         };
-        darwinConfigurations = {
-          dziban = inputs.nix-darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            specialArgs.inputs = inputs // {
-              nixpkgs = inputs.nixpkgs-darwin;
-              home-manager = inputs.home-manager-darwin;
-            };
-            modules = [ ./systems/dziban ];
+
+        funi = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
           };
+          modules = [ ./systems/funi ];
+        };
+
+        rastaban = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./systems/rastaban ];
+        };
+
+        giausar = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./systems/giausar ];
+        };
+
+        iso = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./systems/iso ];
         };
       };
+      darwinConfigurations = {
+        dziban = inputs.nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs.inputs = inputs // {
+            nixpkgs = inputs.nixpkgs-darwin;
+            home-manager = inputs.home-manager-darwin;
+          };
+          modules = [ ./systems/dziban ];
+        };
+      };
+    };
 }

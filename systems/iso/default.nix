@@ -1,4 +1,9 @@
-{ inputs, lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 with inputs;
 
@@ -28,9 +33,7 @@ with inputs;
   };
 
   nixpkgs.overlays = [
-    (final: prev: {
-      pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; };
-    })
+    (final: prev: { pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; }; })
   ];
 
   services.openssh = {
@@ -40,10 +43,15 @@ with inputs;
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.nixos.imports = [ self.homeModules.default self.homeModules.shell ];
+    users.nixos.imports = [
+      self.homeModules.default
+      self.homeModules.shell
+    ];
   };
 
   ## Other hardware-specific configuration

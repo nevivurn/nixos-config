@@ -1,11 +1,17 @@
-{ inputs, lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 with inputs;
 
 let
   hostname = "funi";
   machineId = "580b38632f5347f9eefb6ade40e88402";
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -78,15 +84,15 @@ in {
   };
 
   nixpkgs.overlays = [
-    (final: prev: {
-      pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; };
-    })
+    (final: prev: { pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; }; })
   ];
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+    };
     users.nevivurn = import ./home;
   };
 
@@ -99,15 +105,17 @@ in {
   networking.wireless.athUserRegulatoryDomain = true;
   # Enable DFS-JP. As far as I can tell, my hardware supports DFS, and OpenWRT
   # enables it too.
-  boot.kernelPatches = [{
-    name = "enable-ath-DFS-JP";
-    patch = null;
-    extraStructuredConfig = with lib.kernel; {
-      EXPERT = yes;
-      CFG80211_CERTIFICATION_ONUS = yes;
-      ATH10K_DFS_CERTIFIED = yes;
-    };
-  }];
+  boot.kernelPatches = [
+    {
+      name = "enable-ath-DFS-JP";
+      patch = null;
+      extraStructuredConfig = with lib.kernel; {
+        EXPERT = yes;
+        CFG80211_CERTIFICATION_ONUS = yes;
+        ATH10K_DFS_CERTIFIED = yes;
+      };
+    }
+  ];
 
   # Unlike other systems, we have a *gasp* persistent root filesystem
   boot.tmp.cleanOnBoot = true;

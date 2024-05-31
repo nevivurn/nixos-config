@@ -15,8 +15,7 @@
     openFirewall = true;
   };
 
-  systemd.services.samba-smbd.serviceConfig.ExecStartPre =
-    "${pkgs.coreutils}/bin/mkdir -m +t -p /var/lib/samba/usershares/";
+  systemd.services.samba-smbd.serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/mkdir -m +t -p /var/lib/samba/usershares/";
 
   environment.persistence = {
     "/persist".directories = [ "/var/lib/samba/usershares" ];

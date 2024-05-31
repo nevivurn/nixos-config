@@ -7,7 +7,8 @@ let
     "i.redd.it" = ''header_up Accept "image/*"'';
     "i.imgur.com" = ''header_up Accept "image/*"'';
   };
-in {
+in
+{
   services.caddy = {
     enable = true;
     virtualHosts = lib.mapAttrs (name: value: {
@@ -27,10 +28,12 @@ in {
     }) mitmHosts;
   };
 
-  services.dnsmasq.settings.cname = lib.mkAfter (lib.pipe mitmHosts [
-    lib.attrNames
-    (builtins.map (name: "${name},funi.nevi.network"))
-  ]);
+  services.dnsmasq.settings.cname = lib.mkAfter (
+    lib.pipe mitmHosts [
+      lib.attrNames
+      (builtins.map (name: "${name},funi.nevi.network"))
+    ]
+  );
 
   systemd.services.caddy.serviceConfig = {
     CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";

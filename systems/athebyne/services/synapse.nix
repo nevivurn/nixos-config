@@ -14,10 +14,15 @@
           port = 8008;
           x_forwarded = true;
           tls = false;
-          resources = [{
-            names = [ "client" "federation" ];
-            compress = false;
-          }];
+          resources = [
+            {
+              names = [
+                "client"
+                "federation"
+              ];
+              compress = false;
+            }
+          ];
         }
         {
           port = 8009;
@@ -79,7 +84,11 @@
     ProtectKernelModules = true;
     ProtectKernelTunables = true;
     ProtectProc = "invisible";
-    RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
+    RestrictAddressFamilies = [
+      "AF_UNIX"
+      "AF_INET"
+      "AF_INET6"
+    ];
     RestrictNamespaces = true;
     RestrictRealtime = true;
     SystemCallArchitectures = "native";
@@ -98,18 +107,22 @@
     '';
   };
 
-  services.prometheus.scrapeConfigs = [{
-    job_name = "matrix-synapse";
-    static_configs = let
-      cfg = config.services.matrix-synapse;
-      port = (builtins.elemAt
-        (builtins.filter (l: l.type == "metrics") cfg.settings.listeners)
-        0).port;
-    in [{ targets = [ "athebyne.nevi.network:${builtins.toString port}" ]; }];
-  }];
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "matrix-synapse";
+      static_configs =
+        let
+          cfg = config.services.matrix-synapse;
+          port = (builtins.elemAt (builtins.filter (l: l.type == "metrics") cfg.settings.listeners) 0).port;
+        in
+        [ { targets = [ "athebyne.nevi.network:${builtins.toString port}" ]; } ];
+    }
+  ];
 
   environment.persistence = {
-    "/persist".directories =
-      [ "/var/lib/matrix-synapse" "/var/lib/private/matrix-sliding-sync" ];
+    "/persist".directories = [
+      "/var/lib/matrix-synapse"
+      "/var/lib/private/matrix-sliding-sync"
+    ];
   };
 }

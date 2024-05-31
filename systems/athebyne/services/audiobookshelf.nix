@@ -1,8 +1,12 @@
 { lib, config, ... }:
 
-let cfg = config.services.audiobookshelf;
-in {
-  services.audiobookshelf = { enable = true; };
+let
+  cfg = config.services.audiobookshelf;
+in
+{
+  services.audiobookshelf = {
+    enable = true;
+  };
 
   services.caddy.virtualHosts."audiobookshelf.nevi.network".extraConfig = ''
     tls {
@@ -34,7 +38,10 @@ in {
     ProtectKernelModules = true;
     ProtectKernelTunables = true;
     ProtectProc = "invisible";
-    RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+    RestrictAddressFamilies = [
+      "AF_INET"
+      "AF_INET6"
+    ];
     RestrictNamespaces = true;
     RestrictRealtime = true;
     SystemCallArchitectures = "native";
