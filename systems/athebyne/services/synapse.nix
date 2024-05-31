@@ -55,13 +55,13 @@
       report_stats = false;
       enable_metrics = true;
     };
+  };
 
-    sliding-sync = {
-      enable = true;
-      environmentFile = "/persist/secrets/synapse-sliding-sync";
-      settings.SYNCV3_SERVER = "https://matrix.nevi.network";
-      settings.SYNCV3_BINDADDR = "localhost:8010";
-    };
+  services.matrix-sliding-sync = {
+    enable = true;
+    environmentFile = "/persist/secrets/synapse-sliding-sync";
+    settings.SYNCV3_SERVER = "https://matrix.nevi.network";
+    settings.SYNCV3_BINDADDR = "localhost:8010";
   };
 
   systemd.services.matrix-sliding-sync.serviceConfig = {
