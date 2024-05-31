@@ -16,7 +16,7 @@ with inputs;
     impermanence.nixosModules.impermanence
   ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   nixpkgs.overlays = [
     self.overlays.default

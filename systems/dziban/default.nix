@@ -11,7 +11,7 @@ with inputs;
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
-    sharedModules = [{ home.stateVersion = "23.11"; }];
+    sharedModules = [{ home.stateVersion = "24.05"; }];
   };
 
   nixpkgs.overlays = [
