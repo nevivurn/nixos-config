@@ -25,7 +25,7 @@
     in flake-utils.lib.eachSystem systems (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        formatter = pkgs.nixfmt;
+        formatter = pkgs.nixfmt-rfc-style;
 
         # Only custom packages, included in self.overlays.default.
         # Mainly for nix-update, so it can automatically update my packages.

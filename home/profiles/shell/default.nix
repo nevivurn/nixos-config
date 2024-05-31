@@ -60,7 +60,7 @@
   programs.neovim = {
     enable = true;
     extraLuaConfig = builtins.readFile ./nvim.lua;
-    extraPackages = with pkgs; [ nixd nixfmt ];
+    extraPackages = with pkgs; [ nixd nixfmt-rfc-style ];
     plugins = with pkgs.vimPlugins;
       lib.mkMerge [
         [
