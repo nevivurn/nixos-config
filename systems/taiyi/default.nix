@@ -79,7 +79,7 @@ in
   # try to address crashes
   # ref: https://bugzilla.kernel.org/show_bug.cgi?id=206903#c322
   boot.kernelParams = [
-    "amdgpu.ppfeaturemask=0xfff7bffb"
+    "amdgpu.ppfeaturemask=0xffffbffd"
     "iommu=pt"
   ];
 
