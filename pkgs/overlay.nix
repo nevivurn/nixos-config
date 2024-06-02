@@ -51,6 +51,6 @@ import ./default.nix prev
     pkgs = hotfix.legacyPackages.${final.system};
   in
   {
-    inherit (pkgs) fcitx5;
+    fcitx5 = if final.lib.versionAtLeast prev.fcitx5.version "5.1.10" then prev.fcitx5 else pkgs.fcitx5;
   }
 )
