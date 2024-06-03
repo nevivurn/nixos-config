@@ -14,7 +14,11 @@ in
     ProcSubset = "pid";
     ProtectHome = true;
     ProtectSystem = "strict";
-    ReadWritePaths = [ cfg.dataDir ];
+    ReadWritePaths = [
+      cfg.cacheDir
+      cfg.dataDir
+      cfg.logDir
+    ];
   };
 
   environment.persistence = {
