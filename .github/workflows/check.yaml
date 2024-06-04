@@ -15,7 +15,6 @@ jobs:
           submodules: 'true'
       - uses: cachix/install-nix-action@v27
 
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
       - uses: DeterminateSystems/flake-checker-action@v7
 
       - run: nix fmt -- --check .
@@ -40,7 +39,6 @@ jobs:
       - uses: cachix/install-nix-action@v27
         with:
           install_url: ${{ matrix.nix-version != 'latest' && format('https://releases.nixos.org/nix/nix-{0}/install', matrix.nix-version) || '' }}
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
 
       - name: Add SSH key to agent
         env:
@@ -76,7 +74,6 @@ jobs:
 
     steps:
       - uses: cachix/install-nix-action@v27
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
 
       - name: Add SSH key to agent
         env:
