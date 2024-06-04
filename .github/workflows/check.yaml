@@ -17,7 +17,8 @@ jobs:
 
       - uses: DeterminateSystems/flake-checker-action@v7
 
-      - run: nix fmt -- --check .
+      - name: Check formatting
+        run: nix fmt -- --check .
 
   eval-check:
     name: Eval
@@ -30,6 +31,7 @@ jobs:
         nix-version:
           - 2.18.2 # 24.05, unstable
           - latest
+          - lix
 
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -37,8 +39,15 @@ jobs:
 
     steps:
       - uses: cachix/install-nix-action@v27
+        if: matrix.nix-version != 'lix'
         with:
           install_url: ${{ matrix.nix-version != 'latest' && format('https://releases.nixos.org/nix/nix-{0}/install', matrix.nix-version) || '' }}
+      - name: Install Lix
+        if: matrix.nix-version == 'lix'
+        run: |
+          curl -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
+          sudo tee -a /etc/nix/nix.conf <<< "trusted-users = root worker"
+          sudo tee -a /etc/nix/nix.conf <<< "experimental-features = nix-command flakes"
 
       - name: Add SSH key to agent
         env:
@@ -82,5 +91,5 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "$SSH_KEY"
 
-      - name: Check flake outputs
+      - name: Build
         run: nix build "$FLAKE#$OUTPUT"
