@@ -1,11 +1,16 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   services.caddy = {
     enable = true;
     package = pkgs.caddy.withModules {
-      plugins = [ { name = "github.com/mholt/caddy-l4"; } ];
-      vendorHash = "sha256-Mf//yO/yGQ4e75sIXUEbozGfWqdusqHRK5kvxowIEWY=";
+      plugins = [
+        {
+          name = "github.com/mholt/caddy-l4";
+          version = "v0.0.0-20240604210608-ce9789f602eb";
+        }
+      ];
+      vendorHash = "sha256-IA2pbEQgaSG40EsuOhpNuF5RYV8eFVATPuyrYMoBwhE=";
     };
     settings = {
       apps.layer4.servers = {
