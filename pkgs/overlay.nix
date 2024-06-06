@@ -43,14 +43,3 @@ import ./default.nix prev
       };
   });
 }
-// (
-  let
-    # hotfix for https://github.com/nix-community/home-manager/issues/5369
-    # https://github.com/NixOS/nixpkgs/pull/316403 rebased onto release-24.05
-    hotfix = builtins.getFlake "github:nevivurn/nixpkgs/0785b017e7bff11dc4ad53011319e0fb9931769e";
-    pkgs = hotfix.legacyPackages.${final.system};
-  in
-  {
-    fcitx5 = if final.lib.versionAtLeast prev.fcitx5.version "5.1.10" then prev.fcitx5 else pkgs.fcitx5;
-  }
-)
