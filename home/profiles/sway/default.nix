@@ -43,6 +43,8 @@ in
     yt-dlp
 
     gnucash
+    portfolio
+
     liquidctl
     moonlight-qt
     pavucontrol
