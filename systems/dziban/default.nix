@@ -32,7 +32,13 @@ with inputs;
     })
   ];
 
-  nixpkgs.config.allowUnfreePredicate = (pkg: builtins.elem (lib.getName pkg) [ "p7zip" ]);
+  nixpkgs.config.allowUnfreePredicate = (
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "copilot.vim"
+      "p7zip"
+    ]
+  );
   nix.settings.extra-experimental-features = [
     "nix-command"
     "flakes"
@@ -59,16 +65,13 @@ with inputs;
     variables.SHELL = "/run/current-system/sw/bin/bash";
   };
 
-  fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
-      dejavu_fonts
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-    ];
-  };
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    dejavu_fonts
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+  ];
 
   networking = {
     hostName = "dziban";

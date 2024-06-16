@@ -2,7 +2,13 @@
 
 # general nix config
 {
-  nixpkgs.config.allowUnfreePredicate = (pkg: builtins.elem (lib.getName pkg) [ "p7zip" ]);
+  nixpkgs.config.allowUnfreePredicate = (
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "copilot.vim"
+      "p7zip"
+    ]
+  );
 
   nix.settings = {
     extra-experimental-features = [
