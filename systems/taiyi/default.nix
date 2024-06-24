@@ -162,9 +162,6 @@ in
     dockerSocket.enable = true;
   };
 
-  # Do not install OpenCL stuff, to save space
-  hardware.amdgpu.opencl = false;
-
   # cooler pump
   services.udev.packages = with pkgs; [ liquidctl ];
   systemd.services."liquidctl" = {
