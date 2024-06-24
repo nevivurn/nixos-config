@@ -1,4 +1,9 @@
-{ lib, inputs, ... }:
+{
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
 
 with inputs;
 
@@ -247,4 +252,7 @@ in
     dockerCompat = true;
     dockerSocket.enable = true;
   };
+
+  # enable OpenCL
+  hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
 }
