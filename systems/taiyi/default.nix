@@ -162,6 +162,11 @@ in
     dockerSocket.enable = true;
   };
 
+  hardware.opengl.extraPackages = [
+    pkgs.rocmPackages.clr
+    pkgs.rocmPackages.clr.icd
+  ];
+
   # cooler pump
   services.udev.packages = with pkgs; [ liquidctl ];
   systemd.services."liquidctl" = {
