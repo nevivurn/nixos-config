@@ -220,7 +220,13 @@ in
   ## Other hardware-specific configuration
 
   # for hw accel
-  hardware.opengl.enable = true;
+  hardware.opengl = {
+    enable = true;
+    extraPackages = [
+      pkgs.rocmPackages.clr
+      pkgs.rocmPackages.clr.icd
+    ];
+  };
 
   # podman requires system-level config
   virtualisation.podman = {
