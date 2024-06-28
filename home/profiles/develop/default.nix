@@ -80,6 +80,7 @@
     gpg.ssh.defaultKeyCommand = "ssh-add -L";
     commit.gpgSign = true;
     tag.gpgSign = true;
+    safe.directory = "/mnt/athebyne/share/pass";
   };
 
   home.file.".config/containers/storage.conf".text = ''
