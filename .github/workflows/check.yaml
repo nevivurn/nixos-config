@@ -72,7 +72,6 @@ jobs:
           # It would be nice to check funi here, but we can't run kernel builds
           # on the GH runner.
           - taiyi
-          - athebyne
           - rastaban
           - iso
 
