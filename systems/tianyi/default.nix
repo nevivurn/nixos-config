@@ -135,6 +135,7 @@ in
                 "0.0.0.0/0"
                 "::/0"
               ];
+              PersistentKeepalive = 25;
             };
           }
         ];
