@@ -239,6 +239,12 @@ in
 
   ## Other hardware-specific configuration
 
+  # Allow docking
+  services.logind = {
+    lidSwitchDocked = "lock";
+    lidSwitchExternalPower = "lock";
+  };
+
   # Keyboard setup
   services.xserver.xkb.options = "ctrl:swapcaps,korean:ralt_hangul";
   console.useXkbConfig = true;
