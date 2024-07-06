@@ -17,8 +17,8 @@
   systemd.timers."backup-sync" = {
     description = "Sync backup directories to cloud daily";
     timerConfig = {
-      OnCalendar = "daily";
-      RandomizedDelaySec = "1h";
+      OnCalendar = "weekly";
+      RandomizedDelaySec = "12h";
       Persistent = true;
     };
 
@@ -48,15 +48,14 @@
 
     checkOpts = [ "--with-cache" ];
     pruneOpts = [
-      "--keep-daily 30"
       "--keep-weekly 52"
       "--keep-monthly 48"
       "--keep-yearly 10"
     ];
 
     timerConfig = {
-      OnCalendar = "daily";
-      RandomizedDelaySec = "1h";
+      OnCalendar = "weekly";
+      RandomizedDelaySec = "12h";
       Persistent = true;
     };
   };
