@@ -1,14 +1,9 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   cfg = config.services.kavita.settings;
   inherit
-    ((builtins.getFlake "github:nevivurn/nixpkgs/c6ffdd6a964698770fee1c5013cfd083f801d879")
+    ((builtins.getFlake "github:nevivurn/nixpkgs/19123264df5e839c03615cb9813395c6313298ca")
       .legacyPackages.${pkgs.system}
     )
     kavita
