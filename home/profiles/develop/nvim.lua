@@ -60,6 +60,7 @@ lspconfig.tailwindcss.setup {
 		},
 	},
 }
+lspconfig.helm_ls.setup{}
 lspconfig.templ.setup {}
 lspconfig.terraformls.setup {}
 lspconfig.texlab.setup {}
