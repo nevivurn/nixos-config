@@ -6,10 +6,8 @@
   ...
 }:
 
-with inputs;
-
 {
-  imports = [ self.homeModules.sway ];
+  imports = [ inputs.self.homeModules.sway ];
 
   # We have a real GPU
   programs.mpv =
@@ -111,12 +109,12 @@ with inputs;
         "D" = "cycle deband";
         "CTRL+0" = ''no-osd change-list glsl-shaders clr ""; show-text "GLSL shaders cleared"'';
 
-        "CTRL+1" = ''no-osd change-list glsl-shaders set "${makeShader a4k_A}"; show-text "Anime4K: Mode A"'';
-        "CTRL+2" = ''no-osd change-list glsl-shaders set "${makeShader a4k_B}"; show-text "Anime4K: Mode B"'';
-        "CTRL+3" = ''no-osd change-list glsl-shaders set "${makeShader a4k_C}"; show-text "Anime4K: Mode C"'';
-        "CTRL+4" = ''no-osd change-list glsl-shaders set "${makeShader a4k_AA}"; show-text "Anime4K: Mode AA"'';
-        "CTRL+5" = ''no-osd change-list glsl-shaders set "${makeShader a4k_BB}"; show-text "Anime4K: Mode BB"'';
-        "CTRL+6" = ''no-osd change-list glsl-shaders set "${makeShader a4k_CA}"; show-text "Anime4K: Mode CA"'';
+        "CTRL+1" = ''no-osd change-list glsl-shaders set "${makeShaderHQ a4k_A}"; show-text "Anime4K: Mode A"'';
+        "CTRL+2" = ''no-osd change-list glsl-shaders set "${makeShaderHQ a4k_B}"; show-text "Anime4K: Mode B"'';
+        "CTRL+3" = ''no-osd change-list glsl-shaders set "${makeShaderHQ a4k_C}"; show-text "Anime4K: Mode C"'';
+        "CTRL+4" = ''no-osd change-list glsl-shaders set "${makeShaderHQ a4k_AA}"; show-text "Anime4K: Mode AA"'';
+        "CTRL+5" = ''no-osd change-list glsl-shaders set "${makeShaderHQ a4k_BB}"; show-text "Anime4K: Mode BB"'';
+        "CTRL+6" = ''no-osd change-list glsl-shaders set "${makeShaderHQ a4k_CA}"; show-text "Anime4K: Mode CA"'';
         "CTRL+7" = ''no-osd change-list glsl-shaders set "${makeShader fsr}"; show-text "FSR"'';
       };
     };
