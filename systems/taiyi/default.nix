@@ -19,7 +19,7 @@ in
     self.nixosModules.graphical
 
     nixos-hardware.nixosModules.common-cpu-amd-pstate
-    nixos-hardware.nixosModules.common-gpu-amd
+    nixos-hardware.nixosModules.common-gpu-intel
 
     ./services/backups.nix
     ./services/monitoring.nix
@@ -76,12 +76,7 @@ in
 
   ## Boot
 
-  # try to address crashes
-  # ref: https://bugzilla.kernel.org/show_bug.cgi?id=206903#c322
-  boot.kernelParams = [
-    "amdgpu.ppfeaturemask=0xffffbffd"
-    "iommu=pt"
-  ];
+  boot.kernelParams = [ "iommu=pt" ];
 
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback rpool/local/root@empty
@@ -162,10 +157,7 @@ in
     dockerSocket.enable = true;
   };
 
-  hardware.opengl.extraPackages = [
-    pkgs.rocmPackages.clr
-    pkgs.rocmPackages.clr.icd
-  ];
+  hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
 
   # cooler pump
   services.udev.packages = with pkgs; [ liquidctl ];
