@@ -147,9 +147,6 @@ in
 
   ## Other hardware-specific configuration
 
-  # swaylock locks out otherwise
-  security.pam.services.swaylock = { };
-
   # podman requires system-level config
   virtualisation.podman = {
     enable = true;

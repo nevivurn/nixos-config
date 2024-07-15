@@ -250,9 +250,6 @@ in
   services.xserver.xkb.options = "ctrl:swapcaps,korean:ralt_hangul";
   console.useXkbConfig = true;
 
-  # swaylock locks out otherwise
-  security.pam.services.swaylock = { };
-
   # podman requires system-level config
   virtualisation.podman = {
     enable = true;

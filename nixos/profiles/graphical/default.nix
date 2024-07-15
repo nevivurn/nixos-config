@@ -13,6 +13,9 @@
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
 
+  # swaylock locks out otherwise
+  security.pam.services.swaylock = { };
+
   hardware.bluetooth = {
     enable = true;
     settings = {

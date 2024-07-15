@@ -464,15 +464,15 @@ in
     enable = true;
     events =
       let
-        swaylock = config.programs.swaylock.package;
+        swaylock = lib.getExe config.programs.swaylock.package;
       in
       [
         {
-          command = "${swaylock}/bin/swaylock -f";
+          command = "${swaylock} -f";
           event = "lock";
         }
         {
-          command = "${swaylock}/bin/swaylock -f";
+          command = "${swaylock} -f";
           event = "before-sleep";
         }
       ];
