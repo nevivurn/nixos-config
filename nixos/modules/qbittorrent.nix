@@ -52,7 +52,11 @@ in
     ];
 
     systemd.services.qbittorrent = {
-      after = [ "network.target" ];
+      after = [
+        "network-online.target"
+        "nss-lookup.target"
+      ];
+      wants = [ "network-online.target" ];
       description = "qBittorrent Daemon";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
