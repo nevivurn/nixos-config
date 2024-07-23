@@ -31,7 +31,7 @@
 
       man-pages
     ]
-    ++ lib.optionals pkgs.hostPlatform.isLinux [
+    ++ lib.optionals hostPlatform.isLinux [
       psmisc
       ethtool
       iw
@@ -44,6 +44,11 @@
     la = "ls -A";
     l = "ls -alh";
     grep = "grep --color=tty";
+  };
+
+  home.sessionVariables = {
+    # allow scrolling in systemd pager
+    SYSTEMD_LESS = "FRSMK"; # default: FRSXMK
   };
 
   programs.home-manager.enable = true;
@@ -123,6 +128,7 @@
     };
     extraConfig = {
       init.defaultBranch = "master";
+      # allow scrolling in git pager
       core.pager = "less -+X";
       core.quotePath = false;
     };
@@ -137,9 +143,6 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
-      "athebyne-boot.nevi.network".user = "root";
-
-      "cse.snu.ac.kr".user = "bacchus";
       "*.snucse.org".user = "bacchus";
       "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "sherry"; };
       "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
