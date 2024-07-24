@@ -1,7 +1,5 @@
 { inputs, ... }:
 
-with inputs;
-
 {
-  imports = [ self.homeModules.shell ];
+  imports = [ inputs.self.homeModules.shell ];
 }

@@ -6,10 +6,8 @@
   ...
 }:
 
-with inputs;
-
 {
-  imports = [ self.homeModules.shell ];
+  imports = [ inputs.self.homeModules.shell ];
 
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
@@ -38,7 +36,7 @@ with inputs;
     font.name = "FiraCode Nerd Font";
     font.size = 10;
     settings = {
-      shell = "${pkgs.bashInteractive}/bin/bash -l";
+      shell = "${lib.getExe pkgs.bashInteractive} -l";
       shell_integration = "enabled";
       enable_audio_bell = false;
       background_opacity = "0.8";

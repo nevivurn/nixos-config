@@ -5,10 +5,8 @@
   ...
 }:
 
-with inputs;
-
 {
-  imports = [ self.homeModules.sway ];
+  imports = [ inputs.self.homeModules.sway ];
 
   wayland.windowManager.sway.config = {
     keybindings = {

@@ -5,12 +5,10 @@
   ...
 }:
 
-with inputs;
-
 {
-  imports = [ self.homeModules.develop ];
+  imports = [ inputs.self.homeModules.develop ];
 
-  home.packages = with pkgs; [ weechat ];
+  home.packages = [ pkgs.weechat ];
 
   home.persistence."/persist${config.home.homeDirectory}" = {
     directories = [

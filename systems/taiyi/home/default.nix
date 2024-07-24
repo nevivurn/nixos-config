@@ -157,7 +157,7 @@
       ];
     };
 
-  home.packages = with pkgs; [ picocom ];
+  home.packages = [ pkgs.picocom ];
 
   home.persistence."/persist${config.home.homeDirectory}" = {
     directories = [

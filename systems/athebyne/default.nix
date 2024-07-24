@@ -6,8 +6,6 @@
   ...
 }:
 
-with inputs;
-
 let
   hostname = "athebyne";
   machineId = "c41424cc1cd14395a864f52437bece7b";
@@ -16,11 +14,11 @@ in
   imports = [
     ./hardware-configuration.nix
 
-    self.nixosModules.default
+    inputs.self.nixosModules.default
     ../../private/systems/athebyne/default.nix
 
-    nixos-hardware.nixosModules.common-cpu-amd-pstate
-    nixos-hardware.nixosModules.common-gpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
 
     ./services/audiobookshelf.nix
     ./services/backups.nix

@@ -1,21 +1,14 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
-
-with inputs;
+{ inputs, pkgs, ... }:
 
 {
   imports = [
-    (self + "/nixos/modules/misc.nix")
-    (self + "/nixos/modules/nix.nix")
-    (self + "/nixos/modules/users.nix")
+    (inputs.self + "/nixos/modules/misc.nix")
+    (inputs.self + "/nixos/modules/nix.nix")
+    (inputs.self + "/nixos/modules/users.nix")
 
-    home-manager.nixosModules.home-manager
+    inputs.home-manager.nixosModules.home-manager
 
-    (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+    (inputs.nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
   ];
 
   ## Basic config
@@ -33,7 +26,7 @@ with inputs;
   };
 
   nixpkgs.overlays = [
-    (final: prev: { pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; }; })
+    (final: prev: { pkgsUnstable = import inputs.nixpkgs-unstable { inherit (pkgs) system config; }; })
   ];
 
   services.openssh = {
@@ -49,8 +42,8 @@ with inputs;
     useGlobalPkgs = true;
     useUserPackages = true;
     users.nixos.imports = [
-      self.homeModules.default
-      self.homeModules.shell
+      inputs.self.homeModules.default
+      inputs.self.homeModules.shell
     ];
   };
 

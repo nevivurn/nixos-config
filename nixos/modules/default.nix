@@ -1,7 +1,5 @@
 { pkgs, inputs, ... }:
 
-with inputs;
-
 {
   imports = [
     ./boot.nix
@@ -12,25 +10,25 @@ with inputs;
     ./qbittorrent.nix
     ./users.nix
 
-    home-manager.nixosModules.home-manager
-    impermanence.nixosModules.impermanence
+    inputs.home-manager.nixosModules.home-manager
+    inputs.impermanence.nixosModules.impermanence
   ];
 
   system.stateVersion = "24.05";
 
   nixpkgs.overlays = [
-    self.overlays.default
+    inputs.self.overlays.default
     (final: prev: {
       pkgsUnstable = import inputs.nixpkgs-unstable {
         inherit (pkgs) system config;
-        overlays = [ self.overlays.default ];
+        overlays = [ inputs.self.overlays.default ];
       };
     })
   ];
 
   home-manager.sharedModules = [
-    self.homeModules.default
-    impermanence.nixosModules.home-manager.impermanence
+    inputs.self.homeModules.default
+    inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
   home-manager = {

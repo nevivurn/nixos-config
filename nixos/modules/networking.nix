@@ -16,5 +16,5 @@ lib.mkMerge [
   }
   (lib.mkIf (lib.any (t: t) (
     lib.mapAttrsToList (_: v: v.netdevConfig.Kind == "wireguard") config.systemd.network.netdevs
-  )) { environment.systemPackages = with pkgs; [ wireguard-tools ]; })
+  )) { environment.systemPackages = [ pkgs.wireguard-tools ]; })
 ]

@@ -5,8 +5,6 @@
   ...
 }:
 
-with inputs;
-
 let
   hostname = "funi";
   machineId = "580b38632f5347f9eefb6ade40e88402";
@@ -15,12 +13,12 @@ in
   imports = [
     ./hardware-configuration.nix
 
-    (self + "/nixos/modules/misc.nix")
-    (self + "/nixos/modules/nix.nix")
-    (self + "/nixos/modules/users.nix")
+    (inputs.self + "/nixos/modules/misc.nix")
+    (inputs.self + "/nixos/modules/nix.nix")
+    (inputs.self + "/nixos/modules/users.nix")
 
-    home-manager.nixosModules.home-manager
-    nixos-hardware.nixosModules.pcengines-apu
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixos-hardware.nixosModules.pcengines-apu
 
     ./router.nix
 
@@ -84,7 +82,7 @@ in
   };
 
   nixpkgs.overlays = [
-    (final: prev: { pkgsUnstable = import nixpkgs-unstable { inherit (pkgs) system config; }; })
+    (final: prev: { pkgsUnstable = import inputs.nixpkgs-unstable { inherit (pkgs) system config; }; })
   ];
 
   home-manager = {
@@ -121,5 +119,5 @@ in
   boot.tmp.cleanOnBoot = true;
 
   # we don't pull in nixos/modules/networking.nix
-  environment.systemPackages = with pkgs; [ wireguard-tools ];
+  environment.systemPackages = [ pkgs.wireguard-tools ];
 }

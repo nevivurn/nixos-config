@@ -5,8 +5,6 @@
   ...
 }:
 
-with inputs;
-
 let
   hostname = "taiyi";
   machineId = "62a136e793c240c588c6ddca2ed9d402";
@@ -15,11 +13,11 @@ in
   imports = [
     ./hardware-configuration.nix
 
-    self.nixosModules.default
-    self.nixosModules.graphical
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.graphical
 
-    nixos-hardware.nixosModules.common-cpu-amd-pstate
-    nixos-hardware.nixosModules.common-gpu-intel
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-gpu-intel
 
     ./services/backups.nix
     ./services/monitoring.nix
@@ -157,11 +155,11 @@ in
   hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
 
   # cooler pump
-  services.udev.packages = with pkgs; [ liquidctl ];
+  services.udev.packages = [ pkgs.liquidctl ];
   systemd.services."liquidctl" = {
     description = "Configure pump speed curve";
     script = ''
-      ${pkgs.liquidctl}/bin/liquidctl set pump speed 25 25 35 100
+      ${lib.getExe pkgs.liquidctl} set pump speed 25 25 35 100
     '';
     serviceConfig.Type = "oneshot";
     wantedBy = [ "multi-user.target" ];

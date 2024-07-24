@@ -64,7 +64,7 @@
     plugins = with pkgs.vimPlugins; [
       dracula-vim
 
-      (nvim-treesitter.withPlugins (p: with p; [ nix ]))
+      (nvim-treesitter.withPlugins (ps: [ ps.nix ]))
       nvim-lspconfig
       nvim-cmp
       cmp-buffer

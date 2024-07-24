@@ -5,8 +5,6 @@
   ...
 }:
 
-with inputs;
-
 let
   hostname = "tianyi";
   machineId = "438ba1d86084426fa0ceab1771e01586";
@@ -15,10 +13,10 @@ in
   imports = [
     ./hardware-configuration.nix
 
-    self.nixosModules.default
-    self.nixosModules.graphical
+    inputs.self.nixosModules.default
+    inputs.self.nixosModules.graphical
 
-    nixos-hardware.nixosModules.dell-xps-13-9370
+    inputs.nixos-hardware.nixosModules.dell-xps-13-9370
 
     ./services/monitoring.nix
     ./services/openssh.nix

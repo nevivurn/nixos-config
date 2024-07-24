@@ -6,10 +6,8 @@
   ...
 }:
 
-with inputs;
-
 {
-  imports = [ home-manager.darwinModules.home-manager ];
+  imports = [ inputs.home-manager.darwinModules.home-manager ];
 
   system.stateVersion = 4;
 
@@ -23,11 +21,11 @@ with inputs;
   };
 
   nixpkgs.overlays = [
-    self.overlays.default
+    inputs.self.overlays.default
     (final: prev: {
       pkgsUnstable = import inputs.nixpkgs-unstable {
         inherit (pkgs) system config;
-        overlays = [ self.overlays.default ];
+        overlays = [ inputs.self.overlays.default ];
       };
     })
   ];

@@ -11,9 +11,7 @@
   home.packages = with pkgs; [
     awscli2
     docker-compose
-    (google-cloud-sdk.withExtraComponents (
-      with google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]
-    ))
+    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     kubectl
     kubelogin-oidc
     kubernetes-helm
@@ -62,7 +60,7 @@
           waylandSupport = true;
         };
       in
-      pass.withExtensions (ext: with ext; [ pass-otp ]);
+      pass.withExtensions (ext: [ ext.pass-otp ]);
   };
 
   programs.gpg.enable = true;
@@ -89,7 +87,7 @@
     driver = "overlay"
 
     [storage.options.overlay]
-    mount_program = "${pkgs.fuse-overlayfs}/bin/fuse-overlayfs"
+    mount_program = "${lib.getExe pkgs.fuse-overlayfs}"
   '';
 
   home.file.".terraformrc".text = ''

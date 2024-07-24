@@ -1,11 +1,4 @@
-{
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
-
-with inputs;
+{ lib, inputs, ... }:
 
 let
   hostname = "giausar";
@@ -15,7 +8,7 @@ in
   imports = [
     ./hardware-configuration.nix
 
-    self.nixosModules.default
+    inputs.self.nixosModules.default
     ../../private/systems/giausar/default.nix
 
     ./services/openssh.nix

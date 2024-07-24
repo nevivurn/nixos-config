@@ -1,7 +1,5 @@
 { pkgs, inputs, ... }:
 
-with inputs;
-
 {
   # unbound as a simple, validating, recursive DNS server
   services.unbound = {
@@ -102,7 +100,7 @@ with inputs;
 
       conf-file = [
         (pkgs.runCommand "dnsmasq-hosts" { } ''
-          < ${self.packages.${pkgs.system}.hosts}/hosts \
+          < ${inputs.self.packages.${pkgs.system}.hosts}/hosts \
               grep ^0.0.0.0 \
             | awk '{print $2}' \
             | tail -n+2 \

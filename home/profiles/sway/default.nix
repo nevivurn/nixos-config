@@ -162,7 +162,7 @@ in
           term = "kitty";
 
           menu = "wofi --show run";
-          passMenu = "PASSMENU_DMENU='wofi --show dmenu' PASSMENU_XDOTOOL='${pkgs.wtype}/bin/wtype -s 100 -d 20 -' passmenu";
+          passMenu = "PASSMENU_DMENU='wofi --show dmenu' PASSMENU_XDOTOOL='${lib.getExe pkgs.wtype} -s 100 -d 20 -' passmenu";
         in
         {
           "${mod}+Return" = "exec ${term}";
