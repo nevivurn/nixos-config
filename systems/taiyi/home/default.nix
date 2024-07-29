@@ -157,12 +157,23 @@
       ];
     };
 
-  home.packages = [ pkgs.picocom ];
+  home.packages = with pkgs; [
+    picocom
+    prismlauncher
+  ];
 
   home.persistence."/persist${config.home.homeDirectory}" = {
     directories = [
       {
         directory = "games";
+        method = "symlink";
+      }
+    ];
+  };
+  home.persistence."/persist/cache${config.home.homeDirectory}" = {
+    directories = [
+      {
+        directory = ".local/share/PrismLauncher";
         method = "symlink";
       }
     ];
