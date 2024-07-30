@@ -1,6 +1,24 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+
+let
+  flake = builtins.getFlake "github:NixOS/nixpkgs?rev=e9ff7852df564d55da9c3dc5401435bb97a21eed";
+in
 
 {
+  disabledModules = [
+    "${inputs.nixpkgs}/nixos/modules/services/monitoring/prometheus/exporters.nix"
+  ];
+  imports = [ "${flake}/nixos/modules/services/monitoring/prometheus/exporters.nix" ];
+
+  nixpkgs.overlays = [
+    (_: _: { inherit (flake.legacyPackages.${pkgs.system}) prometheus-smartctl-exporter; })
+  ];
+
   services.prometheus = {
     enable = true;
     enableReload = true;
