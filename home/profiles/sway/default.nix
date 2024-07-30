@@ -442,6 +442,7 @@ in
       pause = true;
       osc = false;
       audio-display = false;
+      osd-fractions = true;
 
       osd-font = "Noto Sans";
       osd-font-size = 15;
