@@ -2,17 +2,11 @@
 
 let
   cfg = config.services.kavita.settings;
-  inherit
-    ((builtins.getFlake "github:nevivurn/nixpkgs/19123264df5e839c03615cb9813395c6313298ca")
-      .legacyPackages.${pkgs.system}
-    )
-    kavita
-    ;
 in
 {
   services.kavita = {
     enable = true;
-    package = kavita;
+    package = pkgs.pkgsUnstable.kavita;
     tokenKeyFile = "/persist/secrets/kavita-token";
     settings.IpAddresses = "127.0.0.1";
   };
