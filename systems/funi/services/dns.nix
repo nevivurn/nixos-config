@@ -45,6 +45,7 @@
       server = [
         "127.0.0.1#5353"
         "/nevi.network/"
+        "/internal.bacchus.io/10.90.0.1"
       ];
       address = [
         "/funi.nevi.network/192.168.2.1"
@@ -60,7 +61,7 @@
       interface = "br-lan";
       bind-interfaces = true;
 
-      rebind-domain-ok = [ "junebug.bacchus.io" ];
+      rebind-domain-ok = [ "internal.bacchus.io" ];
 
       interface-name = [ "public.nevi.network,enp1s0/4" ];
 

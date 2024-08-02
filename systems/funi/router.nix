@@ -90,6 +90,25 @@
           }
         ];
       };
+      "60-wg-bacchus" = {
+        netdevConfig = {
+          Name = "wg-bacchus";
+          Kind = "wireguard";
+        };
+        wireguardConfig.PrivateKeyFile = "/secrets/wg-bacchus-priv";
+        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+          {
+            AllowedIPs = [
+              "10.89.0.0/16"
+              "10.90.0.1/32"
+              "10.91.0.0/16"
+            ];
+            PublicKey = "VSIzXghytTORvgN5T5ePCJvfMHPVa4SB4fLIDpz27Fk=";
+            PresharedKeyFile = "/secrets/wg-bacchus-vpn-psk";
+            Endpoint = "vpn.bacchus.io:51820";
+          }
+        ];
+      };
     };
     networks = {
       # WAN
@@ -147,6 +166,21 @@
           "fdbc:ba6a:38de:2::1/64"
         ];
       };
+      "60-wg-bacchus" = {
+        matchConfig.Name = "wg-bacchus";
+        networkConfig.Address = [ "10.90.0.6/24" ];
+        routes = builtins.map (x: { routeConfig = x; }) [
+          {
+            Gateway = "10.90.0.1";
+            Destination = "10.89.0.0/16";
+          }
+          {
+            Gateway = "10.90.0.1";
+            Destination = "10.91.0.0/16";
+          }
+        ];
+        # DNS is handled in services/dns.nix
+      };
     };
   };
 
@@ -173,6 +207,7 @@
           type nat hook postrouting priority srcnat; policy accept;
           iifname { "br-lan", "wg-home" } oifname "enp1s0" masquerade
           iifname { "br-lan", "wg-home" } oifname "wg-proxy" masquerade
+          iifname { "br-lan" } oifname "wg-bacchus" masquerade
         }
       }
 
@@ -205,7 +240,7 @@
         }
 
         chain forward_lan {
-          oifname { "br-lan", "wg-home", "wg-proxy", "enp1s0" } accept
+          oifname { "br-lan", "wg-home", "wg-proxy", "wg-bacchus", "enp1s0" } accept
         }
 
         chain forward_wan {
