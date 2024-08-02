@@ -15,7 +15,7 @@ jobs:
           submodules: 'true'
       - uses: cachix/install-nix-action@v27
 
-      - uses: DeterminateSystems/flake-checker-action@v7
+      - uses: DeterminateSystems/flake-checker-action@v8
 
       - name: Check formatting
         run: nix fmt -- --check .
@@ -29,7 +29,7 @@ jobs:
       fail-fast: false
       matrix:
         nix-version:
-          - 2.18.4 # 24.05, unstable
+          - 2.18.5 # 24.05, unstable
           - latest
           - lix
 
