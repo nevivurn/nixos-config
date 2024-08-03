@@ -206,8 +206,7 @@
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
           iifname { "br-lan", "wg-home" } oifname "enp1s0" masquerade
-          iifname { "br-lan", "wg-home" } oifname "wg-proxy" masquerade
-          iifname { "br-lan" } oifname "wg-bacchus" masquerade
+          iifname { "br-lan", "wg-home" } oifname { "wg-proxy", "wg-bacchus" } masquerade
         }
       }
 
