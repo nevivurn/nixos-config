@@ -15,16 +15,22 @@
       [
         {
           job_name = "node_exporter";
-          static_configs = [
-            {
-              targets = [
-                "athebyne.nevi.network:${toString exporters.node.port}"
-                "funi.nevi.network:${toString exporters.node.port}"
-                "taiyi.nevi.network:${toString exporters.node.port}"
-                "tianyi.home.nevi.network:${toString exporters.node.port}"
-              ];
-            }
-          ];
+          static_configs =
+            let
+              port = toString exporters.node.port;
+            in
+            [
+              {
+                targets = [
+                  "athebyne.nevi.network:${port}"
+                  "funi.nevi.network:${port}"
+                  "taiyi.nevi.network:${port}"
+                  "tianyi.home.nevi.network:${port}"
+                  "giausar.proxy.nevi.network:${port}"
+                  "rastaban.proxy.nevi.network:${port}"
+                ];
+              }
+            ];
         }
         {
           job_name = "smartctl";

@@ -16,6 +16,7 @@ in
     inputs.self.nixosModules.default
 
     ./services/caddy.nix
+    ./services/monitoring.nix
     ./services/openssh.nix
   ];
 
