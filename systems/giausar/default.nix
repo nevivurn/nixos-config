@@ -85,20 +85,6 @@ in
       networks = {
         "20-lan" = {
           matchConfig.Type = "ether";
-          networkConfig = {
-            Address = [
-              "209.141.54.223/24"
-              "2605:6400:20:ef2:53ea:a240:c175:dbe6/48"
-            ];
-            Gateway = [
-              "209.141.54.1"
-              "2605:6400:20::1"
-            ];
-            DNS = [
-              "205.185.112.68"
-              "205.185.112.69"
-            ];
-          };
           linkConfig.MTUBytes = builtins.toString mtu;
         };
         "50-wg-home" = {
