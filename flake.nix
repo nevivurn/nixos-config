@@ -2,27 +2,18 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
 
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager-darwin.url = "github:nix-community/home-manager/release-24.05";
-    home-manager-darwin.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
-
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   outputs =
     { self, nixpkgs, ... }@inputs:
     let
-      systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-      ];
+      systems = [ "x86_64-linux" ];
       inherit (nixpkgs) lib;
 
       # from flake-utils
@@ -108,13 +99,9 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          configs =
-            lib.mapAttrs (_: c: c.config.system.build.toplevel) (
-              lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations
-            )
-            // lib.mapAttrs (_: c: c.system) (
-              lib.filterAttrs (_: c: c.pkgs.system == system) self.darwinConfigurations
-            );
+          configs = lib.mapAttrs (_: c: c.config.system.build.toplevel) (
+            lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations
+          );
         in
         configs // { allConfigs = pkgs.linkFarmFromDrvs "all-configs" (builtins.attrValues configs); }
       );
@@ -193,16 +180,6 @@
             inherit inputs;
           };
           modules = [ ./systems/iso ];
-        };
-      };
-      darwinConfigurations = {
-        dziban = inputs.nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs.inputs = inputs // {
-            nixpkgs = inputs.nixpkgs-darwin;
-            home-manager = inputs.home-manager-darwin;
-          };
-          modules = [ ./systems/dziban ];
         };
       };
     };
