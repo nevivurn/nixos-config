@@ -10,6 +10,12 @@
           Kind = "bridge";
         };
       };
+      "10-br-guest" = {
+        netdevConfig = {
+          Name = "br-guest";
+          Kind = "bridge";
+        };
+      };
       "40-wg-home" = {
         netdevConfig = {
           Name = "wg-home";
@@ -129,12 +135,30 @@
         linkConfig.RequiredForOnline = false;
       };
       "30-bridge" = {
-        matchConfig.Type = "bridge";
+        matchConfig = {
+          Type = "bridge";
+          Name = "br-lan";
+        };
         networkConfig = {
           Address = [
             "192.168.2.1/24"
             "fdbc:ba6a:38de::1/64"
           ];
+          DNS = [
+            "127.0.0.1"
+            "::1"
+          ];
+          DHCP = "no";
+          IPv6AcceptRA = false;
+        };
+      };
+      "35-bridge-guest" = {
+        matchConfig = {
+          Type = "bridge";
+          Name = "br-guest";
+        };
+        networkConfig = {
+          Address = [ "192.168.3.1/24" ];
           DNS = [
             "127.0.0.1"
             "::1"
@@ -196,14 +220,14 @@
         }
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
-          iifname { "br-lan", "wg-home" } oifname "enp1s0" masquerade
+          iifname { "br-lan", "br-guest", "wg-home" } oifname "enp1s0" masquerade
           iifname { "br-lan", "wg-home" } oifname { "wg-proxy", "wg-bacchus" } masquerade
         }
       }
 
       table inet filter {
         flowtable f {
-          hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0 };
+          hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0, wlp4s0-1 };
         }
 
         chain rpfilter {
@@ -223,6 +247,7 @@
 
           iifname vmap {
             br-lan : jump forward_lan,
+            br-guest : jump forward_guest,
             wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
             wg-proxy : jump forward_wan,
@@ -231,6 +256,10 @@
 
         chain forward_lan {
           oifname { "br-lan", "wg-home", "wg-proxy", "wg-bacchus", "enp1s0" } accept
+        }
+
+        chain forward_guest {
+          oifname "enp1s0" accept
         }
 
         chain forward_wan {
@@ -251,6 +280,7 @@
           iifname vmap {
             lo : accept,
             br-lan : jump input_lan,
+            br-guest : jump input_guest,
             wg-home : jump input_lan,
             enp1s0 : jump input_wan,
           }
@@ -271,6 +301,17 @@
             tcp . 80 : accept,
             tcp . 443 : accept,
             udp . 443 : accept,
+          }
+        }
+
+        chain input_guest {
+          icmp type { echo-request } accept
+          icmpv6 type != { nd-redirect, 139, 140 } accept
+
+          meta l4proto . th dport vmap {
+            tcp . 53 : accept, udp . 53 : accept,
+            udp . 67 : accept, udp . 547 : accept,
+            udp . 123 : accept,
           }
         }
 

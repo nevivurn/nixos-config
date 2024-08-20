@@ -58,7 +58,7 @@
         "matrix.nevi.network,athebyne.nevi.network"
         "matrix-msc3575.nevi.network,athebyne.nevi.network"
       ];
-      interface = "br-lan";
+      interface = "br-lan,br-guest";
       bind-interfaces = true;
 
       rebind-domain-ok = [ "internal.bacchus.io" ];
@@ -81,8 +81,9 @@
       bogus-priv = true;
 
       dhcp-range = [
-        "192.168.2.100,192.168.2.254"
-        "fdbc:ba6a:38de:0:1::,fdbc:ba6a:38de::ffff:ffff:ffff:ffff"
+        "br-lan,192.168.2.100,192.168.2.254"
+        "br-lan,fdbc:ba6a:38de:0:1::,fdbc:ba6a:38de::ffff:ffff:ffff:ffff"
+        "br-guest,192.168.3.100,192.168.3.254"
       ];
       dhcp-host = [
         "92:ef:6d:2b:7b:cf,192.168.2.10,athebyne.nevi.network"
@@ -92,8 +93,9 @@
       enable-ra = true;
 
       dhcp-option = [
-        "option:ntp-server,0.0.0.0"
-        "option6:ntp-server,[fd00::]"
+        "br-lan,option:ntp-server,0.0.0.0"
+        "br-lan,option6:ntp-server,[fd00::]"
+        "br-guest,option:dns-server,1.1.1.1,1.0.0.1"
       ];
 
       domain = "nevi.network";

@@ -38,7 +38,6 @@
       };
 
       settings = {
-        bridge = "br-lan";
         beacon_prot = true;
         ocv = true;
         okc = true;
@@ -48,11 +47,28 @@
       networks = {
         wlp4s0 = {
           ssid = "alruba";
+          bssid = "04:f0:21:b2:55:d7";
           apIsolate = true;
+          settings = {
+            bridge = "br-lan";
+          };
           authentication = {
             mode = "wpa3-sae-transition";
             wpaPasswordFile = "/secrets/wpa-passwords";
             saePasswordsFile = "/secrets/wpa-passwords";
+          };
+        };
+        wlp4s0-1 = {
+          ssid = "alruba-guest";
+          bssid = "02:f0:21:b2:55:d7";
+          apIsolate = true;
+          settings = {
+            bridge = "br-guest";
+          };
+          authentication = {
+            mode = "wpa3-sae-transition";
+            wpaPasswordFile = "/secrets/wpa-guest-passwords";
+            saePasswordsFile = "/secrets/wpa-guest-passwords";
           };
         };
       };
