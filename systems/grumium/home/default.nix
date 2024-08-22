@@ -22,8 +22,10 @@
     extraLuaConfig = lib.mkAfter (builtins.readFile ../../../home/profiles/develop/nvim.lua);
     extraPackages = with pkgs; [
       helm-ls
+      nodePackages.typescript-language-server
       pkgsUnstable.gopls
       terraform-ls
+      vscode-langservers-extracted
       yaml-language-server
     ];
     plugins = with pkgs.vimPlugins; [
@@ -36,7 +38,7 @@
   programs.kitty = {
     enable = true;
     font.name = "FiraCode Nerd Font";
-    font.size = 10;
+    font.size = 11;
     settings = {
       shell = "${lib.getExe pkgs.bashInteractive} -l";
       shell_integration = "enabled";

@@ -136,8 +136,8 @@
       ".direnv"
       ".envrc"
     ];
-    userName = "Yongun Seong";
-    userEmail = "nevivurn@nevi.dev";
+    userName = lib.mkDefault "Yongun Seong";
+    userEmail = lib.mkDefault "nevivurn@nevi.dev";
   };
 
   programs.ssh = {
