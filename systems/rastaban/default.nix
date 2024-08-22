@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ lib, inputs, ... }:
 
 let
   hostname = "rastaban";
@@ -22,48 +17,18 @@ in
 
   ## Filesystems
 
-  fileSystems = {
-    "/" = {
-      device = "rpool/local/root";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-partuuid/fdfa2fb0-07d1-4d7e-a99b-84ca052d0cf4";
-      fsType = "ext2";
-      options = [ "noatime" ];
-    };
-
-    "/nix" = {
-      device = "rpool/local/nix";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-    };
-    "/persist" = {
-      device = "rpool/persist";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-      neededForBoot = true;
-    };
-    "/persist/cache" = {
-      device = "rpool/persist/cache";
-      fsType = "zfs";
-      options = [ "zfsutil" ];
-      neededForBoot = true;
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-partuuid/TEST";
+    fsType = "ext4";
+    options = [ "noatime" ];
   };
   swapDevices = [ { device = "/dev/disk/by-partuuid/52a23b9b-4eb7-4ced-b5a8-1bf671dad89e"; } ];
-  boot.zfs.devNodes = "/dev/disk/by-partuuid";
 
   ## Boot
 
   # force BIOS boot
   boot.loader.systemd-boot.enable = lib.mkForce false;
-
   boot.loader.grub.device = "/dev/vda";
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zfs rollback rpool/local/root@empty
-  '';
 
   ## Networking
 
@@ -131,7 +96,7 @@ in
   users.users.nevivurn = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    hashedPasswordFile = "/persist/secrets/passwd-nevivurn";
+    hashedPasswordFile = "/secrets/passwd-nevivurn";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJ1U9//g+W2pRNdBaiADCMhAWlfWt3Ha1zwfR+iwMoZ nevivurn@tianyi"
@@ -139,17 +104,8 @@ in
   };
   home-manager.users.nevivurn = import ./home;
 
-  ## Persistence
-
-  environment.persistence = {
-    "/persist".directories = [ "/etc/nixos" ];
-    "/persist/cache".directories = [
-      "/root/.cache"
-      "/var/lib/nixos"
-      "/var/lib/systemd/timers"
-      "/var/log"
-    ];
-  };
-
   ## Other hardware-specific configuration
+
+  # Unlike other systems, we have a *gasp* persistent root filesystem
+  boot.tmp.cleanOnBoot = true;
 }
