@@ -42,6 +42,8 @@ import ./default.nix prev
           );
       };
   });
+
+  istioctl = prev.istioctl.overrideAttrs { passthru.withVersion = final.callPackage ./istioctl { }; };
 }
 // prev.lib.optionalAttrs (prev ? pkgsUnstable) {
   # portfolio is broken on unstable due to a dependency, and too old on stable

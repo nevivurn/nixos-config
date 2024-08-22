@@ -2,6 +2,7 @@
   lib,
   buildGoModule,
   istioctl,
+  rename,
 }:
 
 {
@@ -23,13 +24,24 @@ istioctl.override {
       args
       // {
         inherit version src vendorHash;
+
+        nativeBuildInputs = args.nativeBuildInputs ++ [ rename ];
+
         installCheckPhase = lib.pipe args.installCheckPhase [
           versionRename
           versionReplace
         ];
-        postInstall = ''
-          mv $out/bin/istioctl $out/bin/${mainProgram}
-        ''; # do not install completion for now
+        postInstall =
+          args.postInstall
+          + ''
+            substituteInPlace \
+              $out/share/bash-completion/completions/istioctl.bash \
+              $out/share/zsh/site-functions/_istioctl \
+              --replace-fail istioctl ${mainProgram}
+            pushd $out
+            find . -print0 | xargs -0 rename s/istioctl/${mainProgram}/
+            popd
+          '';
 
         ldflags = builtins.map versionReplace args.ldflags;
         meta.mainProgram = mainProgram;
