@@ -9,4 +9,6 @@ pkgs:
 
   # orpheusbetter
   orpheusbetter = pkgs.callPackage ./orpheusbetter { };
+
+  mkIstioctl = pkgs.callPackage ./istioctl { };
 }
