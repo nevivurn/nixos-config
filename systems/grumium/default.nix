@@ -38,6 +38,7 @@ in
     builtins.elem (lib.getName pkg) [
       "copilot.vim"
       "p7zip"
+      "terraform"
     ]
   );
   nix.settings.extra-experimental-features = [
