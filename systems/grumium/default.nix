@@ -6,7 +6,9 @@
   ...
 }:
 
-let hostname = "grumium"; in
+let
+  hostname = "grumium";
+in
 {
   imports = [ inputs.home-manager.darwinModules.home-manager ];
 
