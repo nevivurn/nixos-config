@@ -47,5 +47,16 @@ import ./default.nix prev
 }
 // prev.lib.optionalAttrs (prev ? pkgsUnstable) {
   # portfolio is broken on unstable due to a dependency, and too old on stable
-  portfolio = prev.portfolio.overrideAttrs { inherit (prev.pkgsUnstable.portfolio) version src; };
+  portfolio = prev.portfolio.overrideAttrs (
+    if final.lib.versionOlder prev.pkgsUnstable.portfolio.version "0.70.4" then
+      rec {
+        version = "0.70.4";
+        src = final.fetchurl {
+          url = "https://github.com/buchen/portfolio/releases/download/${version}/PortfolioPerformance-${version}-linux.gtk.x86_64.tar.gz";
+          hash = "sha256-4L2hoWUFAmxyUCbQFWoIQlIhbdyncN0fGFmahPMk0FU=";
+        };
+      }
+    else
+      { inherit (prev.pkgsUnstable.portfolio) version src; }
+  );
 }
