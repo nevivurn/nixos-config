@@ -41,6 +41,14 @@ in
       "terraform"
     ]
   );
+
+  # set up NIX_PATH and registry
+  nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
+  nix.registry.nixpkgs.to = {
+    type = "path";
+    path = inputs.nixpkgs;
+  };
+
   nix.settings.extra-experimental-features = [
     "nix-command"
     "flakes"
