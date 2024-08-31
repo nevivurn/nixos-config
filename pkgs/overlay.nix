@@ -44,6 +44,27 @@ import ./default.nix prev
   });
 
   istioctl = prev.istioctl.overrideAttrs { passthru.withVersion = final.callPackage ./istioctl { }; };
+  istioctl_1_20 = final.istioctl.withVersion rec {
+    version = "1.20.7";
+    src = final.fetchFromGitHub {
+      owner = "istio";
+      repo = "istio";
+      rev = version;
+      hash = "sha256-1FcrjCxnGUcgBAU5hLJmuU4XfoJlRvJwBCIndLinvlA=";
+    };
+    vendorHash = "sha256-IwGFeEvioAjjhwFjq6/S1ZvDWd1qJHnZdsKnw1kf9dE=";
+  };
+
+  kubectl = prev.kubectl.overrideAttrs { passthru.withVersion = final.callPackage ./kubectl { }; };
+  kubectl_1_28 = final.kubectl.withVersion rec {
+    version = "1.28.13";
+    src = final.fetchFromGitHub {
+      owner = "kubernetes";
+      repo = "kubernetes";
+      rev = "v${version}";
+      hash = "sha256-dPLSbHStUVHm7SjjZkQvGZV2sNtsxPc6kCWeEaOIrmw=";
+    };
+  };
 }
 // prev.lib.optionalAttrs (prev ? pkgsUnstable) {
   # portfolio is broken on unstable due to a dependency, and too old on stable
