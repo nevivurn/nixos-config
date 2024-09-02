@@ -65,6 +65,15 @@ import ./default.nix prev
       hash = "sha256-dPLSbHStUVHm7SjjZkQvGZV2sNtsxPc6kCWeEaOIrmw=";
     };
   };
+  kubectl_1_29 = final.kubectl.withVersion rec {
+    version = "1.29.8";
+    src = final.fetchFromGitHub {
+      owner = "kubernetes";
+      repo = "kubernetes";
+      rev = "v${version}";
+      hash = "sha256-NnkUsqXz/H25kQz2m7C//gNVXvHNpjnUy7JY52ou1zk=";
+    };
+  };
 }
 // prev.lib.optionalAttrs (prev ? pkgsUnstable) {
   # portfolio is broken on unstable due to a dependency, and too old on stable
