@@ -14,6 +14,7 @@
       tree
 
       unixtools.xxd
+      yq-go
 
       curl
       wget
