@@ -32,7 +32,6 @@
                   "taiyi.nevi.network:${port}"
                   "tianyi.home.nevi.network:${port}"
                   "giausar.proxy.nevi.network:${port}"
-                  "rastaban.proxy.nevi.network:${port}"
                 ];
               }
             ];

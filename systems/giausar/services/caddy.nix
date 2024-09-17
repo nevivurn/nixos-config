@@ -7,6 +7,8 @@
       plugins = [
         {
           name = "github.com/mholt/caddy-l4";
+          # Bump once nixpkgs' caddy advances past 2.8
+          # https://github.com/mholt/caddy-l4/pull/185#issuecomment-2072916437
           version = "v0.0.0-20240604210608-ce9789f602eb";
         }
       ];
@@ -15,7 +17,7 @@
     settings = {
       apps.layer4.servers = {
         http = {
-          listen = [ ":80" ];
+          listen = [ "10.42.43.3:80" ];
           routes = [
             {
               match = [ { http = [ ]; } ];
@@ -29,7 +31,7 @@
           ];
         };
         https = {
-          listen = [ ":443" ];
+          listen = [ "10.42.43.3:443" ];
           routes = [
             {
               match = [ { tls = { }; } ];

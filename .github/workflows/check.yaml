@@ -67,13 +67,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        system:
-          # A representative subset of systems.
-          # It would be nice to check funi here, but we can't run kernel builds
-          # on the GH runner.
-          - taiyi
-          - rastaban
-          - iso
+        system: [iso]
 
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock

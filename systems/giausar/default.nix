@@ -11,6 +11,7 @@ in
     inputs.self.nixosModules.default
     ../../private/systems/giausar/default.nix
 
+    ./services/caddy.nix
     ./services/monitoring.nix
     ./services/openssh.nix
   ];
