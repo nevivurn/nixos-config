@@ -8,6 +8,11 @@
     listenAddress = "localhost";
     retentionTime = "30d";
 
+    globalConfig = {
+      evaluation_interval = "10s";
+      scrape_interval = "10s";
+    };
+
     scrapeConfigs =
       let
         exporters = config.services.prometheus.exporters;
