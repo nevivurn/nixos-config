@@ -15,7 +15,7 @@ jobs:
           submodules: 'true'
       - uses: cachix/install-nix-action@v27
 
-      - uses: DeterminateSystems/flake-checker-action@v8
+      - uses: DeterminateSystems/flake-checker-action@v9
 
       - name: Check formatting
         run: nix fmt -- --check .
