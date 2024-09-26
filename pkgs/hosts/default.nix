@@ -2,7 +2,7 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "hosts";
-  version = "3.14.111";
+  version = "3.14.112";
 
   src = fetchFromGitHub {
     owner = "StevenBlack";
