@@ -43,7 +43,7 @@ in
     yt-dlp
 
     gnucash
-    portfolio
+    pkgsUnstable.portfolio
 
     liquidctl
     moonlight-qt

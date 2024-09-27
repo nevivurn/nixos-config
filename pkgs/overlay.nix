@@ -57,36 +57,21 @@ import ./default.nix prev
 
   kubectl = prev.kubectl.overrideAttrs { passthru.withVersion = final.callPackage ./kubectl { }; };
   kubectl_1_28 = final.kubectl.withVersion rec {
-    version = "1.28.13";
+    version = "1.28.14";
     src = final.fetchFromGitHub {
       owner = "kubernetes";
       repo = "kubernetes";
       rev = "v${version}";
-      hash = "sha256-dPLSbHStUVHm7SjjZkQvGZV2sNtsxPc6kCWeEaOIrmw=";
+      hash = "sha256-CMboT7c3z4A3/rhuky27y/JzW91PhkspeZWQw8swXBI=";
     };
   };
   kubectl_1_29 = final.kubectl.withVersion rec {
-    version = "1.29.8";
+    version = "1.29.9";
     src = final.fetchFromGitHub {
       owner = "kubernetes";
       repo = "kubernetes";
       rev = "v${version}";
-      hash = "sha256-NnkUsqXz/H25kQz2m7C//gNVXvHNpjnUy7JY52ou1zk=";
+      hash = "sha256-XLtNITqeVallN7vhZxvgjJsuWHYi0vm2ru9OaahU+nM=";
     };
   };
-}
-// prev.lib.optionalAttrs (prev ? pkgsUnstable) {
-  # portfolio is broken on unstable due to a dependency, and too old on stable
-  portfolio = prev.portfolio.overrideAttrs (
-    if final.lib.versionOlder prev.pkgsUnstable.portfolio.version "0.70.4" then
-      rec {
-        version = "0.70.4";
-        src = final.fetchurl {
-          url = "https://github.com/buchen/portfolio/releases/download/${version}/PortfolioPerformance-${version}-linux.gtk.x86_64.tar.gz";
-          hash = "sha256-4L2hoWUFAmxyUCbQFWoIQlIhbdyncN0fGFmahPMk0FU=";
-        };
-      }
-    else
-      { inherit (prev.pkgsUnstable.portfolio) version src; }
-  );
 }
