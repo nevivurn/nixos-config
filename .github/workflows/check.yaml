@@ -29,7 +29,7 @@ jobs:
       fail-fast: false
       matrix:
         nix-version:
-          - 2.18.7 # 24.05, unstable
+          - 2.18.8 # 24.05, unstable
           - latest
           - lix
 
