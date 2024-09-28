@@ -59,6 +59,11 @@ in
   };
 
   environment.persistence = {
-    "/persist".directories = [ "/var/lib/private/kavita" ];
+    "/persist".directories = [
+      {
+        directory = "/var/lib/private/kavita";
+        mode = "0700";
+      }
+    ];
   };
 }
