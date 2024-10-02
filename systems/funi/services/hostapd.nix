@@ -1,6 +1,8 @@
 { config, ... }:
 
 {
+  imports = [ ../../../private/systems/funi/services/hostapd.nix ];
+
   services.hostapd = {
     enable = true;
 
@@ -46,8 +48,7 @@
 
       networks = {
         wlp4s0 = {
-          ssid = "alruba";
-          bssid = "04:f0:21:b2:55:d7";
+          ssid = "alruba_nomap";
           apIsolate = true;
           settings = {
             bridge = "br-lan";
@@ -59,8 +60,7 @@
           };
         };
         wlp4s0-1 = {
-          ssid = "alruba-guest";
-          bssid = "02:f0:21:b2:55:d7";
+          ssid = "alruba-guest_nomap";
           apIsolate = true;
           settings = {
             bridge = "br-guest";
