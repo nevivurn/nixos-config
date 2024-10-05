@@ -44,4 +44,6 @@
       settings.status_full = "&#xf240;";
     };
   };
+
+  programs.mpv.config.profile = "fast";
 }
