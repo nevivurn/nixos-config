@@ -44,7 +44,7 @@ import ./default.nix prev
   });
 
   istioctl = prev.istioctl.overrideAttrs { passthru.withVersion = final.callPackage ./istioctl { }; };
-  istioctl_1_20 = final.istioctl.withVersion rec {
+  istioctl_1_20_7 = final.istioctl.withVersion rec {
     version = "1.20.7";
     src = final.fetchFromGitHub {
       owner = "istio";
