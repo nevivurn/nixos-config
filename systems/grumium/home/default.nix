@@ -13,9 +13,24 @@
   ];
 
   fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
-    (unison.override { enableX11 = false; })
-    unison-fsmonitor
+    istioctl
+    istioctl_1_20_7
+
+    pkgsUnstable.kubectl
+    kubectl_1_29
+
+    kubernetes-helm
+
+    (mkTerraform {
+      version = "1.9.5";
+      hash = "sha256-fWyqBDvuBrwqgwi1WU4RsdWssKmaClNyP5zyUf+JmTU=";
+      vendorHash = "sha256-CAZUs1hxjHXcAteuVJZmkqwnMYUoIau++IFdD1b7yYY=";
+    })
+    tflint
+
+    unixtools.watch
   ];
 
   programs.neovim = {
@@ -52,4 +67,8 @@
       mouse_map left click ungrabbed no_op
     '';
   };
+
+  # add podman
+  # ref: https://github.com/LnL7/nix-darwin/issues/392
+  home.sessionPath = [ "/opt/podman/bin" ];
 }
