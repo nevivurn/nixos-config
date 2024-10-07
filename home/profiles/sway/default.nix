@@ -42,7 +42,7 @@ in
     mupdf
     yt-dlp
 
-    gnucash
+    pkgsUnstable.gnucash
     pkgsUnstable.portfolio
 
     liquidctl
