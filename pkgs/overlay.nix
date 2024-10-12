@@ -74,4 +74,10 @@ import ./default.nix prev
       hash = "sha256-XLtNITqeVallN7vhZxvgjJsuWHYi0vm2ru9OaahU+nM=";
     };
   };
+
+  # until https://github.com/NixOS/nixpkgs/pull/348035 gets merged
+  vscode-langservers-extracted = final.callPackage (final.fetchurl {
+    url = "https://raw.githubusercontent.com/NixOS/nixpkgs/2c371c03bab48efeb635b7217e5b4f99322b24f9/pkgs/development/tools/language-servers/vscode-langservers-extracted/default.nix";
+    hash = "sha256-ygKuElbaZTXQv1/wLD/TAUO3GOjeJg/UHiCPV2ZHRMQ=";
+  }) { };
 }
