@@ -74,7 +74,4 @@ import ./default.nix prev
       hash = "sha256-XLtNITqeVallN7vhZxvgjJsuWHYi0vm2ru9OaahU+nM=";
     };
   };
-
-  # until https://github.com/NixOS/nixpkgs/pull/348035 gets merged
-  vscode-langservers-extracted = final.callPackage ./vscode-langservers-extracted { };
 }
