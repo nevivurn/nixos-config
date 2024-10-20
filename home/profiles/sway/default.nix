@@ -42,8 +42,10 @@ in
     mupdf
     yt-dlp
 
-    pkgsUnstable.gnucash
-    pkgsUnstable.portfolio
+    # otherwise we run into issues with mesa mismatch
+    # and people don't like it when we backport to stable
+    (pkgsUnstable.gnucash.override { webkitgtk_4_0 = webkitgtk; })
+    (pkgsUnstable.portfolio.override { webkitgtk_4_0 = webkitgtk; })
 
     liquidctl
     moonlight-qt
