@@ -124,6 +124,11 @@ in
   };
   systemd.timers.fstrim.timerConfig.RandomizedDelaySec = "12h";
 
+  services.smartd = {
+    enable = true;
+    defaults.monitored = "-a -o on -S on -s (S/../.././00|L/../15/./12)";
+  };
+
   # we don't pull in nixos/modules/networking.nix
   environment.systemPackages = [ pkgs.wireguard-tools ];
 }
