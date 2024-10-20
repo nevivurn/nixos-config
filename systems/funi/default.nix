@@ -37,7 +37,7 @@ in
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-partuuid/45224f00-cbe7-47bb-8e2a-b57f550ef1ec";
+      device = "/dev/disk/by-partuuid/24c6e3bb-d225-4062-b4e7-4bf29dc05720";
       fsType = "ext4";
       options = [ "noatime" ];
     };
