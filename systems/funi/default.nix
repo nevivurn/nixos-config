@@ -37,7 +37,7 @@ in
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-partuuid/d1b748bd-7afd-aa4b-86f2-2ae58d294dd3";
+      device = "/dev/disk/by-partuuid/45224f00-cbe7-47bb-8e2a-b57f550ef1ec";
       fsType = "ext4";
       options = [ "noatime" ];
     };
@@ -45,7 +45,7 @@ in
 
   ## Boot
 
-  boot.loader.grub.device = "/dev/disk/by-id/mmc-SA32G_0x2b2f415a";
+  boot.loader.grub.device = "/dev/disk/by-id/ata-TS256GMSA230S_I584340031";
 
   ## Networking
 
