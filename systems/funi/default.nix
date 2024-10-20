@@ -42,6 +42,7 @@ in
       options = [ "noatime" ];
     };
   };
+  swapDevices = [ { device = "/dev/disk/by-partuuid/f19aaeb9-8fef-4d18-be7d-4196d1f99b0c"; } ];
 
   ## Boot
 
