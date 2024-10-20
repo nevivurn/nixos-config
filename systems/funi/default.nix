@@ -117,6 +117,13 @@ in
   # Unlike other systems, we have a *gasp* persistent root filesystem
   boot.tmp.cleanOnBoot = true;
 
+  # Disk maintenance
+  services.fstrim = {
+    enable = true;
+    interval = "monthly";
+  };
+  systemd.timers.fstrim.timerConfig.RandomizedDelaySec = "12h";
+
   # we don't pull in nixos/modules/networking.nix
   environment.systemPackages = [ pkgs.wireguard-tools ];
 }
