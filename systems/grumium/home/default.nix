@@ -31,6 +31,8 @@
     tflint
 
     unixtools.watch
+
+    readme-generator-for-helm
   ];
 
   programs.neovim = {
