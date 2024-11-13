@@ -8,7 +8,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     owner = "StevenBlack";
     repo = "hosts";
     rev = finalAttrs.version;
-    hash = "sha256-1LO6MzklwZ3ry3gi8ET129L7P2aRsAWOj1XeiNM6qHM=";
+    hash = "sha256-YIpYKSoAGXxMoKq7Cu3VGv1YlrJk1jA36oEwVLvq4lg=";
   };
 
   installPhase = ''
