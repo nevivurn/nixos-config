@@ -125,16 +125,14 @@ in
         };
         wireguardPeers = [
           {
-            wireguardPeerConfig = {
-              Endpoint = "public.nevi.network:6666";
-              PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-              PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
-              AllowedIPs = [
-                "0.0.0.0/0"
-                "::/0"
-              ];
-              PersistentKeepalive = 25;
-            };
+            Endpoint = "public.nevi.network:6666";
+            PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
+            PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
+            AllowedIPs = [
+              "0.0.0.0/0"
+              "::/0"
+            ];
+            PersistentKeepalive = 25;
           }
         ];
       };
@@ -255,5 +253,5 @@ in
   };
 
   # enable OpenCL
-  hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
+  hardware.graphics.extraPackages = [ pkgs.intel-compute-runtime ];
 }

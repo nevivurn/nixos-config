@@ -62,48 +62,11 @@
     };
   };
 
-  services.matrix-sliding-sync = {
-    enable = true;
-    environmentFile = "/persist/secrets/synapse-sliding-sync";
-    settings.SYNCV3_SERVER = "https://matrix.nevi.network";
-    settings.SYNCV3_BINDADDR = "localhost:8010";
-  };
-
-  systemd.services.matrix-sliding-sync.serviceConfig = {
-    CapabilityBoundingSet = "";
-    LockPersonality = true;
-    MemoryDenyWriteExecute = true;
-    PrivateDevices = true;
-    PrivateUsers = true;
-    ProcSubset = "pid";
-    ProtectClock = true;
-    ProtectControlGroups = true;
-    ProtectHome = true;
-    ProtectHostname = true;
-    ProtectKernelLogs = true;
-    ProtectKernelModules = true;
-    ProtectKernelTunables = true;
-    ProtectProc = "invisible";
-    RestrictAddressFamilies = [
-      "AF_UNIX"
-      "AF_INET"
-      "AF_INET6"
-    ];
-    RestrictNamespaces = true;
-    RestrictRealtime = true;
-    SystemCallArchitectures = "native";
-    SystemCallFilter = "@system-service";
-  };
-
   services.caddy.virtualHosts = {
     "matrix.nevi.network".extraConfig = ''
       encode zstd gzip
       reverse_proxy /_matrix/* localhost:8008
       reverse_proxy /_synapse/client/* localhost:8008
-    '';
-    "matrix-msc3575.nevi.network".extraConfig = ''
-      encode zstd gzip
-      reverse_proxy localhost:8010
     '';
   };
 
@@ -120,9 +83,6 @@
   ];
 
   environment.persistence = {
-    "/persist".directories = [
-      "/var/lib/matrix-synapse"
-      "/var/lib/private/matrix-sliding-sync"
-    ];
+    "/persist".directories = [ "/var/lib/matrix-synapse" ];
   };
 }

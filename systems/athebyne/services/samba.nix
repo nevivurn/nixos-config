@@ -3,15 +3,15 @@
 {
   services.samba = {
     enable = true;
-    extraConfig = ''
-      guest account = nobody
-      map to guest = bad user
-      usershare allow guests = yes
-      usershare owner only = no
-      usershare max shares = 10
-      allow insecure wide links = yes
-      wide links = yes
-    '';
+    settings.global = {
+      "guest account" = "nobody";
+      "map to guest" = "bad user";
+      "usershare allow guests" = "yes";
+      "usershare owner only" = "no";
+      "usershare max shares" = 10;
+      "allow insecure wide links" = "yes";
+      "wide links" = "yes";
+    };
     openFirewall = true;
   };
 

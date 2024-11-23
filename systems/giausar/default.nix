@@ -65,7 +65,7 @@ in
             ListenPort = 6667;
             RouteTable = "main";
           };
-          wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+          wireguardPeers = [
             {
               AllowedIPs = [
                 "10.42.43.1/32"

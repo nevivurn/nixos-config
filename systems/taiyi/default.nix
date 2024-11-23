@@ -151,7 +151,7 @@ in
     dockerSocket.enable = true;
   };
 
-  hardware.opengl.extraPackages = [ pkgs.intel-compute-runtime ];
+  hardware.graphics.extraPackages = [ pkgs.intel-compute-runtime ];
 
   # cooler pump
   services.udev.packages = [ pkgs.liquidctl ];

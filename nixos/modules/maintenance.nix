@@ -19,8 +19,6 @@ lib.mkMerge [
   }
 
   (lib.mkIf config.boot.supportedFilesystems.zfs or false {
-    boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-
     services.zfs.autoScrub = {
       enable = true;
       interval = "monthly";

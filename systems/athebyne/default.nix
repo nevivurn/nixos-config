@@ -218,7 +218,7 @@ in
   ## Other hardware-specific configuration
 
   # for hw accel
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = [
       pkgs.rocmPackages.clr

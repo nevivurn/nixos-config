@@ -2,7 +2,7 @@
 
 {
   fonts.enableDefaultPackages = true;
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   programs.dconf.enable = true;
   services.dbus.packages = [ pkgs.gcr ];

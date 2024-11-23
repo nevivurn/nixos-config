@@ -77,8 +77,11 @@ in
   ## Other hardware-specific configuration
 
   hardware = {
-    nvidia.nvidiaPersistenced = true;
-    opengl.enable = true;
+    nvidia = {
+      open = true;
+      nvidiaPersistenced = true;
+    };
+    graphics.enable = true;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 

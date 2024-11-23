@@ -25,7 +25,7 @@
           PrivateKeyFile = "/secrets/wg-home-priv";
           ListenPort = 6666;
         };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+        wireguardPeers = [
           {
             # tianyi
             AllowedIPs = [
@@ -64,7 +64,7 @@
           PrivateKeyFile = "/secrets/wg-proxy-priv";
           ListenPort = 6667;
         };
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+        wireguardPeers = [
           {
             # giausar
             AllowedIPs = [
@@ -83,7 +83,7 @@
           Kind = "wireguard";
         };
         wireguardConfig.PrivateKeyFile = "/secrets/wg-bacchus-priv";
-        wireguardPeers = builtins.map (x: { wireguardPeerConfig = x; }) [
+        wireguardPeers = [
           {
             AllowedIPs = [
               "10.89.0.0/16"
@@ -174,7 +174,7 @@
       "60-wg-bacchus" = {
         matchConfig.Name = "wg-bacchus";
         networkConfig.Address = [ "10.90.0.6/24" ];
-        routes = builtins.map (x: { routeConfig = x; }) [
+        routes = [
           {
             Gateway = "10.90.0.1";
             Destination = "10.89.0.0/16";
