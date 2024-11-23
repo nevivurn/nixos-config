@@ -29,7 +29,7 @@ jobs:
       fail-fast: false
       matrix:
         nix-version:
-          - 2.18.8 # 24.05, unstable
+          - 2.24.10 # 24.11, unstable
           - latest
           - lix
 
@@ -75,7 +75,7 @@ jobs:
       OUTPUT: 'nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel'
 
     steps:
-      - uses: cachix/install-nix-action@v27
+      - uses: cachix/install-nix-action@v30
 
       - name: Add SSH key to agent
         env:
