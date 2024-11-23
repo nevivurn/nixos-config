@@ -37,7 +37,10 @@ in
           default = "qbittorrent";
         };
 
-        package = lib.mkPackageOption pkgs "qbittorrent-nox" { };
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.qbittorrent-nox;
+        };
       };
     };
   };
