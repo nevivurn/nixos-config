@@ -45,6 +45,15 @@
             PresharedKeyFile = "/secrets/wg-home-fafnir-psk";
           }
           {
+            # edasich
+            AllowedIPs = [
+              "10.42.42.4/32"
+              "fdbc:ba6a:38de:1::4/128"
+            ];
+            PublicKey = "YIPm+CmPQUe6bO9pCCVBqQWMd6IBXq+hKZaDOetOTgw=";
+            PresharedKeyFile = "/secrets/wg-home-edasich-psk";
+          }
+          {
             # altais
             AllowedIPs = [
               "10.42.42.6/32"
