@@ -49,7 +49,6 @@
       networks = {
         wlp4s0 = {
           ssid = "alruba_nomap";
-          apIsolate = true;
           settings = {
             bridge = "br-lan";
           };
