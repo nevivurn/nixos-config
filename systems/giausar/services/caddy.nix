@@ -12,7 +12,7 @@
           version = "v0.0.0-20240604210608-ce9789f602eb";
         }
       ];
-      vendorHash = "sha256-fEwuT1Lrjq+J+xcLZFZv53IKlXAKSl5mEBhpIqdQ9xE=";
+      vendorHash = "sha256-04i1EeSyqwCVbO8XlzRggOMuuFFtvmv+gyJn12Hm4A0=";
     };
     settings = {
       apps.layer4.servers = {
