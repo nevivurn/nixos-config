@@ -1,4 +1,4 @@
-{ lib, inputs, ... }:
+{ lib, ... }:
 
 # general nix config
 {
@@ -9,6 +9,8 @@
       "p7zip"
     ]
   );
+
+  nix.channel.enable = false;
 
   nix.settings = {
     extra-experimental-features = [
