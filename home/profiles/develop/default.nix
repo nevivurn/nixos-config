@@ -35,7 +35,7 @@
     extraLuaConfig = lib.mkAfter (builtins.readFile ./nvim.lua);
     extraPackages = with pkgs; [
       helm-ls
-      nodePackages.typescript-language-server
+      typescript-language-server
       pkgsUnstable.gopls
       tailwindcss-language-server
       terraform-ls
