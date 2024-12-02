@@ -96,7 +96,7 @@
       ];
     };
     settings = {
-      server.http_addr = "localhost";
+      server.http_addr = "127.0.0.1";
       server.root_url = "https://athebyne.nevi.network/grafana/";
 
       security.disable_initial_admin_creation = true;
