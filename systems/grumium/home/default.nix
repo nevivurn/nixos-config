@@ -15,6 +15,8 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    gh
+
     istioctl
     istioctl_1_20_7
 
