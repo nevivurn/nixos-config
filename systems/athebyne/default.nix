@@ -110,6 +110,7 @@ in
       };
     };
   };
+  boot.zfs.extraPools = [ "dpool" ];
 
   ## Networking
 
