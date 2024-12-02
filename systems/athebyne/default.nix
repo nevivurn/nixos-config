@@ -96,31 +96,19 @@ in
     "vfio_virqfd"
   ];
 
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zfs rollback rpool/local/root@empty
-  '';
-
-  boot.initrd.kernelModules = [ "r8169" ]; # needed for initrd network
-  boot.initrd.network = {
+  boot.initrd.systemd = {
     enable = true;
-    ssh.enable = true;
-    ssh.authorizedKeys = config.users.users."nevivurn".openssh.authorizedKeys.keys;
-    ssh.hostKeys = [ /persist/secrets/initrd_ssh_host_ed25519_key ]; # world-readable!
-    postCommands = ''
-      zpool import -N dpool
-
-      cat <<EOF > /root/.profile
-      if pgrep -x "zfs" > /dev/null
-      then
-        zpool list
-        zfs load-key -a
-        killall zfs
-        exit
-      else
-        echo "zfs not running"
-      fi
-      EOF
-    '';
+    services."zfs-rollback" = {
+      wantedBy = [ "initrd.target" ];
+      requires = [ "zfs-import.target" ];
+      after = [ "zfs-import.target" ];
+      before = [ "sysroot.mount" ];
+      unitConfig.DefaultDependencies = false;
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.zfs}/bin/zfs rollback rpool/local/root@empty";
+      };
+    };
   };
 
   ## Networking

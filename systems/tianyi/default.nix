@@ -95,9 +95,20 @@ in
 
   ## Boot
 
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zfs rollback rpool/local/root@empty
-  '';
+  boot.initrd.systemd = {
+    enable = true;
+    services."zfs-rollback" = {
+      wantedBy = [ "initrd.target" ];
+      requires = [ "zfs-import.target" ];
+      after = [ "zfs-import.target" ];
+      before = [ "sysroot.mount" ];
+      unitConfig.DefaultDependencies = false;
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.zfs}/bin/zfs rollback rpool/local/root@empty";
+      };
+    };
+  };
 
   ## Networking
 
