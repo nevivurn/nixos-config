@@ -64,10 +64,13 @@
             type = "app";
             program =
               let
-                pkg = pkgs.writeScriptBin "nvd-diff" ''
-                  nixos-rebuild build
-                  ${lib.getExe pkgs.nvd} diff /run/current-system ./result
-                '';
+                pkg = pkgs.writeShellApplication {
+                  name = "nvd-diff";
+                  text = ''
+                    nixos-rebuild build
+                    ${lib.getExe pkgs.nvd} diff /run/current-system ./result
+                  '';
+                };
               in
               lib.getExe pkg;
           };
@@ -85,14 +88,17 @@
                     )
                   ) systems
                 );
-                pkg = pkgs.writeScriptBin "nix-update" (
-                  ''
-                    nix flake update --commit-lock-file
-                  ''
-                  + (lib.concatMapStringsSep "\n" (
-                    ps: "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${ps.name}"
-                  ) upPkgs)
-                );
+                pkg = pkgs.writeShellApplication {
+                  name = "nix-update";
+                  text = (
+                    ''
+                      nix flake update --commit-lock-file
+                    ''
+                    + (lib.concatMapStringsSep "\n" (
+                      ps: "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${ps.name}"
+                    ) upPkgs)
+                  );
+                };
               in
               lib.getExe pkg;
           };
