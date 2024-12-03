@@ -97,7 +97,10 @@
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
-      ".cache/nix"
+      {
+        directory = ".cache/nix";
+        method = "symlink";
+      }
       ".cache/nix-index"
       ".config/github-copilot"
       ".terraform.d"
