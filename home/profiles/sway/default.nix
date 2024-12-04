@@ -43,7 +43,7 @@ in
     yt-dlp
 
     gnucash
-    portfolio
+    (pkgsUnstable.portfolio.override { inherit webkitgtk_4_0; })
 
     liquidctl
     moonlight-qt
