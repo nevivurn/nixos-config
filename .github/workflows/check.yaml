@@ -18,7 +18,7 @@ jobs:
       - uses: DeterminateSystems/flake-checker-action@v9
 
       - name: Check formatting
-        run: nix fmt -- --check .
+        run: nix fmt -- --ci
 
   eval-check:
     name: Eval

@@ -14,10 +14,18 @@
 
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      treefmt-nix,
+      ...
+    }@inputs:
     let
       systems = [
         "x86_64-linux"
@@ -52,7 +60,10 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        formatter = pkgs.nixfmt-rfc-style;
+        formatter = treefmt-nix.lib.mkWrapper pkgs {
+          projectRootFile = "flake.nix";
+          programs.nixfmt.enable = true;
+        };
 
         # Only custom packages, included in self.overlays.default.
         # Mainly for nix-update, so it can automatically update my packages.
