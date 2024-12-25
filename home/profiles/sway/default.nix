@@ -53,7 +53,7 @@ in
     virt-manager
 
     webcord # for screen sharing, for now
-    element-desktop-wayland
+    element-desktop
     pkgsUnstable.protonmail-bridge
   ];
 
@@ -78,6 +78,10 @@ in
     gtk.enable = true;
     x11.enable = true;
     size = 24;
+  };
+
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
   };
 
   xdg.userDirs.enable = true;
