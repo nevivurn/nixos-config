@@ -3,16 +3,9 @@
 {
   services.caddy = {
     enable = true;
-    package = pkgs.caddy.withModules {
-      plugins = [
-        {
-          name = "github.com/mholt/caddy-l4";
-          # Bump once nixpkgs' caddy advances past 2.8
-          # https://github.com/mholt/caddy-l4/pull/185#issuecomment-2072916437
-          version = "v0.0.0-20240604210608-ce9789f602eb";
-        }
-      ];
-      vendorHash = "sha256-04i1EeSyqwCVbO8XlzRggOMuuFFtvmv+gyJn12Hm4A0=";
+    package = pkgs.pkgsUnstable.caddy.withPlugins {
+      plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20241111225910-3c6cc2c0ee08" ];
+      hash = "sha256-E7pqCI5Q009qT/uFoWATLXA5w07VbhEdynSxZn1Ns/M=";
     };
     settings = {
       apps.layer4.servers = {
