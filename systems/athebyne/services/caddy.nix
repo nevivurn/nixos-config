@@ -6,9 +6,9 @@ in
 {
   services.caddy = {
     enable = true;
-    package = pkgs.caddy.withModules {
-      plugins = [ { name = "github.com/caddy-dns/cloudflare"; } ];
-      vendorHash = "sha256-fTcMtg5GGEgclIwJCav0jjWpqT+nKw2OF1Ow0MEEitk=";
+    package = pkgs.pkgsUnstable.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/cloudflare@v0.0.0-20240703190432-89f16b99c18e" ];
+      hash = "";
     };
 
     email = "yseong.p@gmail.com";
