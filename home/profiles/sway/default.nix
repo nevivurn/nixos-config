@@ -497,6 +497,7 @@ in
 
   home.persistence."/persist${config.home.homeDirectory}" = {
     directories = [
+      ".PortfolioPerformance"
       ".config/Moonlight Game Streaming Project"
       ".config/dconf"
       ".config/desmume"
