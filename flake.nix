@@ -203,6 +203,14 @@
           };
           modules = [ ./systems/iso ];
         };
+
+        alsafi = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [ ./systems/alsafi ];
+        };
       };
       darwinConfigurations = {
         grumium = inputs.nix-darwin.lib.darwinSystem {
