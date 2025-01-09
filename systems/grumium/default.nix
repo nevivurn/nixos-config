@@ -82,4 +82,10 @@ in
     hostName = hostname;
     computerName = config.networking.hostName;
   };
+
+  nix.linux-builder = {
+    enable = true;
+    package = pkgs.darwin.linux-builder-x86_64;
+    config.virtualisation.cores = 6;
+  };
 }
