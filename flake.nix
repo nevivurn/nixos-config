@@ -12,7 +12,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -205,13 +205,16 @@
         };
       };
       darwinConfigurations = {
-        grumium = inputs.nix-darwin.lib.darwinSystem {
+        grumium = inputs.nix-darwin.lib.darwinSystem rec {
           system = "aarch64-darwin";
           specialArgs.inputs = inputs // {
             nixpkgs = inputs.nixpkgs-darwin;
             home-manager = inputs.home-manager-darwin;
           };
-          modules = [ ./systems/grumium ];
+          modules = [
+            ./systems/grumium
+            { nixpkgs.hostPlatform = system; }
+          ];
         };
       };
     };
