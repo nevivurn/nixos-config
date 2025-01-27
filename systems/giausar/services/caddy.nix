@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.pkgsUnstable.caddy.withPlugins {
       plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20241111225910-3c6cc2c0ee08" ];
-      hash = "sha256-DtoBrMfMb4vMQywQFL8tJhRJyW8Ky/xl2PohZv5qz0c=";
+      hash = "sha256-9rNg1pkIpPzKpAUTlOzt3gZbxd9ZuykEnOs0djwKj0M=";
     };
     settings = {
       apps.layer4.servers = {
