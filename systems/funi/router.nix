@@ -54,6 +54,15 @@
             PresharedKeyFile = "/secrets/wg-home-edasich-psk";
           }
           {
+            # alsafi
+            AllowedIPs = [
+              "10.42.42.5/32"
+              "fdbc:ba6a:38de:1::5/128"
+            ];
+            PublicKey = "FTqTwAHU/8fz2ZyCygbsFvGcJ3NQnNolGag/eJX/FBU=";
+            PresharedKeyFile = "/secrets/wg-home-alsafi-psk";
+          }
+          {
             # altais
             AllowedIPs = [
               "10.42.42.6/32"

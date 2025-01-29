@@ -6,8 +6,8 @@
 }:
 
 let
-  hostname = "tianyi";
-  machineId = "438ba1d86084426fa0ceab1771e01586";
+  hostname = "alsafi";
+  machineId = "3c2580b354ca43d5a06646c2df8d9938";
 in
 {
   imports = [
@@ -16,7 +16,7 @@ in
     inputs.self.nixosModules.default
     inputs.self.nixosModules.graphical
 
-    inputs.nixos-hardware.nixosModules.dell-xps-13-9370
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen5
 
     ./services/monitoring.nix
     ./services/openssh.nix
@@ -31,9 +31,13 @@ in
       options = [ "zfsutil" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part1";
+      device = "/dev/disk/by-id/nvme-KBG6AZNV256G_LA_KIOXIA_5E7PSJXAZ12K-part1";
       fsType = "vfat";
-      options = [ "noatime" ];
+      options = [
+        "noatime"
+        "fmask=0077"
+        "dmask=0077"
+      ];
     };
 
     "/nix" = {
@@ -56,7 +60,7 @@ in
   };
   swapDevices = [
     {
-      device = "/dev/disk/by-id/nvme-eui.343433304b8054360025384500000001-part2";
+      device = "/dev/disk/by-id/nvme-KBG6AZNV256G_LA_KIOXIA_5E7PSJXAZ12K-part2";
       randomEncryption = {
         enable = true;
         allowDiscards = true;
@@ -77,9 +81,9 @@ in
       ];
       after = [
         "remote-fs-pre.target"
-        "systemd-network-wait-online@wg\\x2dhome.service"
+        #"systemd-network-wait-online@wg\\x2dhome.service"
       ];
-      requires = [ "systemd-network-wait-online@wg\\x2dhome.service" ];
+      #requires = [ "systemd-network-wait-online@wg\\x2dhome.service" ];
       wantedBy = [ "multi-user.target" ];
       conflicts = [ "unmount.target" ];
     }
@@ -120,7 +124,7 @@ in
   networking.domain = "nevi.network";
   networking.timeServers = [ ];
 
-  networking.firewall.checkReversePath = "loose";
+  #networking.firewall.checkReversePath = "loose";
 
   systemd.network = {
     netdevs = {
@@ -138,7 +142,7 @@ in
           {
             Endpoint = "public.nevi.network:6666";
             PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-            PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
+            PresharedKeyFile = "/persist/secrets/wg-home-alsafi-psk";
             AllowedIPs = [
               "0.0.0.0/0"
               "::/0"
@@ -164,8 +168,8 @@ in
         linkConfig.RequiredForOnline = false;
         networkConfig = {
           Address = [
-            "10.42.42.2/24"
-            "fdbc:ba6a:38de:1::2/64"
+            "10.42.42.6/24"
+            "fdbc:ba6a:38de:1::6/64"
           ];
           DNS = "192.168.2.1";
           NTP = "funi.nevi.network";
@@ -173,7 +177,6 @@ in
         };
         routingPolicyRules = [
           {
-
             Family = "both";
             FirewallMark = 51820;
             InvertRule = true;
@@ -246,6 +249,14 @@ in
 
   ## Other hardware-specific configuration
 
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 40;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
+
   # Allow docking
   services.logind = {
     lidSwitchDocked = "lock";
@@ -262,7 +273,4 @@ in
     dockerCompat = true;
     dockerSocket.enable = true;
   };
-
-  # enable OpenCL
-  hardware.graphics.extraPackages = [ pkgs.intel-compute-runtime ];
 }
