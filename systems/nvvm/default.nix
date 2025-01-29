@@ -16,6 +16,7 @@ in
     inputs.self.nixosModules.default
 
     ./services/openssh.nix
+    ./services/ollama.nix
   ];
 
   ## Filesystems
@@ -86,15 +87,10 @@ in
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  nixpkgs.config.allowUnfreePredicate = (
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-      "p7zip"
-      "nvidia-persistenced"
-    ]
-  );
+  nixpkgs.config = {
+    cudaSupport = true;
+    allowUnfree = true;
+  };
   nix.settings = {
     substituters = [ "https://cuda-maintainers.cachix.org" ];
     trusted-public-keys = [
