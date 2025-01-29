@@ -168,8 +168,8 @@ in
         linkConfig.RequiredForOnline = false;
         networkConfig = {
           Address = [
-            "10.42.42.6/24"
-            "fdbc:ba6a:38de:1::6/64"
+            "10.42.42.5/24"
+            "fdbc:ba6a:38de:1::5/64"
           ];
           DNS = "192.168.2.1";
           NTP = "funi.nevi.network";
