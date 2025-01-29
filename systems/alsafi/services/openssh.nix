@@ -4,7 +4,7 @@
     settings.PasswordAuthentication = false;
     openFirewall = false;
   };
-  #networking.firewall.interfaces."wg-home".allowedTCPPorts = [ 22 ];
+  networking.firewall.interfaces."wg-home".allowedTCPPorts = [ 22 ];
 
   environment.persistence = {
     "/persist".files = [

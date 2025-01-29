@@ -127,31 +127,31 @@ in
   #networking.firewall.checkReversePath = "loose";
 
   systemd.network = {
-    #netdevs = {
-    #  "30-wg-home" = {
-    #    netdevConfig = {
-    #      Name = "wg-home";
-    #      Kind = "wireguard";
-    #    };
-    #    wireguardConfig = {
-    #      PrivateKeyFile = "/persist/secrets/wg-home-priv";
-    #      FirewallMark = 51820;
-    #      RouteTable = 51820;
-    #    };
-    #    wireguardPeers = [
-    #      {
-    #        Endpoint = "public.nevi.network:6666";
-    #        PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-    #        PresharedKeyFile = "/persist/secrets/wg-home-athebyne-psk";
-    #        AllowedIPs = [
-    #          "0.0.0.0/0"
-    #          "::/0"
-    #        ];
-    #        PersistentKeepalive = 25;
-    #      }
-    #    ];
-    #  };
-    #};
+    netdevs = {
+      "30-wg-home" = {
+        netdevConfig = {
+          Name = "wg-home";
+          Kind = "wireguard";
+        };
+        wireguardConfig = {
+          PrivateKeyFile = "/persist/secrets/wg-home-priv";
+          FirewallMark = 51820;
+          RouteTable = 51820;
+        };
+        wireguardPeers = [
+          {
+            Endpoint = "public.nevi.network:6666";
+            PublicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
+            PresharedKeyFile = "/persist/secrets/wg-home-alsafi-psk";
+            AllowedIPs = [
+              "0.0.0.0/0"
+              "::/0"
+            ];
+            PersistentKeepalive = 25;
+          }
+        ];
+      };
+    };
 
     networks = {
       "20-wifi" = {
@@ -159,49 +159,48 @@ in
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
-          #Domains = [ "~public.nevi.network" ];
+          Domains = [ "~public.nevi.network" ];
         };
       };
 
-      #"30-wg-home" = {
-      #  matchConfig.Name = "wg-home";
-      #  linkConfig.RequiredForOnline = false;
-      #  networkConfig = {
-      #    Address = [
-      #      "10.42.42.2/24"
-      #      "fdbc:ba6a:38de:1::2/64"
-      #    ];
-      #    DNS = "192.168.2.1";
-      #    NTP = "funi.nevi.network";
-      #    Domains = [ "~." ];
-      #  };
-      #  routingPolicyRules = [
-      #    {
-
-      #      Family = "both";
-      #      FirewallMark = 51820;
-      #      InvertRule = true;
-      #      Table = 51820;
-      #    }
-      #  ];
-      #};
+      "30-wg-home" = {
+        matchConfig.Name = "wg-home";
+        linkConfig.RequiredForOnline = false;
+        networkConfig = {
+          Address = [
+            "10.42.42.6/24"
+            "fdbc:ba6a:38de:1::6/64"
+          ];
+          DNS = "192.168.2.1";
+          NTP = "funi.nevi.network";
+          Domains = [ "~." ];
+        };
+        routingPolicyRules = [
+          {
+            Family = "both";
+            FirewallMark = 51820;
+            InvertRule = true;
+            Table = 51820;
+          }
+        ];
+      };
     };
   };
 
   # rp mangling, copied from wg-quick
-  #boot.kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
-  #networking.nftables.ruleset = lib.mkAfter ''
-  #  table inet wg-rpmangle {
-  #    chain premangle {
-  #      type filter hook prerouting priority mangle;
-  #      meta l4proto udp meta mark set ct mark
-  #    }
-  #    chain postmangle {
-  #      type filter hook postrouting priority mangle;
-  #      meta l4proto udp mark 51820 ct mark set mark
-  #    }
-  #  }
-  #'';
+  boot.kernel.sysctl."net.ipv4.conf.all.src_valid_mark" = 1;
+  networking.nftables.ruleset = lib.mkAfter ''
+    table inet wg-rpmangle {
+      chain premangle {
+        type filter hook prerouting priority mangle;
+        meta l4proto udp meta mark set ct mark
+      }
+      chain postmangle {
+        type filter hook postrouting priority mangle;
+        meta l4proto udp mark 51820 ct mark set mark
+      }
+    }
+  '';
 
   networking.wireless.iwd.enable = true;
   networking.wireless.interfaces = [ "wlan0" ];
