@@ -87,6 +87,12 @@ in
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # Module is not automatically loaded when open && no xserver
+  # ref:
+  # - https://github.com/NixOS/nixpkgs/issues/334180
+  # - https://github.com/NixOS/nixpkgs/pull/334340
+  boot.kernelModules = [ "nvidia_uvm" ];
+
   nixpkgs.config.allowUnfree = true;
   nix.settings = {
     substituters = [ "https://cuda-maintainers.cachix.org" ];
