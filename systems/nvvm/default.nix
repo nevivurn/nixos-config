@@ -23,12 +23,12 @@ in
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-partuuid/2f6142c6-1991-463f-a453-b10d5b9092f7";
+      device = "/dev/disk/by-partuuid/b976c2fa-a23a-46bf-b52c-ce3ebb82d615";
       fsType = "ext4";
       options = [ "noatime" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-partuuid/f9534779-28ed-47d2-b7b3-513e106c0372";
+      device = "/dev/disk/by-partuuid/cce0c13f-f755-4909-9f91-7e22b5e8f247";
       fsType = "vfat";
       options = [ "noatime" ];
     };
@@ -87,10 +87,7 @@ in
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  nixpkgs.config = {
-    cudaSupport = true;
-    allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
   nix.settings = {
     substituters = [ "https://cuda-maintainers.cachix.org" ];
     trusted-public-keys = [
