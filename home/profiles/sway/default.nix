@@ -45,7 +45,6 @@ in
     gnucash
     (pkgsUnstable.portfolio.override { inherit webkitgtk_4_0; })
 
-    liquidctl
     moonlight-qt
     pavucontrol
     easyeffects
