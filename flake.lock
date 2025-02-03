@@ -21,28 +21,6 @@
         "type": "github"
       }
     },
-    "home-manager-darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nix-darwin",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1736373539,
-        "narHash": "sha256-dinzAqCjenWDxuy+MqUQq0I4zUSfaCvN9rzuCmgMZJY=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "bd65bc3cde04c16755955630b344bc9e35272c56",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-24.11",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "impermanence": {
       "locked": {
         "lastModified": 1737831083,
@@ -55,27 +33,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "impermanence",
-        "type": "github"
-      }
-    },
-    "nix-darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-darwin"
-        ]
-      },
-      "locked": {
-        "lastModified": 1737421067,
-        "narHash": "sha256-/hgw8fDKDpko0XqOw1e9tX8lS2Hqecg7W/JsONun6Qc=",
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "rev": "cae8d1c4a3bd37be5887203fe3b0c3a860c53a07",
-        "type": "github"
-      },
-      "original": {
-        "owner": "LnL7",
-        "ref": "nix-darwin-24.11",
-        "repo": "nix-darwin",
         "type": "github"
       }
     },
@@ -110,22 +67,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-darwin": {
-      "locked": {
-        "lastModified": 1738322334,
-        "narHash": "sha256-SYQTFMBJRbvLBaTm0D8qnbrmwfQQkalVtef6XLbGDFs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "d42233d3d0c2ec4765314a966981303006a46aa8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-24.11-darwin",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1738297584,
@@ -145,12 +86,9 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "home-manager-darwin": "home-manager-darwin",
         "impermanence": "impermanence",
-        "nix-darwin": "nix-darwin",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "treefmt-nix": "treefmt-nix"
       }
