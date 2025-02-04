@@ -107,6 +107,7 @@
               "10.89.0.0/16"
               "10.90.0.1/32"
               "10.91.0.0/16"
+              "10.92.0.0/16"
             ];
             PublicKey = "VSIzXghytTORvgN5T5ePCJvfMHPVa4SB4fLIDpz27Fk=";
             PresharedKeyFile = "/secrets/wg-bacchus-vpn-psk";
