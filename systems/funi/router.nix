@@ -202,6 +202,10 @@
             Gateway = "10.90.0.1";
             Destination = "10.91.0.0/16";
           }
+          {
+            Gateway = "10.90.0.1";
+            Destination = "10.92.0.0/16";
+          }
         ];
         # DNS is handled in services/dns.nix
       };
