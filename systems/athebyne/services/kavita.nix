@@ -5,7 +5,7 @@ let
   # testing https://github.com/NixOS/nixpkgs/pull/364200
   inherit
     # kavita: 0.8.4.2 -> 0.8.5.11
-    ((builtins.getFlake "github:nevivurn/nixpkgs/de7769d9380c27050e2ee37a937fe7c88a3ffd6a")
+    ((builtins.getFlake "github:nevivurn/nixpkgs/123ae57041b56b40685b7c752df51714f25fbf38")
       .legacyPackages.${pkgs.system}
     )
     kavita
