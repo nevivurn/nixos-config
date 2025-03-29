@@ -52,4 +52,12 @@ in
   environment.persistence = {
     "/persist".directories = [ "/var/lib/private/${cfg.dataDir}" ];
   };
+
+  systemd.tmpfiles.settings."10-persist" = {
+    "/var/lib/private".d = {
+      user = "root";
+      group = "root";
+      mode = "0700";
+    };
+  };
 }
