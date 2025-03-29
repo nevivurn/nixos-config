@@ -4,7 +4,8 @@ let
   cfg = config.services.kavita.settings;
   # testing https://github.com/NixOS/nixpkgs/pull/364200
   inherit
-    ((builtins.getFlake "github:r-ryantm/nixpkgs/d37af857a484e9984c4c4c99db5bb540de574daa")
+    # kavita: 0.8.4.2 -> 0.8.5.11
+    ((builtins.getFlake "github:nevivurn/nixpkgs/de7769d9380c27050e2ee37a937fe7c88a3ffd6a")
       .legacyPackages.${pkgs.system}
     )
     kavita
