@@ -509,8 +509,11 @@ in
       ".local/share/protonmail"
       ".mozilla"
       ".thunderbird"
-      "dl"
       "pics"
+      {
+        directory = "dl";
+        method = "symlink";
+      }
     ];
   };
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
