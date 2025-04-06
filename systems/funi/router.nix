@@ -237,9 +237,9 @@
       }
 
       table inet filter {
-        flowtable f {
-          hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0, wlp4s0-1 };
-        }
+        #flowtable f {
+        #  hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0, wlp4s0-1 };
+        #}
 
         chain rpfilter {
           type filter hook prerouting priority filter; policy accept;
@@ -250,7 +250,7 @@
         chain forward {
           type filter hook forward priority filter; policy drop;
 
-          meta l4proto { tcp, udp } flow offload @f
+          #meta l4proto { tcp, udp } flow offload @f
           ct state vmap { established : accept, related : accept, invalid : drop }
 
           icmpv6 type { router-renumbering, 139, 140 } drop
