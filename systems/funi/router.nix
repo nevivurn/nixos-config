@@ -4,6 +4,16 @@
   systemd.network = {
     enable = true;
     netdevs = {
+      "10-lan-bond" = {
+        netdevConfig = {
+          Name = "bond0";
+          Kind = "bond";
+        };
+        bondConfig = {
+          Mode = "802.3ad";
+          TransmitHashPolicy = "layer3+4";
+        };
+      };
       "10-br-lan" = {
         netdevConfig = {
           Name = "br-lan";
@@ -138,8 +148,13 @@
           UseDNS = false;
         };
       };
-      "20-lan-bridge" = {
+      "20-lan-bond" = {
         matchConfig.Type = "ether";
+        networkConfig.Bond = "bond0";
+        linkConfig.RequiredForOnline = false;
+      };
+      "25-lan-bond-bridge" = {
+        matchConfig.Name = "bond0";
         networkConfig.Bridge = "br-lan";
         linkConfig.RequiredForOnline = false;
       };
@@ -237,10 +252,6 @@
       }
 
       table inet filter {
-        #flowtable f {
-        #  hook ingress priority filter; devices = { enp1s0, enp2s0, enp3s0, wlp4s0, wlp4s0-1 };
-        #}
-
         chain rpfilter {
           type filter hook prerouting priority filter; policy accept;
           meta nfproto ipv4 udp sport . udp dport { 68 . 67, 67 . 68 } accept
@@ -250,7 +261,6 @@
         chain forward {
           type filter hook forward priority filter; policy drop;
 
-          #meta l4proto { tcp, udp } flow offload @f
           ct state vmap { established : accept, related : accept, invalid : drop }
 
           icmpv6 type { router-renumbering, 139, 140 } drop
