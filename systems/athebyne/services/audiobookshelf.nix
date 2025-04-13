@@ -47,6 +47,7 @@ in
     SystemCallArchitectures = "native";
     SystemCallFilter = "@system-service";
     SystemCallErrorNumber = "EPERM";
+    ReadWritePaths = [ "/data/media/podcasts" ];
   };
 
   environment.persistence = {
