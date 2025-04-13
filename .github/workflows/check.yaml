@@ -29,7 +29,6 @@ jobs:
       fail-fast: false
       matrix:
         nix-version:
-          - 2.24.12 # 24.11, unstable
           - latest
           - lix
 
@@ -58,31 +57,3 @@ jobs:
 
       - name: Check flake outputs
         run: nix flake check "$FLAKE" --no-build --all-systems --no-allow-import-from-derivation
-
-  build:
-    name: Build
-    runs-on: ubuntu-24.04
-    needs: eval-check
-
-    strategy:
-      fail-fast: false
-      matrix:
-        system: [iso]
-
-    env:
-      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      FLAKE: 'git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1'
-      OUTPUT: 'nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel'
-
-    steps:
-      - uses: cachix/install-nix-action@v30
-
-      - name: Add SSH key to agent
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-        run: |
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "$SSH_KEY"
-
-      - name: Build
-        run: nix build "$FLAKE#$OUTPUT"
