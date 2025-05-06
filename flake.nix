@@ -175,14 +175,6 @@
           modules = [ ./systems/giausar ];
         };
 
-        nvvm = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./systems/nvvm ];
-        };
-
         iso = lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
