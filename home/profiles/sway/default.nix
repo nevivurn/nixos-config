@@ -43,7 +43,7 @@ in
     yt-dlp
 
     gnucash
-    (pkgsUnstable.portfolio.override { inherit webkitgtk_4_0; })
+    (pkgsUnstable.portfolio.override { inherit webkitgtk_4_1; })
 
     moonlight-qt
     pavucontrol
@@ -51,7 +51,7 @@ in
     thunderbird
     virt-manager
 
-    webcord # for screen sharing, for now
+    discord
     element-desktop
     pkgsUnstable.protonmail-bridge
   ];
@@ -521,7 +521,7 @@ in
       ".cache/mozilla"
       ".cache/thunderbird"
       ".config/Element"
-      ".config/WebCord"
+      ".config/discord"
       ".local/state/wireplumber"
     ];
   };

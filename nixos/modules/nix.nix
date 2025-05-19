@@ -6,6 +6,7 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "copilot.vim"
+      "discord"
       "p7zip"
     ]
   );
