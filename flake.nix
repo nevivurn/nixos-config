@@ -88,6 +88,10 @@
                 };
               in
               lib.getExe pkg;
+            meta = {
+              description = "Updates Nix flake inputs and packages";
+              inherit (pkgs.nix-update.meta) platforms;
+            };
           };
         };
       }
