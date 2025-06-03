@@ -115,7 +115,8 @@ in
   };
 
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    enable = true;
+    type = "fcitx5";
     fcitx5.addons = with pkgs; [
       fcitx5-gtk
       fcitx5-hangul
@@ -422,17 +423,15 @@ in
     in
     "${dracula}/style.css";
 
-  services.mako =
-    {
-      enable = true;
+  services.mako = {
+    enable = true;
+    settings = with draculaColors; {
       layer = "overlay";
       font = "Noto Sans";
-    }
-    // (with draculaColors; {
-      backgroundColor = bg;
-      borderColor = purple;
-      textColor = fg;
-    });
+      background-color = bg;
+      border-color = purple;
+    };
+  };
 
   programs.mpv = {
     enable = true;
