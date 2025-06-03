@@ -15,6 +15,7 @@
   ];
 
   system.stateVersion = "24.05";
+  system.nixos.tags = with inputs.self; [ sourceInfo.shortRev or sourceInfo.dirtyShortRev ];
 
   nixpkgs.overlays = [
     (final: prev: {
