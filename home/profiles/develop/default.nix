@@ -70,7 +70,6 @@
     pinentry.package = pkgs.pinentry-gnome3;
     sshKeys = [
       "9478FDDFE4E99B8BD79B4A0390432CE2B7E9F0B6" # taiyi
-      "9AF5A517D9F1E5A7A0BE52B910C0773991A8AF6D" # tianyi
       "2ED471433C747746BD3B710C02E9A3B5FE5122A5" # alsafi
     ];
   };

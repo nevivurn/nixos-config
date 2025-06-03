@@ -11,7 +11,6 @@
       ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/alsafi gs://nevi-backups-sp/alsafi
       ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/taiyi gs://nevi-backups-sp/taiyi
       ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/taiyi-old gs://nevi-backups-sp/taiyi-old
-      ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/tianyi gs://nevi-backups-sp/tianyi
     '';
     serviceConfig.Type = "oneshot";
   };

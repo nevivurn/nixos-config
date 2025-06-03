@@ -62,21 +62,6 @@
         packages = import ./pkgs pkgs;
 
         apps = {
-          nvd-diff = {
-            type = "app";
-            program =
-              let
-                pkg = pkgs.writeShellApplication {
-                  name = "nvd-diff";
-                  text = ''
-                    nixos-rebuild build
-                    ${lib.getExe pkgs.nvd} diff /run/current-system ./result
-                  '';
-                };
-              in
-              lib.getExe pkg;
-          };
-
           nix-update = {
             type = "app";
             program =
@@ -143,14 +128,6 @@
           modules = [ ./systems/taiyi ];
         };
 
-        tianyi = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./systems/tianyi ];
-        };
-
         athebyne = lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
@@ -173,14 +150,6 @@
             inherit inputs;
           };
           modules = [ ./systems/giausar ];
-        };
-
-        iso = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./systems/iso ];
         };
 
         alsafi = lib.nixosSystem {

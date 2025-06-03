@@ -37,15 +37,6 @@
         };
         wireguardPeers = [
           {
-            # tianyi
-            AllowedIPs = [
-              "10.42.42.2/32"
-              "fdbc:ba6a:38de:1::2/128"
-            ];
-            PublicKey = "JR9Zu+6QO8yBBE9WwbwEcdo6JVZ1pHsjb3P+mQIy3mY=";
-            PresharedKeyFile = "/secrets/wg-home-tianyi-psk";
-          }
-          {
             # fafnir
             AllowedIPs = [
               "10.42.42.3/32"

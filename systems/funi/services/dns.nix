@@ -51,9 +51,6 @@
         "/funi.nevi.network/192.168.2.1"
         "/funi.nevi.network/fdbc:ba6a:38de::1"
 
-        "/tianyi.home.nevi.network/10.42.42.2"
-        "/tianyi.home.nevi.network/fdbc:ba6a:38de:1::2"
-
         "/alsafi.home.nevi.network/10.42.42.5"
         "/alsafi.home.nevi.network/fdbc:ba6a:38de:1::5"
       ];

@@ -10,10 +10,4 @@ in
 
   # hosts list for malware, ads
   hosts = callPackage ./hosts { };
-
-  # readme generator for helm
-  readme-generator-for-helm = callPackage ./readme-generator-for-helm { };
-
-  # orpheusbetter
-  orpheusbetter = callPackage ./orpheusbetter { };
 }
