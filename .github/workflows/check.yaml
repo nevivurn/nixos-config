@@ -13,9 +13,9 @@ jobs:
         with:
           ssh-key: ${{secrets.SSH_KEY}}
           submodules: 'true'
-      - uses: cachix/install-nix-action@v30
+      - uses: cachix/install-nix-action@v31
 
-      - uses: DeterminateSystems/flake-checker-action@v9
+      - uses: DeterminateSystems/flake-checker-action@v10
 
       - name: Check formatting
         run: nix fmt -- --ci
@@ -37,7 +37,7 @@ jobs:
       FLAKE: 'git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1'
 
     steps:
-      - uses: cachix/install-nix-action@v30
+      - uses: cachix/install-nix-action@v31
         if: matrix.nix-version != 'lix'
         with:
           install_url: ${{ matrix.nix-version != 'latest' && format('https://releases.nixos.org/nix/nix-{0}/install', matrix.nix-version) || '' }}
