@@ -6,7 +6,7 @@ in
 {
   services.kavita = {
     enable = true;
-    package = pkgs.pkgsUnstable.kavita;
+    package = pkgs.kavita;
     tokenKeyFile = "/persist/secrets/kavita-token";
     settings.IpAddresses = "127.0.0.1";
   };

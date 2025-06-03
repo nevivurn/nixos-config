@@ -43,7 +43,7 @@ in
     yt-dlp
 
     gnucash
-    (pkgsUnstable.portfolio.override { inherit webkitgtk_4_1; })
+    portfolio
 
     moonlight-qt
     pavucontrol
