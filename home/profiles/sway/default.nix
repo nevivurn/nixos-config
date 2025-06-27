@@ -450,7 +450,7 @@ in
       osd-font-size = 15;
       osd-border-size = 1;
       sub-font-size = 30;
-      script-opts = "stats-font_size=4,stats-border_size=0.5";
+      script-opts = "stats-font_size=14,stats-border_size=1";
 
       alang = "ja,jpn";
       slang = "enm,eng,en";
