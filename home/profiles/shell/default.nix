@@ -146,14 +146,7 @@
     enable = true;
     matchBlocks = {
       "*.snucse.org".user = "bacchus";
-      "sherry.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "sherry"; };
       "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
-
-      "datium.github.com" = {
-        hostname = "github.com";
-        identityFile = "/home/nevivurn/code/datium/id_ed25519_datium";
-        identitiesOnly = true;
-      };
     };
   };
 }

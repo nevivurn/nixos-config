@@ -43,24 +43,10 @@ lspconfig.gopls.setup {
 	end
 }
 
--- templ not autodetected for some reason
-vim.filetype.add { extension = { templ = 'templ' } }
-
 -- Simpler configs
-lspconfig.jsonls.setup {}
-lspconfig.tailwindcss.setup {
-	-- add templ
-	-- NOTE: remove after upgrade
-	filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "gohtmltmpl", "haml", "handlebars", "hbs", "html", "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte", "templ" },
-	init_options = {
-		userLanguages = {
-			eelixir = "html-eex",
-			eruby = "erb",
-			templ = "html",
-		},
-	},
-}
 lspconfig.helm_ls.setup{}
+lspconfig.jsonls.setup {}
+lspconfig.tailwindcss.setup {}
 lspconfig.templ.setup {}
 lspconfig.terraformls.setup {}
 lspconfig.texlab.setup {}
