@@ -45,7 +45,6 @@
     ];
     plugins = with pkgs.vimPlugins; [
       (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
-      copilot-vim
       vim-go
     ];
   };
@@ -102,7 +101,6 @@
         method = "symlink";
       }
       ".cache/nix-index"
-      ".config/github-copilot"
       ".terraform.d"
       ".unison"
     ];
