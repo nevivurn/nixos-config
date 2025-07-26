@@ -79,6 +79,7 @@ in
               PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
               PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
               Endpoint = "athebyne.nevi.network:6667";
+              PersistentKeepalive = 25;
             }
           ];
         };
@@ -88,7 +89,7 @@ in
           matchConfig.Type = "ether";
           linkConfig.MTUBytes = builtins.toString mtu;
         };
-        "50-wg-home" = {
+        "50-wg-proxy" = {
           matchConfig.Name = "wg-proxy";
           networkConfig.Address = [
             "10.42.43.3/24"
