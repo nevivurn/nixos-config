@@ -2,14 +2,13 @@
 
 let
   cfg = config.services.nfs.server;
-  allowedPorts =
-    [
-      111
-      2049
-    ]
-    ++ lib.optionals (cfg.statdPort != null) [ cfg.statdPort ]
-    ++ lib.optionals (cfg.lockdPort != null) [ cfg.lockdPort ]
-    ++ lib.optionals (cfg.mountdPort != null) [ cfg.mountdPort ];
+  allowedPorts = [
+    111
+    2049
+  ]
+  ++ lib.optionals (cfg.statdPort != null) [ cfg.statdPort ]
+  ++ lib.optionals (cfg.lockdPort != null) [ cfg.lockdPort ]
+  ++ lib.optionals (cfg.mountdPort != null) [ cfg.mountdPort ];
 in
 {
   services.nfs.server = {

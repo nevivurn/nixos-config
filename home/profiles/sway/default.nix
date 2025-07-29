@@ -251,12 +251,14 @@ in
             ${right} = "resize grow width 5";
             ${up} = "resize shrink height 5";
             ${down} = "resize grow height 5";
-          } // reset;
+          }
+          // reset;
           exit = {
             e = "exit";
             "Shift+r" = "exec systemctl reboot";
             "Shift+p" = "exec systemctl poweroff";
-          } // reset;
+          }
+          // reset;
         };
 
       bars = [
