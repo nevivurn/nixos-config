@@ -85,6 +85,16 @@
         };
         wireguardPeers = [
           {
+            # alrakis
+            AllowedIPs = [
+              "10.42.43.2/32"
+              "fdbc:ba6a:38de:2::2/128"
+            ];
+            PublicKey = "uJUJCtrSzbyIJFQWwm5+nSrGqC41ax+fQ2G+n02p9jg=";
+            PresharedKeyFile = "/secrets/wg-proxy-alrakis-psk";
+            Endpoint = "alrakis.nevi.network:6667";
+          }
+          {
             # giausar
             AllowedIPs = [
               "10.42.43.3/32"
