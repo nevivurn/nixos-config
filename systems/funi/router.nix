@@ -272,12 +272,17 @@
             br-guest : jump forward_guest,
             wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
-            wg-proxy : jump forward_wan,
+            wg-proxy : jump forward_proxy,
           }
         }
 
         chain forward_lan {
           oifname { "br-lan", "wg-home", "wg-proxy", "wg-bacchus", "enp1s0" } accept
+        }
+
+        chain forward_proxy {
+          oifname "wg-proxy" accept
+          jump forward_wan
         }
 
         chain forward_guest {

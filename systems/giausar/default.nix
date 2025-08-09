@@ -68,7 +68,7 @@ in
           wireguardPeers = [
             {
               AllowedIPs = [
-                "10.42.43.1/32"
+                "10.42.43.0/24"
                 # specify all subnets for ipv6 as we don't NAT on ipv6
                 "fdbc:ba6a:38de::/64" # lan
                 "fdbc:ba6a:38de:1::/64" # wg-home
