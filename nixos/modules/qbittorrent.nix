@@ -9,6 +9,9 @@ let
   cfg = config.services.qbittorrent;
 in
 {
+  # Local module predates upstream module
+  disabledModules = [ "services/torrent/qbittorrent.nix" ];
+
   options = {
     services = {
       qbittorrent = {
