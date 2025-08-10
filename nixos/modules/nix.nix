@@ -6,7 +6,7 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "discord"
-      "p7zip"
+      "7zz"
     ]
   );
 
