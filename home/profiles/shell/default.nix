@@ -19,7 +19,7 @@
 
       curl
       wget
-      (p7zip.override { enableUnfree = true; })
+      (_7zz.override { enableUnfree = true; })
 
       ldns
       mtr
