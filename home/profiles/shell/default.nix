@@ -46,6 +46,7 @@
     la = "ls -A";
     l = "ls -alh";
     grep = "grep --color=tty";
+    desecret = "yq '.data | with_entries(.value |= @base64d)'";
   };
 
   home.sessionVariables = {
