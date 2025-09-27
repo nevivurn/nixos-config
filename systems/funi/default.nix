@@ -107,7 +107,7 @@ in
     {
       name = "enable-ath-DFS-JP";
       patch = null;
-      extraStructuredConfig = with lib.kernel; {
+      structuredExtraConfig = with lib.kernel; {
         EXPERT = yes;
         CFG80211_CERTIFICATION_ONUS = yes;
         ATH10K_DFS_CERTIFIED = yes;
