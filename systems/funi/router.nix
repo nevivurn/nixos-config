@@ -26,6 +26,15 @@
           Kind = "bridge";
         };
       };
+      "31-br-lan-vlan" = {
+        netdevConfig = {
+          Name = "br-lan.200";
+          Kind = "vlan";
+        };
+        vlanConfig = {
+          Id = 200;
+        };
+      };
       "40-wg-home" = {
         netdevConfig = {
           Name = "wg-home";
@@ -175,25 +184,35 @@
           ];
           DHCP = "no";
           IPv6AcceptRA = false;
+          VLAN = [ "br-lan.200" ];
+        };
+      };
+      "32-bridge-200" = {
+        matchConfig.Name = "br-lan.200";
+        networkConfig = {
+          Address = [
+            "10.64.200.3/24"
+            "fdbc:ba6a:38de:200::3/64"
+          ];
+          DHCP = "no";
+          IPv6AcceptRA = false;
         };
         routes = [
-          # LEGACY -> new connectivity
-          # NOTE(nevivurn): severely broken (requires ICMP redirects) and such,
-          # but hopefully this is a temporary solution...
+          # LEGACY -> new connectivity through ROUTER
           {
-            Gateway = "192.168.2.21";
+            Gateway = "10.64.200.4";
             Destination = "10.64.0.0/16";
           }
           {
-            Gateway = "fdbc:ba6a:38de::21";
+            Gateway = "fdbc:ba6a:38de:200::4";
             Destination = "fdbc:ba6a:38de:10::/64";
           }
           {
-            Gateway = "fdbc:ba6a:38de::21";
+            Gateway = "fdbc:ba6a:38de:200::4";
             Destination = "fdbc:ba6a:38de:11::/64";
           }
           {
-            Gateway = "fdbc:ba6a:38de::21";
+            Gateway = "fdbc:ba6a:38de:200::4";
             Destination = "fdbc:ba6a:38de:20::/64";
           }
         ];
@@ -269,7 +288,7 @@
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
           iifname { "br-lan", "br-guest", "wg-home" } oifname "enp1s0" masquerade
-          iifname { "br-lan", "wg-home" } oifname { "wg-proxy", "wg-bacchus" } masquerade
+          iifname { "br-lan", "br-lan.200", "wg-home" } oifname { "wg-proxy", "wg-bacchus" } masquerade
         }
       }
 
@@ -290,6 +309,7 @@
 
           iifname vmap {
             br-lan : jump forward_lan,
+            br-lan.200 : jump forward_lan,
             br-guest : jump forward_guest,
             wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
@@ -298,7 +318,7 @@
         }
 
         chain forward_lan {
-          oifname { "br-lan", "wg-home", "wg-proxy", "wg-bacchus", "enp1s0" } accept
+          oifname { "br-lan", "br-lan.200", "wg-home", "wg-proxy", "wg-bacchus", "enp1s0" } accept
         }
 
         chain forward_proxy {
@@ -328,6 +348,7 @@
           iifname vmap {
             lo : accept,
             br-lan : jump input_lan,
+            br-lan.200 : jump input_lan,
             br-guest : jump input_guest,
             wg-home : jump input_lan,
             enp1s0 : jump input_wan,
