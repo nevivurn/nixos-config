@@ -176,6 +176,27 @@
           DHCP = "no";
           IPv6AcceptRA = false;
         };
+        routes = [
+          # LEGACY -> new connectivity
+          # NOTE(nevivurn): severely broken (requires ICMP redirects) and such,
+          # but hopefully this is a temporary solution...
+          {
+            Gateway = "192.168.2.21";
+            Destination = "10.64.0.0/16";
+          }
+          {
+            Gateway = "fdbc:ba6a:38de::21";
+            Destination = "fdbc:ba6a:38de:10::/64";
+          }
+          {
+            Gateway = "fdbc:ba6a:38de::21";
+            Destination = "fdbc:ba6a:38de:11::/64";
+          }
+          {
+            Gateway = "fdbc:ba6a:38de::21";
+            Destination = "fdbc:ba6a:38de:20::/64";
+          }
+        ];
       };
       "35-bridge-guest" = {
         matchConfig = {
