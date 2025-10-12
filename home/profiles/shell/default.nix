@@ -145,6 +145,9 @@
 
   programs.ssh = {
     enable = true;
+    extraConfig = ''
+      SetEnv TERM=xterm
+    '';
     matchBlocks = {
       "*.snucse.org".user = "bacchus";
       "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
