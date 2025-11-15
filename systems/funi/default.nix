@@ -113,6 +113,16 @@ in
         ATH10K_DFS_CERTIFIED = yes;
       };
     }
+    {
+      # ref: https://lore.kernel.org/all/175823924851.3217488.17742065327824732992.b4-ty@oss.qualcomm.com/
+      name = "revert-ath.patch";
+      patch = pkgs.fetchpatch2 {
+        name = "revert-ath.patch";
+        url = "https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/patch/?id=51a73f1b2e56b0324b4a3bb8cebc4221b5be4c7a";
+        revert = true;
+        hash = "sha256-Hw9dfirMEMNI2okWc0wTjmosZWKUK214y2wck1mNDFk=";
+      };
+    }
   ];
 
   # Unlike other systems, we have a *gasp* persistent root filesystem
