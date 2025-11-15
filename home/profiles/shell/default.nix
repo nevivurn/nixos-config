@@ -21,7 +21,7 @@
       wget
       (_7zz.override { enableUnfree = true; })
 
-      ldns
+      bind.dnsutils
       mtr
       openssl
       tcpdump

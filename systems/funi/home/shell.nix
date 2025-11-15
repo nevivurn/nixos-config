@@ -16,7 +16,7 @@
 
     ethtool
     iw
-    ldns
+    bind.dnsutils
     mtr
     openssl
     tcpdump
