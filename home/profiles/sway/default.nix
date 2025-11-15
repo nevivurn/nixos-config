@@ -40,7 +40,7 @@ in
     imv
     mediainfo
     mupdf
-    yt-dlp
+    pkgsUnstable.yt-dlp
 
     gnucash
     portfolio
