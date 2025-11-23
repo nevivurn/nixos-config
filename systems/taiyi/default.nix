@@ -108,6 +108,10 @@ in
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;
+          DNS = [
+            "10.64.20.4"
+            "10.64.20.5"
+          ];
         };
       };
     };
