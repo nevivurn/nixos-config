@@ -2,11 +2,14 @@
 
 let
   cfg = config.services.kavita.settings;
+  pkg =
+    (builtins.getFlake "github:kraftnix/nixpkgs/b5b360ba9d98233cbb8d3edc8754e03de5a0d4b6")
+    .legacyPackages.${pkgs.system}.kavita;
 in
 {
   services.kavita = {
     enable = true;
-    package = pkgs.pkgsUnstable.kavita;
+    package = pkg;
     tokenKeyFile = "/persist/secrets/kavita-token";
     settings.IpAddresses = "127.0.0.1";
   };
