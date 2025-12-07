@@ -73,7 +73,7 @@
     ];
   };
 
-  programs.git.extraConfig = {
+  programs.git.settings = {
     gpg.format = "ssh";
     gpg.ssh.defaultKeyCommand = "ssh-add -L";
     commit.gpgSign = true;

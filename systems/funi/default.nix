@@ -82,7 +82,14 @@ in
   };
 
   nixpkgs.overlays = [
-    (final: prev: { pkgsUnstable = import inputs.nixpkgs-unstable { inherit (pkgs) system config; }; })
+    (final: prev: {
+      pkgsUnstable = import inputs.nixpkgs-unstable {
+        inherit (pkgs) config;
+        system = pkgs.stdenv.hostPlatform.system;
+        overlays = [ inputs.self.overlays.default ];
+      };
+    })
+    inputs.self.overlays.default
   ];
 
   home-manager = {

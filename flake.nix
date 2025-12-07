@@ -106,7 +106,7 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           configs = lib.mapAttrs (_: c: c.config.system.build.toplevel) (
-            lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations
+            lib.filterAttrs (_: c: c.pkgs.stdenv.hostPlatform.system == system) self.nixosConfigurations
           );
         in
         configs // { allConfigs = pkgs.linkFarmFromDrvs "all-configs" (builtins.attrValues configs); }

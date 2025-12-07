@@ -1,5 +1,5 @@
 # subset of settings of self.homeModules.shell
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -89,11 +89,16 @@
 
   programs.git = {
     enable = true;
-    aliases = {
-      graph = "log --graph --all --oneline";
-    };
-    extraConfig = {
+    settings = {
+      alias = {
+        graph = "log --graph --all --oneline";
+      };
+      user = {
+        name = lib.mkDefault "Yongun Seong";
+        email = lib.mkDefault "nevivurn@nevi.dev";
+      };
       init.defaultBranch = "master";
+      # allow scrolling in git pager
       core.pager = "less -+X";
       core.quotePath = false;
     };
@@ -101,9 +106,10 @@
       ".direnv"
       ".envrc"
     ];
-    userName = "Yongun Seong";
-    userEmail = "nevivurn@nevi.dev";
   };
 
-  programs.ssh.enable = true;
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false; # Presumably will be deprecated / removed in the future
+  };
 }
