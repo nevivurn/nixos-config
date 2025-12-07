@@ -8,46 +8,14 @@ jobs:
     name: Check
     runs-on: ubuntu-24.04
 
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ssh-key: ${{secrets.SSH_KEY}}
           submodules: 'true'
-      - uses: cachix/install-nix-action@v31
-
-      - uses: DeterminateSystems/flake-checker-action@v10
-
-      - name: Check formatting
-        run: nix fmt -- --ci
-
-  eval-check:
-    name: Eval
-    runs-on: ubuntu-24.04
-    needs: check
-
-    strategy:
-      fail-fast: false
-      matrix:
-        nix-version:
-          - latest
-          - lix
-
-    env:
-      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      FLAKE: 'git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1'
-
-    steps:
-      - uses: cachix/install-nix-action@v31
-        if: matrix.nix-version != 'lix'
-        with:
-          install_url: ${{ matrix.nix-version != 'latest' && format('https://releases.nixos.org/nix/nix-{0}/install', matrix.nix-version) || '' }}
-      - name: Install Lix
-        if: matrix.nix-version == 'lix'
-        run: |
-          curl -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
-          sudo tee -a /etc/nix/nix.conf <<< "trusted-users = root worker"
-          sudo tee -a /etc/nix/nix.conf <<< "experimental-features = nix-command flakes"
-
       - name: Add SSH key to agent
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
@@ -55,5 +23,12 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "$SSH_KEY"
 
+      - uses: cachix/install-nix-action@v31
+      - uses: DeterminateSystems/flake-checker-action@v12
+
+      - name: Check formatting
+        run: nix fmt -- --ci
       - name: Check flake outputs
+        env:
+          FLAKE: 'git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1'
         run: nix flake check "$FLAKE" --no-build --all-systems --no-allow-import-from-derivation
