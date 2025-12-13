@@ -4,8 +4,8 @@
   services.caddy = {
     enable = true;
     package = pkgs.caddy.withPlugins {
-      plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250428144642-57989befb7e6" ];
-      hash = "sha256-UNOvokDRmir2RcXdsSwUxHLEKD8PA6aYEngjUPImsTo=";
+      plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20251209130418-1a3490ef786a" ];
+      hash = "sha256-ujjlyTBJqrEoSFDxb14rWh7VDCaSmhqnC+/BqYgbMgY=";
     };
     settings = {
       apps.layer4.servers = {
