@@ -20,7 +20,8 @@
   nixpkgs.overlays = [
     (final: prev: {
       pkgsUnstable = import inputs.nixpkgs-unstable {
-        inherit (pkgs) system config;
+        inherit (pkgs) config;
+        system = pkgs.stdenv.hostPlatform.system;
         overlays = [ inputs.self.overlays.default ];
       };
     })

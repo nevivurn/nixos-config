@@ -1,9 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -106,7 +106,7 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           configs = lib.mapAttrs (_: c: c.config.system.build.toplevel) (
-            lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations
+            lib.filterAttrs (_: c: c.pkgs.stdenv.hostPlatform.system == system) self.nixosConfigurations
           );
         in
         configs // { allConfigs = pkgs.linkFarmFromDrvs "all-configs" (builtins.attrValues configs); }

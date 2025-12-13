@@ -203,9 +203,9 @@ in
   };
 
   # Allow docking
-  services.logind = {
-    lidSwitchDocked = "lock";
-    lidSwitchExternalPower = "lock";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "lock";
+    HandleLidSwitchDocked = "lock";
   };
 
   # Keyboard setup

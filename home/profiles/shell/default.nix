@@ -33,7 +33,7 @@
 
       man-pages
     ]
-    ++ lib.optionals hostPlatform.isLinux [
+    ++ lib.optionals stdenv.hostPlatform.isLinux [
       psmisc
       ethtool
       iw
@@ -126,10 +126,14 @@
 
   programs.git = {
     enable = true;
-    aliases = {
-      graph = "log --graph --all --oneline";
-    };
-    extraConfig = {
+    settings = {
+      alias = {
+        graph = "log --graph --all --oneline";
+      };
+      user = {
+        name = lib.mkDefault "Yongun Seong";
+        email = lib.mkDefault "nevivurn@nevi.dev";
+      };
       init.defaultBranch = "master";
       # allow scrolling in git pager
       core.pager = "less -+X";
@@ -139,16 +143,13 @@
       ".direnv"
       ".envrc"
     ];
-    userName = lib.mkDefault "Yongun Seong";
-    userEmail = lib.mkDefault "nevivurn@nevi.dev";
   };
 
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      SetEnv TERM=xterm
-    '';
+    enableDefaultConfig = false; # Presumably will be deprecated / removed in the future
     matchBlocks = {
+      "*".setEnv.TERM = "xterm";
       "*.snucse.org".user = "bacchus";
       "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
     };

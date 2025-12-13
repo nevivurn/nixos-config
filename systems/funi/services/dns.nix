@@ -103,7 +103,7 @@
 
       conf-file = [
         (pkgs.runCommand "dnsmasq-hosts" { } ''
-          < ${inputs.self.packages.${pkgs.system}.hosts}/hosts \
+          < ${pkgs.hosts}/hosts \
               grep ^0.0.0.0 \
             | awk '{print $2}' \
             | tail -n+2 \
