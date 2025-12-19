@@ -1,7 +1,7 @@
 -- More dev-oriented settings
 
 -- Go
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
 	on_attach = function(client, bufnr)
 		-- format w/ goimports
 		-- ref: https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
@@ -41,14 +41,14 @@ lspconfig.gopls.setup {
 		vim.g.go_mod_fmt_autosave = 0
 		vim.g.go_template_autocreate = 0
 	end
-}
+})
 
 -- Simpler configs
-lspconfig.helm_ls.setup{}
-lspconfig.jsonls.setup {}
-lspconfig.tailwindcss.setup {}
-lspconfig.templ.setup {}
-lspconfig.terraformls.setup {}
-lspconfig.texlab.setup {}
-lspconfig.ts_ls.setup {}
-lspconfig.yamlls.setup {}
+vim.lsp.enable('helm_ls')
+vim.lsp.enable('jsonls')
+vim.lsp.enable('tailwindcss')
+vim.lsp.enable('templ')
+vim.lsp.enable('terraformls')
+vim.lsp.enable('texlab')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('yamlls')

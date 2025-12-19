@@ -39,11 +39,8 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = false
 
--- lsp
-local lspconfig = require'lspconfig'
-
 -- servers
-lspconfig.nixd.setup {
+vim.lsp.config('nixd', {
 	settings = {
 		nixd = {
 			formatting = {
@@ -51,7 +48,7 @@ lspconfig.nixd.setup {
 			}
 		}
 	}
-}
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
