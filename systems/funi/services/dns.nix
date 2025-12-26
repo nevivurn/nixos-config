@@ -61,7 +61,10 @@
       interface = "br-lan,br-guest";
       bind-interfaces = true;
 
-      rebind-domain-ok = [ "internal.bacchus.io" ];
+      rebind-domain-ok = [
+        "internal.bacchus.io"
+        "authenticatorlocalprod.com" # Okta
+      ];
 
       interface-name = [ "public.nevi.network,enp1s0/4" ];
 
