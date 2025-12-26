@@ -14,7 +14,7 @@ in
       resolvers 1.1.1.1
     }
 
-    @private remote_ip 192.168.2.0/24 fdbc:ba6a:38de::/64 10.42.42.0/24 fdbc:ba6a:38de:1::/64
+    @private remote_ip 192.168.2.0/24 fdbc:ba6a:38de::/64 10.42.42.0/24 fdbc:ba6a:38de:1::/64 10.64.10.0/24 fdbc:ba6a:38de:10::/64
     encode zstd gzip
 
     handle @private {
