@@ -3,7 +3,7 @@ set -euxo pipefail
 
 
 target="${1:-dry-activate}"
-cmd='nixos-rebuild --flake '.?submodules=1' --use-remote-sudo'
+cmd='nixos-rebuild --flake '.?submodules=1' --sudo'
 
 deploy() {
 	$cmd --target-host "$1" "$target"
