@@ -49,6 +49,7 @@ vim.lsp.config('nixd', {
 		}
 	}
 })
+vim.lsp.enable('nixd')
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)

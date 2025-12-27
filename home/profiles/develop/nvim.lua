@@ -42,6 +42,7 @@ vim.lsp.config('gopls', {
 		vim.g.go_template_autocreate = 0
 	end
 })
+vim.lsp.enable('gopls')
 
 -- Simpler configs
 vim.lsp.enable('helm_ls')
