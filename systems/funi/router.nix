@@ -215,6 +215,14 @@
             Gateway = "fdbc:ba6a:38de:200::4";
             Destination = "fdbc:ba6a:38de:20::/64";
           }
+          {
+            Gateway = "fdbc:ba6a:38de:200::4";
+            Destination = "fdbc:ba6a:38de:30::/64";
+          }
+          {
+            Gateway = "fdbc:ba6a:38de:200::4";
+            Destination = "fdbc:ba6a:38de:31::/64";
+          }
         ];
       };
       "35-bridge-guest" = {
