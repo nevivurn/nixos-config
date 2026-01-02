@@ -54,6 +54,8 @@ in
     discord
     element-desktop
     pkgsUnstable.protonmail-bridge
+
+    wireshark
   ];
 
   gtk.enable = true;
