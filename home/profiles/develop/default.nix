@@ -89,10 +89,6 @@
     mount_program = "${lib.getExe pkgs.fuse-overlayfs}"
   '';
 
-  home.file.".terraformrc".text = ''
-    plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
-  '';
-
   home.persistence."/persist/cache${config.home.homeDirectory}" = {
     allowOther = true;
     directories = [
@@ -101,7 +97,6 @@
         method = "symlink";
       }
       ".cache/nix-index"
-      ".terraform.d"
       ".unison"
     ];
   };
