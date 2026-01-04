@@ -165,7 +165,7 @@
 
   home.packages = with pkgs; [
     picocom
-    prismlauncher
+    pkgsUnstable.claude-code
   ];
 
   home.persistence."/persist${config.home.homeDirectory}" = {
