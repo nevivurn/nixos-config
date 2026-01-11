@@ -27,7 +27,7 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    config.whitelist.prefix = [ "/persist/home/nevivurn/code/nevi" ];
+    config.whitelist.prefix = [ "/home/nevivurn/code/nevi" ];
   };
 
   programs.neovim = {
