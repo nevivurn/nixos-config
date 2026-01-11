@@ -1,6 +1,5 @@
 {
   inputs,
-  config,
   lib,
   pkgs,
   ...
@@ -175,6 +174,7 @@
   };
   home.persistence."/persist/cache" = {
     directories = [
+      { directory = ".claude"; }
       { directory = ".local/share/PrismLauncher"; }
     ];
   };
