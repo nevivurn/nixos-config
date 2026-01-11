@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -89,28 +88,20 @@
     mount_program = "${lib.getExe pkgs.fuse-overlayfs}"
   '';
 
-  home.persistence."/persist/cache${config.home.homeDirectory}" = {
-    allowOther = true;
+  home.persistence."/persist/cache" = {
     directories = [
-      {
-        directory = ".cache/nix";
-        method = "symlink";
-      }
+      { directory = ".cache/nix"; }
       ".cache/nix-index"
       ".unison"
     ];
   };
-  home.persistence."/persist${config.home.homeDirectory}" = {
-    allowOther = true;
+  home.persistence."/persist" = {
     directories = [
       ".aws"
       ".config/gcloud"
       ".kube"
       ".ssh"
-      {
-        directory = "code";
-        method = "symlink";
-      }
+      { directory = "code"; }
     ];
   };
 }

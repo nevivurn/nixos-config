@@ -497,7 +497,7 @@ in
     longitude = 126.99;
   };
 
-  home.persistence."/persist${config.home.homeDirectory}" = {
+  home.persistence."/persist" = {
     directories = [
       ".PortfolioPerformance"
       ".config/Moonlight Game Streaming Project"
@@ -513,13 +513,10 @@ in
       ".mozilla"
       ".thunderbird"
       "pics"
-      {
-        directory = "dl";
-        method = "symlink";
-      }
+      { directory = "dl"; }
     ];
   };
-  home.persistence."/persist/cache${config.home.homeDirectory}" = {
+  home.persistence."/persist/cache" = {
     directories = [
       ".cache/mozilla"
       ".cache/thunderbird"

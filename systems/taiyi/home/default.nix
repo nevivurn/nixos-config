@@ -168,20 +168,14 @@
     pkgsUnstable.claude-code
   ];
 
-  home.persistence."/persist${config.home.homeDirectory}" = {
+  home.persistence."/persist" = {
     directories = [
-      {
-        directory = "games";
-        method = "symlink";
-      }
+      { directory = "games"; }
     ];
   };
-  home.persistence."/persist/cache${config.home.homeDirectory}" = {
+  home.persistence."/persist/cache" = {
     directories = [
-      {
-        directory = ".local/share/PrismLauncher";
-        method = "symlink";
-      }
+      { directory = ".local/share/PrismLauncher"; }
     ];
   };
 }
