@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   systemd.services."backup-sync" = {
@@ -6,12 +6,16 @@
     environment = {
       CLOUDSDK_CORE_PROJECT = "nevi-dev-backups";
     };
-    script = ''
-      ${pkgs.google-cloud-sdk}/bin/gcloud auth activate-service-account --key-file /data/keys/restic-unified-gcp
-      ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/alsafi gs://nevi-backups-sp/alsafi
-      ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/taiyi gs://nevi-backups-sp/taiyi
-      ${pkgs.google-cloud-sdk}/bin/gsutil -m rsync -rd /data/backups/taiyi-old gs://nevi-backups-sp/taiyi-old
-    '';
+    script =
+      let
+        gcloud = lib.getExe pkgs.google-cloud-sdk;
+      in
+      ''
+        ${gcloud} auth activate-service-account --key-file /data/keys/restic-unified-gcp
+        ${gcloud} storage rsync -r --delete-unmatched-destination-objects /data/backups/alsafi gs://nevi-backups-sp/alsafi
+        ${gcloud} storage rsync -r --delete-unmatched-destination-objects /data/backups/taiyi gs://nevi-backups-sp/taiyi
+        ${gcloud} storage rsync -r --delete-unmatched-destination-objects /data/backups/taiyi-old gs://nevi-backups-sp/taiyi-old
+      '';
     serviceConfig.Type = "oneshot";
   };
   systemd.timers."backup-sync" = {
