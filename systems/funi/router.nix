@@ -157,6 +157,7 @@
         ipv6AcceptRAConfig = {
           UseDNS = false;
         };
+        cakeConfig.Bandwidth = "100M";
       };
       "20-lan-bond" = {
         matchConfig.Type = "ether";
