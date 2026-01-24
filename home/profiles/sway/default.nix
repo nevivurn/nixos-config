@@ -512,8 +512,8 @@ in
       ".local/share/protonmail"
       ".mozilla"
       ".thunderbird"
+      "dl"
       "pics"
-      { directory = "dl"; }
     ];
   };
   home.persistence."/persist/cache" = {

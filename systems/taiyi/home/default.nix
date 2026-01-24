@@ -168,14 +168,10 @@
   ];
 
   home.persistence."/persist" = {
-    directories = [
-      { directory = "games"; }
-    ];
+    directories = [ "games" ];
   };
   home.persistence."/persist/cache" = {
-    directories = [
-      { directory = ".claude"; }
-      { directory = ".local/share/PrismLauncher"; }
-    ];
+    files = [ ".claude.json" ];
+    directories = [ ".claude" ];
   };
 }
