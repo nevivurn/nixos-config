@@ -196,4 +196,11 @@
         KrigBilateral
       ];
     };
+
+  home.packages = with pkgs; [ pkgsUnstable.claude-code ];
+
+  home.persistence."/persist/cache" = {
+    files = [ ".claude.json" ];
+    directories = [ ".claude" ];
+  };
 }
