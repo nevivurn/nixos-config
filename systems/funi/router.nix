@@ -35,54 +35,6 @@
           Id = 200;
         };
       };
-      "40-wg-home" = {
-        netdevConfig = {
-          Name = "wg-home";
-          Kind = "wireguard";
-        };
-        wireguardConfig = {
-          PrivateKeyFile = "/secrets/wg-home-priv";
-          ListenPort = 6666;
-        };
-        wireguardPeers = [
-          {
-            # fafnir
-            AllowedIPs = [
-              "10.42.42.3/32"
-              "fdbc:ba6a:38de:1::3/128"
-            ];
-            PublicKey = "W2634QLtmqji5pZzlDh5Z02KegcCf3uleQqbtctOsTk=";
-            PresharedKeyFile = "/secrets/wg-home-fafnir-psk";
-          }
-          {
-            # edasich
-            AllowedIPs = [
-              "10.42.42.4/32"
-              "fdbc:ba6a:38de:1::4/128"
-            ];
-            PublicKey = "YIPm+CmPQUe6bO9pCCVBqQWMd6IBXq+hKZaDOetOTgw=";
-            PresharedKeyFile = "/secrets/wg-home-edasich-psk";
-          }
-          {
-            # alsafi
-            AllowedIPs = [
-              "10.42.42.5/32"
-              "fdbc:ba6a:38de:1::5/128"
-            ];
-            PublicKey = "FTqTwAHU/8fz2ZyCygbsFvGcJ3NQnNolGag/eJX/FBU=";
-            PresharedKeyFile = "/secrets/wg-home-alsafi-psk";
-          }
-          {
-            # altais
-            AllowedIPs = [
-              "10.42.42.6/32"
-              "fdbc:ba6a:38de:1::6/128"
-            ];
-            PublicKey = "F+Gz+s93TCYuFMYawdLF56gsjL6JNqOR7PglXbTZJgs=";
-            PresharedKeyFile = "/secrets/wg-home-altais-psk";
-          }
-        ];
-      };
       "50-wg-proxy" = {
         netdevConfig = {
           Name = "wg-proxy";
@@ -112,26 +64,6 @@
             PublicKey = "IhmbixqrWYfXtj3lHvFAXQknaN/HP8w/nqnc+tcH+1c=";
             PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
             Endpoint = "giausar.nevi.network:6667";
-          }
-        ];
-      };
-      "60-wg-bacchus" = {
-        netdevConfig = {
-          Name = "wg-bacchus";
-          Kind = "wireguard";
-        };
-        wireguardConfig.PrivateKeyFile = "/secrets/wg-bacchus-priv";
-        wireguardPeers = [
-          {
-            AllowedIPs = [
-              "10.89.0.0/16"
-              "10.90.0.1/32"
-              "10.91.0.0/16"
-              "10.92.0.0/16"
-            ];
-            PublicKey = "VSIzXghytTORvgN5T5ePCJvfMHPVa4SB4fLIDpz27Fk=";
-            PresharedKeyFile = "/secrets/wg-bacchus-vpn-psk";
-            Endpoint = "vpn.bacchus.io:51820";
           }
         ];
       };
@@ -241,38 +173,12 @@
           IPv6AcceptRA = false;
         };
       };
-      "40-wg-home" = {
-        matchConfig.Name = "wg-home";
-        networkConfig.Address = [
-          "10.42.42.1/24"
-          "fdbc:ba6a:38de:1::1/64"
-        ];
-      };
-      "50-wg-home" = {
+      "50-wg-proxy" = {
         matchConfig.Name = "wg-proxy";
         networkConfig.Address = [
           "10.42.43.1/24"
           "fdbc:ba6a:38de:2::1/64"
         ];
-      };
-      "60-wg-bacchus" = {
-        matchConfig.Name = "wg-bacchus";
-        networkConfig.Address = [ "10.90.0.6/24" ];
-        routes = [
-          {
-            Gateway = "10.90.0.1";
-            Destination = "10.89.0.0/16";
-          }
-          {
-            Gateway = "10.90.0.1";
-            Destination = "10.91.0.0/16";
-          }
-          {
-            Gateway = "10.90.0.1";
-            Destination = "10.92.0.0/16";
-          }
-        ];
-        # DNS is handled in services/dns.nix
       };
     };
   };
@@ -296,8 +202,8 @@
         }
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
-          iifname { "br-lan", "br-guest", "wg-home" } oifname "enp1s0" masquerade
-          iifname { "br-lan", "br-lan.200", "wg-home" } oifname { "wg-proxy", "wg-bacchus" } masquerade
+          iifname { "br-lan", "br-guest" } oifname "enp1s0" masquerade
+          iifname { "br-lan", "br-lan.200" } oifname "wg-proxy" masquerade
         }
       }
 
@@ -320,14 +226,13 @@
             br-lan : jump forward_lan,
             br-lan.200 : jump forward_lan,
             br-guest : jump forward_guest,
-            wg-home : jump forward_lan,
             enp1s0 : jump forward_wan,
             wg-proxy : jump forward_proxy,
           }
         }
 
         chain forward_lan {
-          oifname { "br-lan", "br-lan.200", "wg-home", "wg-proxy", "wg-bacchus", "enp1s0" } accept
+          oifname { "br-lan", "br-lan.200", "wg-proxy", "enp1s0" } accept
         }
 
         chain forward_proxy {
@@ -359,7 +264,6 @@
             br-lan : jump input_lan,
             br-lan.200 : jump input_lan,
             br-guest : jump input_guest,
-            wg-home : jump input_lan,
             enp1s0 : jump input_wan,
           }
         }

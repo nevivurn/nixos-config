@@ -24,7 +24,6 @@ in
 
     ./services/chrony.nix
     ./services/dns.nix
-    ./services/hostapd.nix
     ./services/inadyn.nix
     ./services/mitm.nix
     ./services/monitoring.nix
@@ -104,23 +103,6 @@ in
   ## Other hardware-specific configuration
 
   hardware.enableRedistributableFirmware = true;
-
-  # Patches adapted from OpenWRT:
-  # Allow overriding firmware regulatory domain
-  networking.wireless.athUserRegulatoryDomain = true;
-  # Enable DFS-JP. As far as I can tell, my hardware supports DFS, and OpenWRT
-  # enables it too.
-  boot.kernelPatches = [
-    {
-      name = "enable-ath-DFS-JP";
-      patch = null;
-      structuredExtraConfig = with lib.kernel; {
-        EXPERT = yes;
-        CFG80211_CERTIFICATION_ONUS = yes;
-        ATH10K_DFS_CERTIFIED = yes;
-      };
-    }
-  ];
 
   # Unlike other systems, we have a *gasp* persistent root filesystem
   boot.tmp.cleanOnBoot = true;
