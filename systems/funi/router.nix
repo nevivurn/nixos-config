@@ -181,7 +181,7 @@
         }
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
-          iifname { "br-lan", "br-guest" } oifname "enp1s0" masquerade
+          iifname "br-lan" oifname "enp1s0" masquerade
           iifname { "br-lan", "br-lan.200" } oifname "wg-proxy" masquerade
         }
       }
@@ -204,7 +204,6 @@
           iifname vmap {
             br-lan : jump forward_lan,
             br-lan.200 : jump forward_lan,
-            br-guest : jump forward_guest,
             enp1s0 : jump forward_wan,
             wg-proxy : jump forward_proxy,
           }
@@ -217,10 +216,6 @@
         chain forward_proxy {
           oifname "wg-proxy" accept
           jump forward_wan
-        }
-
-        chain forward_guest {
-          oifname "enp1s0" accept
         }
 
         chain forward_wan {
@@ -242,7 +237,6 @@
             lo : accept,
             br-lan : jump input_lan,
             br-lan.200 : jump input_lan,
-            br-guest : jump input_guest,
             enp1s0 : jump input_wan,
           }
         }
@@ -262,17 +256,6 @@
             tcp . 80 : accept,
             tcp . 443 : accept,
             udp . 443 : accept,
-          }
-        }
-
-        chain input_guest {
-          icmp type { echo-request } accept
-          icmpv6 type != { nd-redirect, 139, 140 } accept
-
-          meta l4proto . th dport vmap {
-            tcp . 53 : accept, udp . 53 : accept,
-            udp . 67 : accept, udp . 547 : accept,
-            udp . 123 : accept,
           }
         }
 
