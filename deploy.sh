@@ -13,8 +13,8 @@ hosts=(
 	taiyi.nevi.network
 	athebyne.nevi.network
 	funi.nevi.network
-	giausar.proxy.nevi.network
-	alrakis.proxy.nevi.network
+	giausar.prx.nevi.network
+	alrakis.prx.nevi.network
 )
 
 for host in "${hosts[@]}"; do

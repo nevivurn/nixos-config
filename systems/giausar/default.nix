@@ -11,9 +11,9 @@ in
     inputs.self.nixosModules.default
     ../../private/systems/giausar/default.nix
 
-    ./services/caddy.nix
     ./services/monitoring.nix
     ./services/openssh.nix
+    ./services/nginx-sni-proxy.nix
   ];
 
   ## Filesystems
@@ -83,6 +83,42 @@ in
             }
           ];
         };
+        "51-wg-proxy" = {
+          netdevConfig = {
+            Name = "wg51";
+            Kind = "wireguard";
+          };
+          wireguardConfig = {
+            PrivateKeyFile = "/secrets/wg51-priv";
+            ListenPort = 6051;
+            RouteTable = "main";
+          };
+          wireguardPeers = [
+            {
+              AllowedIPs = [ "fdbc:ba6a:38de:51::1/128" ];
+              PublicKey = "nWRIJoXRWQ5h0Tu3irTVaAPwKda5xTBTz4J0CvijEV8=";
+              PresharedKeyFile = "/secrets/wg51-giausar-psk";
+            }
+          ];
+        };
+        "52-wg-proxy" = {
+          netdevConfig = {
+            Name = "wg52";
+            Kind = "wireguard";
+          };
+          wireguardConfig = {
+            PrivateKeyFile = "/secrets/wg52-priv";
+            ListenPort = 6052;
+            RouteTable = "main";
+          };
+          wireguardPeers = [
+            {
+              AllowedIPs = [ "fdbc:ba6a:38de:52::1/128" ];
+              PublicKey = "7aVZW+ICYXqi62uRJupTqD+R+SMeX4plcu6gOTjrlSg=";
+              PresharedKeyFile = "/secrets/wg52-giausar-psk";
+            }
+          ];
+        };
       };
       networks = {
         "20-lan" = {
@@ -96,13 +132,26 @@ in
             "fdbc:ba6a:38de:2::3/64"
           ];
         };
+        "51-wg-proxy" = {
+          matchConfig.Name = "wg51";
+          networkConfig.Address = [ "fdbc:ba6a:38de:51::3/64" ];
+        };
+        "52-wg-proxy" = {
+          matchConfig.Name = "wg52";
+          networkConfig.Address = [ "fdbc:ba6a:38de:52::3/64" ];
+        };
       };
     };
-  networking.firewall.allowedUDPPorts = [ 6667 ];
+
+  networking.firewall.allowedUDPPorts = [
+    6667
+    6051
+    6052
+  ];
 
   ## Basic config
 
-  time.timeZone = "Asia/Seoul";
+  time.timeZone = "Etc/UTC";
 
   ## Users
 
