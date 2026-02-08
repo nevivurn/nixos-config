@@ -33,8 +33,6 @@
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wg-bacchus.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wg-home.useDHCP = lib.mkDefault true;
   # networking.interfaces.wg-proxy.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp4s0-1.useDHCP = lib.mkDefault true;

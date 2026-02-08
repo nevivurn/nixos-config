@@ -45,7 +45,6 @@
       server = [
         "127.0.0.1#5353"
         "/nevi.network/"
-        "/internal.bacchus.io/10.90.0.1"
       ];
       address = [
         "/funi.nevi.network/192.168.2.1"
@@ -62,7 +61,6 @@
       bind-interfaces = true;
 
       rebind-domain-ok = [
-        "internal.bacchus.io"
         "authenticatorlocalprod.com" # Okta
       ];
 

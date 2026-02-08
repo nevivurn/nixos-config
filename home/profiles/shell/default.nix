@@ -150,8 +150,6 @@
     enableDefaultConfig = false; # Presumably will be deprecated / removed in the future
     matchBlocks = {
       "*".setEnv.TERM = "xterm";
-      "*.snucse.org".user = "bacchus";
-      "martini.snucse.org" = lib.hm.dag.entryBefore [ "*.snucse.org" ] { user = "yseong"; };
     };
   };
 }
