@@ -20,12 +20,6 @@
           Kind = "bridge";
         };
       };
-      "10-br-guest" = {
-        netdevConfig = {
-          Name = "br-guest";
-          Kind = "bridge";
-        };
-      };
       "31-br-lan-vlan" = {
         netdevConfig = {
           Name = "br-lan.200";
@@ -157,21 +151,6 @@
             Destination = "fdbc:ba6a:38de:31::/64";
           }
         ];
-      };
-      "35-bridge-guest" = {
-        matchConfig = {
-          Type = "bridge";
-          Name = "br-guest";
-        };
-        networkConfig = {
-          Address = [ "192.168.3.1/24" ];
-          DNS = [
-            "127.0.0.1"
-            "::1"
-          ];
-          DHCP = "no";
-          IPv6AcceptRA = false;
-        };
       };
       "50-wg-proxy" = {
         matchConfig.Name = "wg-proxy";
