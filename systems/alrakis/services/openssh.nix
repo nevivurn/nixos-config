@@ -5,7 +5,6 @@
     openFirewall = false;
   };
   networking.firewall.interfaces = {
-    wg-proxy.allowedTCPPorts = [ 22 ];
     wg51.allowedTCPPorts = [ 22 ];
     wg52.allowedTCPPorts = [ 22 ];
   };

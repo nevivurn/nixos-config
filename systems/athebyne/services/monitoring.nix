@@ -30,8 +30,6 @@
                   "alsafi.home.nevi.network:${port}"
                   "athebyne.nevi.network:${port}"
                   "funi.nevi.network:${port}"
-                  "giausar.proxy.nevi.network:${port}"
-                  "alrakis.proxy.nevi.network:${port}"
                   "taiyi.nevi.network:${port}"
                 ];
               }

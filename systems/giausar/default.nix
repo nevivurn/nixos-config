@@ -11,7 +11,6 @@ in
     inputs.self.nixosModules.default
     ../../private/systems/giausar/default.nix
 
-    ./services/monitoring.nix
     ./services/openssh.nix
     ./services/nginx-sni-proxy.nix
   ];
@@ -54,35 +53,6 @@ in
     in
     {
       netdevs = {
-        "50-wg-proxy" = {
-          netdevConfig = {
-            Name = "wg-proxy";
-            Kind = "wireguard";
-            MTUBytes = builtins.toString (mtu - 80);
-          };
-          wireguardConfig = {
-            PrivateKeyFile = "/secrets/wg-proxy-priv";
-            ListenPort = 6667;
-            RouteTable = "main";
-          };
-          wireguardPeers = [
-            {
-              AllowedIPs = [
-                "10.42.43.0/24"
-                # specify all subnets for ipv6 as we don't NAT on ipv6
-                "fdbc:ba6a:38de::/64" # lan
-                "fdbc:ba6a:38de:1::/64" # wg-home
-                "fdbc:ba6a:38de:2::/64" # wg-proxy
-                # athebyne
-                "192.168.2.10/32"
-              ];
-              PublicKey = "LpIGLOZ2phoWlVWRAY4Kun/ggfv3JUhBwd/I7QXdFWc=";
-              PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
-              Endpoint = "athebyne.nevi.network:6667";
-              PersistentKeepalive = 25;
-            }
-          ];
-        };
         "51-wg-proxy" = {
           netdevConfig = {
             Name = "wg51";
@@ -125,13 +95,6 @@ in
           matchConfig.Type = "ether";
           linkConfig.MTUBytes = builtins.toString mtu;
         };
-        "50-wg-proxy" = {
-          matchConfig.Name = "wg-proxy";
-          networkConfig.Address = [
-            "10.42.43.3/24"
-            "fdbc:ba6a:38de:2::3/64"
-          ];
-        };
         "51-wg-proxy" = {
           matchConfig.Name = "wg51";
           networkConfig.Address = [ "fdbc:ba6a:38de:51::3/64" ];
@@ -144,7 +107,6 @@ in
     };
 
   networking.firewall.allowedUDPPorts = [
-    6667
     6051
     6052
   ];

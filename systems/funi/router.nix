@@ -29,38 +29,6 @@
           Id = 200;
         };
       };
-      "50-wg-proxy" = {
-        netdevConfig = {
-          Name = "wg-proxy";
-          Kind = "wireguard";
-        };
-        wireguardConfig = {
-          PrivateKeyFile = "/secrets/wg-proxy-priv";
-          ListenPort = 6667;
-        };
-        wireguardPeers = [
-          {
-            # alrakis
-            AllowedIPs = [
-              "10.42.43.2/32"
-              "fdbc:ba6a:38de:2::2/128"
-            ];
-            PublicKey = "uJUJCtrSzbyIJFQWwm5+nSrGqC41ax+fQ2G+n02p9jg=";
-            PresharedKeyFile = "/secrets/wg-proxy-alrakis-psk";
-            Endpoint = "alrakis.nevi.network:6667";
-          }
-          {
-            # giausar
-            AllowedIPs = [
-              "10.42.43.3/32"
-              "fdbc:ba6a:38de:2::3/128"
-            ];
-            PublicKey = "IhmbixqrWYfXtj3lHvFAXQknaN/HP8w/nqnc+tcH+1c=";
-            PresharedKeyFile = "/secrets/wg-proxy-giausar-psk";
-            Endpoint = "giausar.nevi.network:6667";
-          }
-        ];
-      };
     };
     networks = {
       # WAN
@@ -132,43 +100,8 @@
           }
           {
             Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:10::/64";
+            Destination = "fdbc:ba6a:38de::/48";
           }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:11::/64";
-          }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:20::/64";
-          }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:30::/64";
-          }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:31::/64";
-          }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:50::/64";
-          }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:51::/64";
-          }
-          {
-            Gateway = "fdbc:ba6a:38de:200::4";
-            Destination = "fdbc:ba6a:38de:52::/64";
-          }
-        ];
-      };
-      "50-wg-proxy" = {
-        matchConfig.Name = "wg-proxy";
-        networkConfig.Address = [
-          "10.42.43.1/24"
-          "fdbc:ba6a:38de:2::1/64"
         ];
       };
     };
@@ -194,7 +127,6 @@
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
           iifname "br-lan" oifname "enp1s0" masquerade
-          iifname { "br-lan", "br-lan.200" } oifname "wg-proxy" masquerade
         }
       }
 
@@ -217,17 +149,11 @@
             br-lan : jump forward_lan,
             br-lan.200 : jump forward_lan,
             enp1s0 : jump forward_wan,
-            wg-proxy : jump forward_proxy,
           }
         }
 
         chain forward_lan {
-          oifname { "br-lan", "br-lan.200", "wg-proxy", "enp1s0" } accept
-        }
-
-        chain forward_proxy {
-          oifname "wg-proxy" accept
-          jump forward_wan
+          oifname { "br-lan", "br-lan.200", "enp1s0" } accept
         }
 
         chain forward_wan {
@@ -262,7 +188,6 @@
             tcp . 53 : accept, udp . 53 : accept,
             udp . 67 : accept, udp . 547 : accept,
             udp . 123 : accept,
-            udp . 6666 : accept,
             tcp . 7777 : accept, # spare open port
             tcp . 9100 : accept,
             tcp . 80 : accept,
@@ -274,10 +199,6 @@
         chain input_wan {
           icmp type { echo-request } accept
           icmpv6 type != { nd-redirect, 139, 140 } accept
-          meta l4proto . th dport vmap {
-            udp . 6666 : accept,
-            udp . 6667 : accept,
-          }
         }
       }
     '';
