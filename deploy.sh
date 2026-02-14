@@ -11,8 +11,8 @@ deploy() {
 
 hosts=(
 	taiyi.nevi.network
-	athebyne.nevi.network
 	funi.nevi.network
+	athebyne.inf.nevi.network
 	giausar.prx.nevi.network
 	alrakis.prx.nevi.network
 )
