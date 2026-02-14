@@ -27,10 +27,9 @@
             [
               {
                 targets = [
-                  "alsafi.home.nevi.network:${port}"
                   "athebyne.nevi.network:${port}"
-                  "funi.nevi.network:${port}"
-                  "taiyi.nevi.network:${port}"
+                  "rtr01.inf.nevi.network:${port}"
+                  "rtr02.inf.nevi.network:${port}"
                 ];
               }
             ];
