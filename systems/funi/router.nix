@@ -113,17 +113,6 @@
     checkRuleset = false;
     ruleset = ''
       table ip nat {
-        chain prerouting {
-          type nat hook prerouting priority dstnat; policy accept;
-
-          iifname "enp1s0" dnat to meta l4proto . th dport map {
-            tcp . 80 : 192.168.2.10,
-            tcp . 443 : 192.168.2.10,
-            udp . 443 : 192.168.2.10,
-            tcp . 5555 : 192.168.2.10,
-            udp . 5555 : 192.168.2.10,
-          }
-        }
         chain postrouting {
           type nat hook postrouting priority srcnat; policy accept;
           iifname "br-lan" oifname "enp1s0" masquerade
@@ -148,23 +137,11 @@
           iifname vmap {
             br-lan : jump forward_lan,
             br-lan.200 : jump forward_lan,
-            enp1s0 : jump forward_wan,
           }
         }
 
         chain forward_lan {
           oifname { "br-lan", "br-lan.200", "enp1s0" } accept
-        }
-
-        chain forward_wan {
-          ct status dnat accept
-          ip6 daddr fdbc:ba6a:38de::10 meta l4proto . th dport vmap {
-            tcp . 80 : accept,
-            tcp . 443 : accept,
-            udp . 443 : accept,
-            tcp . 5555 : accept,
-            udp . 5555 : accept,
-          }
         }
 
         chain input {
@@ -187,12 +164,8 @@
             tcp . 22 : accept,
             tcp . 53 : accept, udp . 53 : accept,
             udp . 67 : accept, udp . 547 : accept,
-            udp . 123 : accept,
             tcp . 7777 : accept, # spare open port
             tcp . 9100 : accept,
-            tcp . 80 : accept,
-            tcp . 443 : accept,
-            udp . 443 : accept,
           }
         }
 

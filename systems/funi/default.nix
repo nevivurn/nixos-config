@@ -25,7 +25,6 @@ in
     ./services/chrony.nix
     ./services/dns.nix
     ./services/inadyn.nix
-    ./services/mitm.nix
     ./services/monitoring.nix
     ./services/openssh.nix
   ];
