@@ -2,7 +2,7 @@
 
 {
   services.matrix-synapse = {
-    enable = true;
+    enable = false; # disable temporarily during migration
     withJemalloc = true;
 
     settings = {
