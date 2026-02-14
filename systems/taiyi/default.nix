@@ -105,17 +105,9 @@ in
     networks = {
       "20-lan" = {
         matchConfig.Type = "ether";
-        networkConfig = {
-          DHCP = "ipv4";
-          IPv6AcceptRA = true;
-          DNS = [
-            "10.64.20.4"
-            "10.64.20.5"
-          ];
-        };
-        dhcpV4Config.UseDNS = false;
-        dhcpV6Config.UseDNS = false;
-        ipv6AcceptRAConfig.UseDNS = false;
+        networkConfig.DHCP = "yes";
+        dhcpV4Config.UseMTU = true;
+        ipv6AcceptRAConfig.UseMTU = true;
       };
     };
   };

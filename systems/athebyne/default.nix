@@ -149,7 +149,9 @@ in
           DHCP = "ipv4";
           IPv6AcceptRA = true;
         };
+        dhcpV4Config.UseMTU = true;
         dhcpV6Config.DUIDType = "link-layer";
+        ipv6AcceptRAConfig.UseMTU = true;
       };
     };
   };
