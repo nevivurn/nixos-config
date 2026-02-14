@@ -15,7 +15,6 @@ in
     ./hardware-configuration.nix
 
     inputs.self.nixosModules.default
-    ../../private/systems/athebyne/default.nix
 
     inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
     inputs.nixos-hardware.nixosModules.common-gpu-amd
@@ -150,6 +149,7 @@ in
           DHCP = "ipv4";
           IPv6AcceptRA = true;
         };
+        dhcpV6Config.DUIDType = "link-layer";
       };
     };
   };
