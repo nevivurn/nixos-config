@@ -1,7 +1,7 @@
 {
   lib,
-  inputs,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -17,9 +17,6 @@ in
     inputs.self.nixosModules.graphical
 
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen5
-
-    ./services/monitoring.nix
-    ./services/openssh.nix
   ];
 
   ## Filesystems
@@ -33,11 +30,7 @@ in
     "/boot" = {
       device = "/dev/disk/by-id/nvme-KBG6AZNV256G_LA_KIOXIA_5E7PSJXAZ12K-part1";
       fsType = "vfat";
-      options = [
-        "noatime"
-        "fmask=0077"
-        "dmask=0077"
-      ];
+      options = [ "noatime" ];
     };
 
     "/nix" = {
@@ -116,32 +109,8 @@ in
   systemd.network.networks = {
     "20-wifi" = {
       matchConfig.Type = "wlan";
-      networkConfig = {
-        DHCP = "ipv4";
-        IPv6AcceptRA = true;
-        Domains = [ "~public.nevi.network" ];
-      };
+      networkConfig.DHCP = "yes";
     };
-  };
-
-  networking.wg-quick.interfaces.wg-home = {
-    privateKeyFile = "/persist/secrets/wg-home-priv";
-    address = [
-      "10.42.42.5/24"
-      "fdbc:ba6a:38de:1::5/64"
-    ];
-    dns = [ "192.168.2.1" ];
-    peers = [
-      {
-        allowedIPs = [
-          "0.0.0.0/0"
-          "::/0"
-        ];
-        endpoint = "public.nevi.network:6666";
-        presharedKeyFile = "/persist/secrets/wg-home-alsafi-psk";
-        publicKey = "/3jJJC13Q4co0mFo/DXFp7pch1a7jk7C+dHKu+DxDUg=";
-      }
-    ];
   };
 
   networking.wireless.iwd.enable = true;

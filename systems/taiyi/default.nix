@@ -101,14 +101,12 @@ in
   networking.domain = "nevi.network";
   networking.timeServers = [ ];
 
-  systemd.network = {
-    networks = {
-      "20-lan" = {
-        matchConfig.Type = "ether";
-        networkConfig.DHCP = "yes";
-        dhcpV4Config.UseMTU = true;
-        ipv6AcceptRAConfig.UseMTU = true;
-      };
+  systemd.network.networks = {
+    "20-lan" = {
+      matchConfig.Type = "ether";
+      networkConfig.DHCP = "yes";
+      dhcpV4Config.UseMTU = true;
+      ipv6AcceptRAConfig.UseMTU = true;
     };
   };
 
