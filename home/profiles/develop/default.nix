@@ -83,8 +83,6 @@
   programs.ssh.matchBlocks = {
     "rtr01.rtr.nevi.network".user = "vyos";
     "rtr02.rtr.nevi.network".user = "vyos";
-    "rtr01.home.nevi.network".user = "vyos";
-    "rtr02.home.nevi.network".user = "vyos";
   };
 
   home.file.".config/containers/storage.conf".text = ''
