@@ -17,8 +17,9 @@
       "XF86MonBrightnessDown" = "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
     };
     input = {
-      "type:keyboard" = {
-        xkb_options = lib.mkForce "ctrl:swapcaps,korean:ralt_hangul";
+      # Swap caps/ctrl only on the built-in laptop keyboard
+      "1:1:AT_Translated_Set_2_keyboard" = {
+        xkb_options = "ctrl:swapcaps,korean:ralt_hangul";
       };
       "type:touchpad" = {
         tap = "enabled";
