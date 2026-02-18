@@ -73,6 +73,7 @@
 
   programs.git.settings = {
     gpg.format = "ssh";
+    gpg.ssh.program = lib.getExe pkgs.ssh-keygen-gpg-wrapper;
     gpg.ssh.defaultKeyCommand = "ssh-add -L";
     commit.gpgSign = true;
     tag.gpgSign = true;
