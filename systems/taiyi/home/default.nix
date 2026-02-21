@@ -162,6 +162,8 @@
       ];
     };
 
+  programs.ssh.matchBlocks."*".certificateFile = "${./../cert.pub}";
+
   home.packages = with pkgs; [
     picocom
     pkgsUnstable.claude-code

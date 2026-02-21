@@ -139,10 +139,6 @@ in
       "video"
     ];
     hashedPasswordFile = "/persist/secrets/passwd-nevivurn";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3 nevivurn@taiyi"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMglmE8YhvAD8g74xCisFbRD/caAMQ0c7UV9s4hTldGT nevivurn@alsafi"
-    ];
   };
   home-manager.users.nevivurn = import ./home;
 

@@ -1,3 +1,1 @@
-nevivurn@taiyi namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUNr1fMh1l/hCfs/hjeT3AhBESCVq3QXgbQh/cTVRS3
-nevivurn@alsafi namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMglmE8YhvAD8g74xCisFbRD/caAMQ0c7UV9s4hTldGT
-nevivurn cert-authority,namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJQ5bSq67p6GC5oE8+jglOw17CV/vtBQH/SyxoACxgti (nevivurn@signer)
+nevivurn cert-authority,namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJQ5bSq67p6GC5oE8+jglOw17CV/vtBQH/SyxoACxgti nevivurn@signer
