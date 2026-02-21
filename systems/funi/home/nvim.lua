@@ -1,1 +1,0 @@
-../../../home/profiles/shell/nvim.lua

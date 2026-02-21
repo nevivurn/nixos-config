@@ -143,14 +143,6 @@
           modules = [ ./systems/athebyne ];
         };
 
-        funi = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [ ./systems/funi ];
-        };
-
         giausar = lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
