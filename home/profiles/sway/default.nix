@@ -507,6 +507,7 @@ in
       ".config/fcitx5"
       ".config/protonmail"
       ".gnupg"
+      ".local/share/easyeffects"
       ".local/share/gnucash"
       ".local/share/password-store"
       ".local/share/protonmail"
