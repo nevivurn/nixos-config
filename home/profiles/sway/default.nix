@@ -106,7 +106,7 @@ in
     settings = {
       shell_integration = "enabled";
       enable_audio_bell = false;
-      background_opacity = "0.8";
+      background_opacity = "0.9";
       dynamic_background_opacity = true;
     };
     extraConfig = ''
