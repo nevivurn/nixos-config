@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ inputs.self.homeModules.sway ];
+  imports = [
+    inputs.self.homeModules.sway
+    ../../../private/systems/taiyi/home
+  ];
 
   # We have a real GPU
   programs.mpv =
@@ -164,9 +167,19 @@
 
   programs.ssh.matchBlocks."*".certificateFile = "${./../cert.pub}";
 
+  programs.claude-code = {
+    enable = true;
+    package = pkgs.pkgsUnstable.claude-code;
+    mcpServers = {
+      context7 = {
+        type = "stdio";
+        command = lib.getExe pkgs.context7-mcp;
+      };
+    };
+  };
+
   home.packages = with pkgs; [
     picocom
-    pkgsUnstable.claude-code
   ];
 
   home.persistence."/persist" = {

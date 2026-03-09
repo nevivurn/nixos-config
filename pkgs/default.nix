@@ -10,4 +10,6 @@ in
 
   # ssh-keygen wrapper for for gpg-agent
   ssh-keygen-gpg-wrapper = callPackage ./ssh-keygen-gpg-wrapper { };
+
+  context7-mcp = callPackage ./context7-mcp { };
 }
