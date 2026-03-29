@@ -28,6 +28,7 @@
               {
                 targets = [
                   "athebyne.nevi.network:${port}"
+                  "pve01.mgmt.nevi.network:${port}"
                   "rtr01.inf.nevi.network:${port}"
                   "rtr02.inf.nevi.network:${port}"
                 ];
