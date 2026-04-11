@@ -74,11 +74,9 @@
                   builtins.map (
                     system:
                     builtins.map (name: {
-                        inherit system name;
-                        extraArgs = self.packages.${system}.${name}.passthru.nix-update-args or [];
-                      }) (
-                      builtins.attrNames (lib.filterAttrs (_: isUpdatable) self.packages.${system})
-                    )
+                      inherit system name;
+                      extraArgs = self.packages.${system}.${name}.passthru.nix-update-args or [ ];
+                    }) (builtins.attrNames (lib.filterAttrs (_: isUpdatable) self.packages.${system}))
                   ) systems
                 );
                 pkg = pkgs.writeShellApplication {
@@ -88,7 +86,8 @@
                       nix flake update --commit-lock-file
                     ''
                     + (lib.concatMapStringsSep "\n" (
-                      ps: "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${lib.escapeShellArgs ps.extraArgs} ${ps.name}"
+                      ps:
+                      "${lib.getExe pkgs.nix-update} -F --commit --system ${ps.system} ${lib.escapeShellArgs ps.extraArgs} ${ps.name}"
                     ) upPkgs)
                   );
                 };

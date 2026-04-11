@@ -66,5 +66,8 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   meta.mainProgram = "context7-mcp";
-  passthru.nix-update-args = [ "--version-regex" "^@upstash/context7-mcp@(.+)$" ];
+  passthru.nix-update-args = [
+    "--version-regex"
+    "^@upstash/context7-mcp@(.+)$"
+  ];
 })
