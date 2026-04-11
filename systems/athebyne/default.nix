@@ -141,6 +141,7 @@ in
         networkConfig = {
           Bridge = "virbr0";
         };
+        linkConfig.MTUBytes = 9000;
       };
 
       "20-lan" = {
