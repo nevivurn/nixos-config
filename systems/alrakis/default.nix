@@ -28,7 +28,7 @@ in
 
   # force BIOS boot
   boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.loader.grub.device = "/dev/vdb";
+  boot.loader.grub.device = "/dev/vda";
 
   ## Networking
 
