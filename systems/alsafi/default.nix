@@ -121,7 +121,7 @@ in
         };
         wireguardPeers = [
           {
-            Endpoint = "rtr01.pub.nevi.network:51820";
+            Endpoint = "rtr01.nevi.ing:51820";
             PersistentKeepalive = 25;
             AllowedIPs = [
               "0.0.0.0/0"
@@ -145,7 +145,7 @@ in
         };
         wireguardPeers = [
           {
-            Endpoint = "rtr02.pub.nevi.network:51820";
+            Endpoint = "rtr02.nevi.ing:51820";
             PersistentKeepalive = 25;
             AllowedIPs = [
               "0.0.0.0/0"
@@ -161,7 +161,10 @@ in
       "20-wifi" = {
         matchConfig.Type = "wlan";
         networkConfig.DHCP = "yes";
-        networkConfig.Domains = [ "~pub.nevi.network" ];
+        networkConfig.Domains = [
+          "~rtr01.nevi.ing"
+          "~rtr02.nevi.ing"
+        ];
       };
       "41-wg-home" = {
         matchConfig.Name = "wg41";
@@ -216,7 +219,8 @@ in
 
   # allow wg traffic on weird return paths
   networking.firewall.extraReversePathFilterRules = ''
-    udp sport 51820 accept
+    udp sport { 53, 51820 }accept
+    tcp sport 53 accept
   '';
 
   networking.wireless.iwd.enable = true;
