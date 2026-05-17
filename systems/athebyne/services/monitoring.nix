@@ -41,7 +41,10 @@
         }
       ];
 
-    exporters.node.enable = true;
+    exporters.node = {
+      enable = true;
+      openFirewall = true;
+    };
     exporters.smartctl = {
       enable = true;
       devices = [
