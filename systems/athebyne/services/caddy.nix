@@ -40,12 +40,6 @@ in
           route /jellyfin/* {
             reverse_proxy localhost:8096
           }
-
-          redir /grafana /grafana/
-          route /grafana/* {
-            uri strip_prefix /grafana
-            reverse_proxy localhost:3000
-          }
         }
       '';
     };
