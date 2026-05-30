@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 
 let
   cfg = config.services.jellyfin;
@@ -13,7 +13,7 @@ in
     ProtectProc = "invisible";
     ProcSubset = "pid";
     ProtectHome = true;
-    ProtectSystem = "strict";
+    ProtectSystem = lib.mkForce "strict";
     ReadWritePaths = [
       cfg.cacheDir
       cfg.dataDir
