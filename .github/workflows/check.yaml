@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ssh-key: ${{secrets.SSH_KEY}}
-          submodules: 'true'
+          submodules: "true"
       - name: Add SSH key to agent
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
@@ -23,12 +23,12 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "$SSH_KEY"
 
-      - uses: cachix/install-nix-action@v31
+      - uses: NixOS/nix-installer-action@6b8548fe06acfb0155a50ab5d561accb215764cc
       - uses: DeterminateSystems/flake-checker-action@v12
 
       - name: Check formatting
         run: nix fmt -- --ci
       - name: Check flake outputs
         env:
-          FLAKE: 'git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1'
-        run: nix flake check "$FLAKE" --no-build --all-systems --no-allow-import-from-derivation
+          FLAKE: "git+ssh://git@github.com/${{ github.repository }}.git?ref=${{ github.ref }}&rev=${{ github.sha }}&submodules=1"
+        run: nix flake check "$FLAKE" --no-build --all-systems --no-allow-import-from-derivation --option abort-on-warn true
