@@ -6,6 +6,7 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "7zz"
+      "uasm"
       "claude-code"
       "discord"
     ]

@@ -19,7 +19,7 @@
 
       curl
       wget
-      (_7zz.override { enableUnfree = true; })
+      _7zz-rar
 
       bind.dnsutils
       mtr
