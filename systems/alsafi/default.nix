@@ -230,7 +230,7 @@ in
   # with nfs unmounting.
   systemd.services.iwd.after = [ "dbus.service" ];
 
-  services.resolved.dnssec = "false";
+  services.resolved.settings.Resolve.DNSSEC = "false";
   # services.resolved.fallbackDns does not support empty lists
   environment.etc."systemd/resolved.conf".text = lib.mkAfter ''
     FallbackDNS=

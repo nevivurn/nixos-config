@@ -78,10 +78,10 @@
 
   programs.neovim = {
     enable = true;
-    extraLuaConfig = builtins.readFile ./nvim.lua;
+    initLua = builtins.readFile ./nvim.lua;
     extraPackages = with pkgs; [
       nixd
-      nixfmt-rfc-style
+      nixfmt
     ];
     plugins =
       with pkgs.vimPlugins;
@@ -148,8 +148,6 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false; # Presumably will be deprecated / removed in the future
-    matchBlocks = {
-      "*".setEnv.TERM = "xterm";
-    };
+    settings."*".SetEnv.TERM = "xterm";
   };
 }

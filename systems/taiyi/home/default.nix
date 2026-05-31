@@ -165,7 +165,7 @@
       ];
     };
 
-  programs.ssh.matchBlocks."*".certificateFile = "${./../cert.pub}";
+  programs.ssh.settings."*".CertificateFile = "${./../cert.pub}";
 
   programs.claude-code = {
     enable = true;

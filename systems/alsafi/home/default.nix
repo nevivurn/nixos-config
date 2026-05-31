@@ -198,7 +198,7 @@
       ];
     };
 
-  programs.ssh.matchBlocks."*".certificateFile = "${./../cert.pub}";
+  programs.ssh.settings."*".CertificateFile = "${./../cert.pub}";
 
   home.packages = with pkgs; [ pkgsUnstable.claude-code ];
 

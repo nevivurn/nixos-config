@@ -14,7 +14,7 @@
     inputs.impermanence.nixosModules.impermanence
   ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "26.05";
   system.nixos.tags = with inputs.self; [ sourceInfo.shortRev or sourceInfo.dirtyShortRev ];
 
   nixpkgs.overlays = [

@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -31,7 +32,7 @@
   };
 
   programs.neovim = {
-    extraLuaConfig = lib.mkAfter (builtins.readFile ./nvim.lua);
+    initLua = lib.mkAfter (builtins.readFile ./nvim.lua);
     extraPackages = with pkgs; [
       helm-ls
       typescript-language-server
@@ -46,19 +47,6 @@
       (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars))
       vim-go
     ];
-  };
-
-  programs.password-store = {
-    enable = true;
-    package =
-      let
-        pass = pkgs.pass.override {
-          inherit pass;
-          dmenuSupport = false;
-          waylandSupport = true;
-        };
-      in
-      pass.withExtensions (ext: [ ext.pass-otp ]);
   };
 
   programs.gpg.enable = true;
@@ -80,9 +68,9 @@
     safe.directory = "/mnt/athebyne/share/pass";
   };
 
-  programs.ssh.matchBlocks = {
-    "rtr01.rtr.nevi.network".user = "vyos";
-    "rtr02.rtr.nevi.network".user = "vyos";
+  programs.ssh.settings = {
+    "rtr01.rtr.nevi.network".User = "vyos";
+    "rtr02.rtr.nevi.network".User = "vyos";
   };
 
   home.file.".config/containers/storage.conf".text = ''

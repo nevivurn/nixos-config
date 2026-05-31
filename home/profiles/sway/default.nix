@@ -85,9 +85,24 @@ in
     NIXOS_OZONE_WL = "1";
   };
 
-  xdg.userDirs.enable = true;
-  xdg.userDirs.download = "${config.home.homeDirectory}/dl";
-  xdg.userDirs.pictures = "${config.home.homeDirectory}/pics";
+  programs.password-store = {
+    enable = true;
+    package =
+      let
+        pass = pkgs.pass.override {
+          inherit pass;
+          dmenuSupport = false;
+          waylandSupport = true;
+        };
+      in
+      pass.withExtensions (ext: [ ext.pass-otp ]);
+  };
+
+  xdg.userDirs = {
+    enable = true;
+    download = "${config.home.homeDirectory}/dl";
+    pictures = "${config.home.homeDirectory}/pics";
+  };
 
   programs.bash.profileExtra = ''
     if [[ "$(tty)" == /dev/tty1 ]]; then
@@ -473,16 +488,10 @@ in
       let
         swaylock = lib.getExe config.programs.swaylock.package;
       in
-      [
-        {
-          command = "${swaylock} -f";
-          event = "lock";
-        }
-        {
-          command = "${swaylock} -f";
-          event = "before-sleep";
-        }
-      ];
+      {
+        lock = "${swaylock} -f";
+        before-sleep = "${swaylock} -f";
+      };
   };
   programs.swaylock = {
     enable = true;
@@ -505,13 +514,13 @@ in
       ".config/desmume"
       ".config/easyeffects"
       ".config/fcitx5"
+      ".config/mozilla"
       ".config/protonmail"
       ".gnupg"
       ".local/share/easyeffects"
       ".local/share/gnucash"
-      ".local/share/password-store"
       ".local/share/protonmail"
-      ".mozilla"
+      ".password-store"
       ".thunderbird"
       "dl"
       "pics"
