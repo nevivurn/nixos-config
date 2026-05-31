@@ -10,6 +10,7 @@ jobs:
 
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - uses: actions/checkout@v6
