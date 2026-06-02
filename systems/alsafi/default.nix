@@ -30,7 +30,10 @@ in
     "/boot" = {
       device = "/dev/disk/by-id/nvme-KBG6AZNV256G_LA_KIOXIA_5E7PSJXAZ12K-part1";
       fsType = "vfat";
-      options = [ "noatime" ];
+      options = [
+        "noatime"
+        "umask=0077"
+      ];
     };
 
     "/nix" = {
