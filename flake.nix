@@ -71,9 +71,9 @@
               let
                 isUpdatable = p: p ? version && lib.hasPrefix self.outPath (builtins.unsafeGetAttrPos "src" p).file;
                 upPkgs = lib.flatten (
-                  builtins.map (
+                  map (
                     system:
-                    builtins.map (name: {
+                    map (name: {
                       inherit system name;
                       extraArgs = self.packages.${system}.${name}.passthru.nix-update-args or [ ];
                     }) (builtins.attrNames (lib.filterAttrs (_: isUpdatable) self.packages.${system}))
