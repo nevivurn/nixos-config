@@ -31,13 +31,10 @@ vim.cmd [[ colorscheme dracula ]]
 vim.opt.termguicolors = true
 
 -- tree-sitter
-require'nvim-treesitter.configs'.setup {
-	highlight = { enable = true },
-	indent = { enable = true },
-}
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false
+vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo[0][0].foldmethod = 'expr'
+vim.wo[0][0].foldenable = false
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 -- servers
 vim.lsp.config('nixd', {
