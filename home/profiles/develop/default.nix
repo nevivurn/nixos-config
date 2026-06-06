@@ -9,9 +9,10 @@
   imports = [ ../shell ];
 
   home.packages = with pkgs; [
+    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     awscli2
     docker-compose
-    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
+    gh
     k9s
     kubectl
     kubernetes-helm
