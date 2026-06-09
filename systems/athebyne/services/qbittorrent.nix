@@ -8,8 +8,8 @@
         (pkgs.fetchpatch2 {
           # ref: https://github.com/qbittorrent/qBittorrent/pull/24386
           name = "multi-torrent-dialogue.patch";
-          url = "https://github.com/nevivurn/qBittorrent/compare/release-5.2.1...nevivurn:qBittorrent:rebased/tom/shared-download-window.patch?full_index=1";
-          hash = "sha256-dNbnHJSjtyyS8LKbQahGtWEtx9VEhkSDze1+uUIdPLo=";
+          url = "https://github.com/nevivurn/qBittorrent/compare/release-5.2.1...9ae23eea9.patch?full_index=1";
+          hash = "sha256-QorEPQiSV3h+U/AFOU64ahnoIv9pf9Do8trvKn9OJgs=";
         })
       ];
     });
