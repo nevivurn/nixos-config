@@ -53,7 +53,7 @@
     checkOpts = [ "--with-cache" ];
     pruneOpts = [
       "--keep-weekly 52"
-      "--keep-monthly 48"
+      "--keep-monthly 24"
       "--keep-yearly 10"
     ];
 
