@@ -265,7 +265,7 @@ in
       "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/iwd"
-      "/var/lib/systemd/timers"
+      "/var/lib/systemd"
       "/var/log"
     ];
   };

@@ -198,7 +198,7 @@ in
       "/root/.cache"
       "/var/cache/libvirt"
       "/var/lib/nixos"
-      "/var/lib/systemd/timers"
+      "/var/lib/systemd"
       "/var/log"
     ];
   };
