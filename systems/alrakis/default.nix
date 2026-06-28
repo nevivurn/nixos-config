@@ -10,6 +10,7 @@ in
 
     inputs.self.nixosModules.default
 
+    ./services/bird.nix
     ./services/openssh.nix
     ./services/nginx-sni-proxy.nix
   ];
