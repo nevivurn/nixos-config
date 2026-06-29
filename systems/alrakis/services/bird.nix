@@ -8,6 +8,14 @@
       protocol device {
       };
 
+      protocol kernel {
+        learn;
+        ipv6 {
+          import all;
+          export none;
+        };
+      };
+
       protocol static {
         ipv6;
         route 2a06:9801:7ce::/48 unreachable;
