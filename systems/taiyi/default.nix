@@ -86,7 +86,7 @@ in
       unitConfig.DefaultDependencies = false;
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.zfs}/bin/zfs rollback rpool/local/root@empty";
+        ExecStart = "${lib.getExe pkgs.zfs} rollback rpool/local/root@empty";
       };
     };
   };
