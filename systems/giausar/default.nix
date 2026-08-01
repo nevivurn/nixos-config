@@ -49,7 +49,7 @@ in
 
   systemd.network =
     let
-      mtu = 1450;
+      mtu = 1440;
     in
     {
       netdevs = {
@@ -97,10 +97,12 @@ in
         };
         "51-wg-proxy" = {
           matchConfig.Name = "wg51";
+          linkConfig.MTUBytes = builtins.toString (mtu - 80);
           networkConfig.Address = [ "fdbc:ba6a:38de:51::3/64" ];
         };
         "52-wg-proxy" = {
           matchConfig.Name = "wg52";
+          linkConfig.MTUBytes = builtins.toString (mtu - 80);
           networkConfig.Address = [ "fdbc:ba6a:38de:52::3/64" ];
         };
       };
