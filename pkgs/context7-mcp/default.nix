@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "context7-mcp";
-  version = "4.0.4";
+  version = "4.0.5";
 
   src = fetchFromGitHub {
     owner = "upstash";
     repo = "context7";
     tag = "@upstash/context7-mcp@${finalAttrs.version}";
-    hash = "sha256-Ac9ev8Zb8kPRkitynb0kxGFc/zXXuIHXYfxAzFIOC2U=";
+    hash = "sha256-XN6lGp135VdRFlYhgZzOjLo3+QyzEP4Q8O6QMSR2wyw=";
   };
 
   nativeBuildInputs = [
@@ -37,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
       pnpmWorkspaces
       ;
     fetcherVersion = 4;
-    hash = "sha256-A2k6QrUj+sfuAEIksKvVq/qArYAxC0tRf5Cq41ybcLw=";
+    hash = "sha256-cZUj6M2O5M5FQgS45pZFr7SCXVTaLxJRSZamoRXXol0=";
   };
 
   env.CI = true;
