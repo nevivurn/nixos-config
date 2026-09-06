@@ -2,11 +2,17 @@
 
 let
   cfg = config.services.kavita.settings;
+  inherit
+    ((builtins.getFlake "github:nevivurn/nixpkgs/9d0fbc1408d8120602df2865ac2feed9c4ec7b7b")
+      .legacyPackages.${pkgs.stdenv.hostPlatform.system}
+    )
+    kavita
+    ;
 in
 {
   services.kavita = {
     enable = true;
-    package = pkgs.pkgsUnstable.kavita;
+    package = kavita;
     tokenKeyFile = "/persist/secrets/kavita-token";
     settings.IpAddresses = "127.0.0.1";
   };
@@ -21,7 +27,7 @@ in
     encode zstd gzip
 
     handle @private {
-      reverse_proxy localhost:${builtins.toString cfg.Port}
+      reverse_proxy localhost:${toString cfg.Port}
     }
   '';
 
