@@ -42,7 +42,7 @@ in
     mupdf
     pkgsUnstable.yt-dlp
 
-    gnucash
+    pkgsUnstable.gnucash
     portfolio
 
     moonlight-qt
